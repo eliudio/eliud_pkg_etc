@@ -1,0 +1,28 @@
+name: eliud_pkg_etc
+description: Eliud package for other extensions
+version: 0.0.1
+author:
+homepage:
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  #flutter: ">=1.17.0 <2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  eliud_core:
+    path: ../eliud_core
+
+  eliud_pkg_album:
+    path: ../eliud_pkg_album
+
+dev_dependencies:
+  build_runner: "1.11.5"
+
+  eliud_generator:
+    path: ../eliud_generator
+
+flutter:
+  uses-material-design: true
