@@ -39,7 +39,7 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
         future: ChainOfMediumModels.getChainOfUrls(policyPresentationModel.appId, policyPresentationModel.policy),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return AlbumSlider(title: 'policyPresentationModel.title', urls: snapshot.data, initialPage: 0, withCloseButton: false,);
+            return AlbumSlider(title: 'policyPresentationModel.title', urls: snapshot.data, initialPage: 0, withCloseButton: false, withNextPrevButton: true,);
           } else {
             return Center(
               child: DelayedCircularProgressIndicator(),
