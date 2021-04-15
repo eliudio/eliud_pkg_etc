@@ -97,10 +97,12 @@ class PolicyPresentationModel {
     MemberMediumModel? policyHolder;
     if (entity.policyId != null) {
       try {
-        await memberMediumRepository(appId: appId)!.get(entity.policyId).then((val) {
-          policyHolder = val;
-        }).catchError((error) {});
-      } catch (_) {}
+          policyHolder = await memberMediumRepository(appId: appId)!.get(entity.policyId);
+      } on Exception catch(e) {
+        print('Error whilst trying to initialise policy');
+        print('Error whilst retrieving memberMedium with id ${entity.policyId}');
+        print('Exception: $e');
+      }
     }
 
     return PolicyPresentationModel(
