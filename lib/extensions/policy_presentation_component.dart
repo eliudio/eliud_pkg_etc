@@ -17,7 +17,7 @@ import 'package:flutter/cupertino.dart';
 class PolicyPresentationComponentConstructorDefault
     implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, Object>? parameters}) {
+  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
     return PolicyPresentation(id: id);
   }
 }
