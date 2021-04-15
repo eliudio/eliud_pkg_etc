@@ -27,53 +27,59 @@ const _policyPresentationLimit = 5;
 
 class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, PolicyPresentationListState> {
   final PolicyPresentationRepository _policyPresentationRepository;
-  StreamSubscription _policyPresentationsListSubscription;
-  final EliudQuery eliudQuery;
+  StreamSubscription? _policyPresentationsListSubscription;
+  final EliudQuery? eliudQuery;
   int pages = 1;
-  final bool paged;
-  final String orderBy;
-  final bool descending;
-  final bool detailed;
+  final bool? paged;
+  final String? orderBy;
+  final bool? descending;
+  final bool? detailed;
 
-  PolicyPresentationListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required PolicyPresentationRepository policyPresentationRepository})
+  PolicyPresentationListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required PolicyPresentationRepository policyPresentationRepository})
       : assert(policyPresentationRepository != null),
         _policyPresentationRepository = policyPresentationRepository,
         super(PolicyPresentationListLoading());
 
   Stream<PolicyPresentationListState> _mapLoadPolicyPresentationListToState() async* {
-    int amountNow =  (state is PolicyPresentationListLoaded) ? (state as PolicyPresentationListLoaded).values.length : 0;
+    int amountNow =  (state is PolicyPresentationListLoaded) ? (state as PolicyPresentationListLoaded).values!.length : 0;
     _policyPresentationsListSubscription?.cancel();
     _policyPresentationsListSubscription = _policyPresentationRepository.listen(
           (list) => add(PolicyPresentationListUpdated(value: list, mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && (paged)) ? pages * _policyPresentationLimit : null
+      limit: ((paged != null) && paged!) ? pages * _policyPresentationLimit : null
     );
   }
 
   Stream<PolicyPresentationListState> _mapLoadPolicyPresentationListWithDetailsToState() async* {
-    int amountNow =  (state is PolicyPresentationListLoaded) ? (state as PolicyPresentationListLoaded).values.length : 0;
+    int amountNow =  (state is PolicyPresentationListLoaded) ? (state as PolicyPresentationListLoaded).values!.length : 0;
     _policyPresentationsListSubscription?.cancel();
     _policyPresentationsListSubscription = _policyPresentationRepository.listenWithDetails(
             (list) => add(PolicyPresentationListUpdated(value: list, mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && (paged)) ? pages * _policyPresentationLimit : null
+        limit: ((paged != null) && paged!) ? pages * _policyPresentationLimit : null
     );
   }
 
   Stream<PolicyPresentationListState> _mapAddPolicyPresentationListToState(AddPolicyPresentationList event) async* {
-    _policyPresentationRepository.add(event.value);
+    var value = event.value;
+    if (value != null) 
+      _policyPresentationRepository.add(value);
   }
 
   Stream<PolicyPresentationListState> _mapUpdatePolicyPresentationListToState(UpdatePolicyPresentationList event) async* {
-    _policyPresentationRepository.update(event.value);
+    var value = event.value;
+    if (value != null) 
+      _policyPresentationRepository.update(value);
   }
 
   Stream<PolicyPresentationListState> _mapDeletePolicyPresentationListToState(DeletePolicyPresentationList event) async* {
-    _policyPresentationRepository.delete(event.value);
+    var value = event.value;
+    if (value != null) 
+      _policyPresentationRepository.delete(value);
   }
 
   Stream<PolicyPresentationListState> _mapPolicyPresentationListUpdatedToState(
@@ -84,7 +90,7 @@ class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, Polic
   @override
   Stream<PolicyPresentationListState> mapEventToState(PolicyPresentationListEvent event) async* {
     if (event is LoadPolicyPresentationList) {
-      if ((detailed == null) || (!detailed)) {
+      if ((detailed == null) || (!detailed!)) {
         yield* _mapLoadPolicyPresentationListToState();
       } else {
         yield* _mapLoadPolicyPresentationListWithDetailsToState();

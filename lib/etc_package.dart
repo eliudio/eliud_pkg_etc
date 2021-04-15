@@ -12,13 +12,13 @@ import 'package:eliud_pkg_etc/model/component_registry.dart';
 
 abstract class EtcPackage extends Package {
   @override
-  BlocProvider createMainBloc(NavigatorBloc navigatorBloc, AccessBloc accessBloc) => null;
+  BlocProvider? createMainBloc(NavigatorBloc navigatorBloc, AccessBloc accessBloc) => null;
 
   @override
-  Future<bool> isConditionOk(String packageCondition, AppModel app, MemberModel member, bool isOwner, bool isBlocked, PrivilegeLevel privilegeLevel) async => null;
+  Future<bool?> isConditionOk(String packageCondition, AppModel app, MemberModel? member, bool isOwner, bool? isBlocked, PrivilegeLevel? privilegeLevel) async => null;
 
   @override
-  List<String> retrieveAllPackageConditions() => null;
+  List<String>? retrieveAllPackageConditions() => null;
 
   @override
   void init() {

@@ -21,7 +21,7 @@ abstract class PolicyPresentationComponentEvent extends Equatable {
 }
 
 class FetchPolicyPresentationComponent extends PolicyPresentationComponentEvent {
-  final String id;
+  final String? id;
 
   FetchPolicyPresentationComponent({ this.id });
 }

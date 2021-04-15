@@ -24,7 +24,7 @@ import 'package:flutter/services.dart';
 
 
 class PolicyPresentationComponentBloc extends Bloc<PolicyPresentationComponentEvent, PolicyPresentationComponentState> {
-  final PolicyPresentationRepository policyPresentationRepository;
+  final PolicyPresentationRepository? policyPresentationRepository;
 
   PolicyPresentationComponentBloc({ this.policyPresentationRepository }): super(PolicyPresentationComponentUninitialized());
   @override
@@ -34,9 +34,9 @@ class PolicyPresentationComponentBloc extends Bloc<PolicyPresentationComponentEv
       try {
         if (currentState is PolicyPresentationComponentUninitialized) {
           bool permissionDenied = false;
-          final model = await policyPresentationRepository.get(event.id, onError: (error) {
+          final model = await policyPresentationRepository!.get(event.id, onError: (error) {
             // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
               permissionDenied = true;
             }
           });
@@ -46,7 +46,7 @@ class PolicyPresentationComponentBloc extends Bloc<PolicyPresentationComponentEv
             if (model != null) {
               yield PolicyPresentationComponentLoaded(value: model);
             } else {
-              String id = event.id;
+              String? id = event.id;
               yield PolicyPresentationComponentError(
                   message: "PolicyPresentation with id = '$id' not found");
             }

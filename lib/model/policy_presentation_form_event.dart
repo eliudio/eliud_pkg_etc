@@ -34,7 +34,7 @@ abstract class PolicyPresentationFormEvent extends Equatable {
   const PolicyPresentationFormEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class InitialiseNewPolicyPresentationFormEvent extends PolicyPresentationFormEvent {
@@ -42,78 +42,78 @@ class InitialiseNewPolicyPresentationFormEvent extends PolicyPresentationFormEve
 
 
 class InitialisePolicyPresentationFormEvent extends PolicyPresentationFormEvent {
-  final PolicyPresentationModel value;
+  final PolicyPresentationModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialisePolicyPresentationFormEvent({this.value});
 }
 
 class InitialisePolicyPresentationFormNoLoadEvent extends PolicyPresentationFormEvent {
-  final PolicyPresentationModel value;
+  final PolicyPresentationModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialisePolicyPresentationFormNoLoadEvent({this.value});
 }
 
 class ChangedPolicyPresentationDocumentID extends PolicyPresentationFormEvent {
-  final String value;
+  final String? value;
 
   ChangedPolicyPresentationDocumentID({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPolicyPresentationDocumentID{ value: $value }';
 }
 
 class ChangedPolicyPresentationAppId extends PolicyPresentationFormEvent {
-  final String value;
+  final String? value;
 
   ChangedPolicyPresentationAppId({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPolicyPresentationAppId{ value: $value }';
 }
 
 class ChangedPolicyPresentationDescription extends PolicyPresentationFormEvent {
-  final String value;
+  final String? value;
 
   ChangedPolicyPresentationDescription({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPolicyPresentationDescription{ value: $value }';
 }
 
 class ChangedPolicyPresentationPolicy extends PolicyPresentationFormEvent {
-  final String value;
+  final String? value;
 
   ChangedPolicyPresentationPolicy({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPolicyPresentationPolicy{ value: $value }';
 }
 
 class ChangedPolicyPresentationConditions extends PolicyPresentationFormEvent {
-  final ConditionsSimpleModel value;
+  final ConditionsSimpleModel? value;
 
   ChangedPolicyPresentationConditions({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPolicyPresentationConditions{ value: $value }';

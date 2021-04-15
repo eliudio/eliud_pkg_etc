@@ -36,19 +36,19 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class PolicyPresentationModel {
-  String documentID;
+  String? documentID;
 
   // This is the identifier of the app to which this belongs
-  String appId;
-  String description;
-  MemberMediumModel policy;
-  ConditionsSimpleModel conditions;
+  String? appId;
+  String? description;
+  MemberMediumModel? policy;
+  ConditionsSimpleModel? conditions;
 
   PolicyPresentationModel({this.documentID, this.appId, this.description, this.policy, this.conditions, })  {
     assert(documentID != null);
   }
 
-  PolicyPresentationModel copyWith({String documentID, String appId, String description, MemberMediumModel policy, ConditionsSimpleModel conditions, }) {
+  PolicyPresentationModel copyWith({String? documentID, String? appId, String? description, MemberMediumModel? policy, ConditionsSimpleModel? conditions, }) {
     return PolicyPresentationModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, policy: policy ?? this.policy, conditions: conditions ?? this.conditions, );
   }
 
@@ -71,16 +71,16 @@ class PolicyPresentationModel {
     return 'PolicyPresentationModel{documentID: $documentID, appId: $appId, description: $description, policy: $policy, conditions: $conditions}';
   }
 
-  PolicyPresentationEntity toEntity({String appId}) {
+  PolicyPresentationEntity toEntity({String? appId}) {
     return PolicyPresentationEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
-          policyId: (policy != null) ? policy.documentID : null, 
-          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
+          policyId: (policy != null) ? policy!.documentID : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 
-  static PolicyPresentationModel fromEntity(String documentID, PolicyPresentationEntity entity) {
+  static PolicyPresentationModel? fromEntity(String documentID, PolicyPresentationEntity? entity) {
     if (entity == null) return null;
     return PolicyPresentationModel(
           documentID: documentID, 
@@ -91,13 +91,13 @@ class PolicyPresentationModel {
     );
   }
 
-  static Future<PolicyPresentationModel> fromEntityPlus(String documentID, PolicyPresentationEntity entity, { String appId}) async {
+  static Future<PolicyPresentationModel?> fromEntityPlus(String documentID, PolicyPresentationEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    MemberMediumModel policyHolder;
+    MemberMediumModel? policyHolder;
     if (entity.policyId != null) {
       try {
-        await memberMediumRepository(appId: appId).get(entity.policyId).then((val) {
+        await memberMediumRepository(appId: appId)!.get(entity.policyId).then((val) {
           policyHolder = val;
         }).catchError((error) {});
       } catch (_) {}

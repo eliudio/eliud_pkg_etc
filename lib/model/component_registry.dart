@@ -26,11 +26,11 @@ import 'package:eliud_pkg_etc/model/internal_component.dart';
 class ComponentRegistry {
 
   void init() {
-    Registry.registry().addInternalComponents('eliud_pkg_etc', ["policyPresentations", ]);
+    Registry.registry()!.addInternalComponents('eliud_pkg_etc', ["policyPresentations", ]);
 
-    Registry.registry().register(componentName: "eliud_pkg_etc_internalWidgets", componentConstructor: ListComponentFactory());
-    Registry.registry().addDropDownSupporter("policyPresentations", DropdownButtonComponentFactory());
-    Registry.registry().register(componentName: "policyPresentations", componentConstructor: PolicyPresentationComponentConstructorDefault());
+    Registry.registry()!.register(componentName: "eliud_pkg_etc_internalWidgets", componentConstructor: ListComponentFactory());
+    Registry.registry()!.addDropDownSupporter("policyPresentations", DropdownButtonComponentFactory());
+    Registry.registry()!.register(componentName: "policyPresentations", componentConstructor: PolicyPresentationComponentConstructorDefault());
 
   }
 }

@@ -25,7 +25,7 @@ import 'package:eliud_pkg_etc/model/policy_presentation_component_state.dart';
 
 abstract class AbstractPolicyPresentationComponent extends StatelessWidget {
   static String componentName = "policyPresentations";
-  final String policyPresentationID;
+  final String? policyPresentationID;
 
   AbstractPolicyPresentationComponent({this.policyPresentationID});
 
@@ -63,7 +63,7 @@ abstract class AbstractPolicyPresentationComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, PolicyPresentationModel value);
+  Widget yourWidget(BuildContext context, PolicyPresentationModel? value);
   Widget alertWidget({ title: String, content: String});
   PolicyPresentationRepository getPolicyPresentationRepository(BuildContext context);
 }

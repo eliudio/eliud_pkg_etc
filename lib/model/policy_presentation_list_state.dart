@@ -20,19 +20,19 @@ abstract class PolicyPresentationListState extends Equatable {
   const PolicyPresentationListState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class PolicyPresentationListLoading extends PolicyPresentationListState {}
 
 class PolicyPresentationListLoaded extends PolicyPresentationListState {
-  final List<PolicyPresentationModel> values;
-  final bool mightHaveMore;
+  final List<PolicyPresentationModel?>? values;
+  final bool? mightHaveMore;
 
   const PolicyPresentationListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values, mightHaveMore ];
+  List<Object?> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'PolicyPresentationListLoaded { values: $values }';

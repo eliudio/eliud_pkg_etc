@@ -48,50 +48,50 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     return PolicyPresentationCollection.doc(value.documentID).update(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
-  PolicyPresentationModel _populateDoc(DocumentSnapshot value) {
+  PolicyPresentationModel? _populateDoc(DocumentSnapshot value) {
     return PolicyPresentationModel.fromEntity(value.id, PolicyPresentationEntity.fromMap(value.data()));
   }
 
-  Future<PolicyPresentationModel> _populateDocPlus(DocumentSnapshot value) async {
+  Future<PolicyPresentationModel?> _populateDocPlus(DocumentSnapshot value) async {
     return PolicyPresentationModel.fromEntityPlus(value.id, PolicyPresentationEntity.fromMap(value.data()), appId: appId);  }
 
-  Future<PolicyPresentationModel> get(String id, {Function(Exception) onError}) {
-    return PolicyPresentationCollection.doc(id).get().then((doc) {
+  Future<PolicyPresentationModel?> get(String? id, {Function(Exception)? onError}) {
+    return PolicyPresentationCollection.doc(id).get().then((doc) async {
       if (doc.data() != null)
-        return _populateDocPlus(doc);
+        return await _populateDocPlus(doc);
       else
         return null;
     }).catchError((Object e) {
       if (onError != null) {
-        onError(e);
+        onError(e as Exception);
       }
     });
   }
 
-  StreamSubscription<List<PolicyPresentationModel>> listen(PolicyPresentationModelTrigger trigger, {String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
-    Stream<List<PolicyPresentationModel>> stream;
-//    stream = getQuery(PolicyPresentationCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
+  StreamSubscription<List<PolicyPresentationModel?>> listen(PolicyPresentationModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
+    Stream<List<PolicyPresentationModel?>> stream;
+//    stream = getQuery(PolicyPresentationCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((data) {
 //    The above line is replaced by the below line. The reason is because the same collection can not be subscribed to twice
 //    The reason we're subscribing twice to the same list, is because the close on bloc isn't called. This needs to be fixed.
 //    See https://github.com/felangel/bloc/issues/2073.
 //    In the meantime:
-      stream = getQuery(appRepository().getSubCollection(appId, 'policypresentation'), orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
-      Iterable<PolicyPresentationModel> policyPresentations  = data.docs.map((doc) {
-        PolicyPresentationModel value = _populateDoc(doc);
+      stream = getQuery(appRepository()!.getSubCollection(appId, 'policypresentation'), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((data) {
+      Iterable<PolicyPresentationModel?> policyPresentations  = data.docs.map((doc) {
+        PolicyPresentationModel? value = _populateDoc(doc);
         return value;
       }).toList();
-      return policyPresentations;
+      return policyPresentations as List<PolicyPresentationModel?>;
     });
     return stream.listen((listOfPolicyPresentationModels) {
       trigger(listOfPolicyPresentationModels);
     });
   }
 
-  StreamSubscription<List<PolicyPresentationModel>> listenWithDetails(PolicyPresentationModelTrigger trigger, {String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
-    Stream<List<PolicyPresentationModel>> stream;
+  StreamSubscription<List<PolicyPresentationModel?>> listenWithDetails(PolicyPresentationModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
+    Stream<List<PolicyPresentationModel?>> stream;
 //  stream = getQuery(PolicyPresentationCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
 //  see comment listen(...) above
-    stream = getQuery(appRepository().getSubCollection(appId, 'policypresentation'), orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
+    stream = getQuery(appRepository()!.getSubCollection(appId, 'policypresentation'), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
         .asyncMap((data) async {
       return await Future.wait(data.docs.map((doc) =>  _populateDocPlus(doc)).toList());
     });
@@ -102,7 +102,7 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
   }
 
   @override
-  StreamSubscription<PolicyPresentationModel> listenTo(String documentId, PolicyPresentationChanged changed) {
+  StreamSubscription<PolicyPresentationModel?> listenTo(String documentId, PolicyPresentationChanged changed) {
     var stream = PolicyPresentationCollection.doc(documentId)
         .snapshots()
         .asyncMap((data) {
@@ -113,9 +113,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     });
   }
 
-  Stream<List<PolicyPresentationModel>> values({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
-    DocumentSnapshot lastDoc;
-    Stream<List<PolicyPresentationModel>> _values = getQuery(PolicyPresentationCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((snapshot) {
+  Stream<List<PolicyPresentationModel?>> values({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
+    DocumentSnapshot? lastDoc;
+    Stream<List<PolicyPresentationModel?>> _values = getQuery(PolicyPresentationCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDoc(doc);
@@ -124,9 +124,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     return _values;
   }
 
-  Stream<List<PolicyPresentationModel>> valuesWithDetails({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
-    DocumentSnapshot lastDoc;
-    Stream<List<PolicyPresentationModel>> _values = getQuery(PolicyPresentationCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().asyncMap((snapshot) {
+  Stream<List<PolicyPresentationModel?>> valuesWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
+    DocumentSnapshot? lastDoc;
+    Stream<List<PolicyPresentationModel?>> _values = getQuery(PolicyPresentationCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().asyncMap((snapshot) {
       return Future.wait(snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
@@ -136,9 +136,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     return _values;
   }
 
-  Future<List<PolicyPresentationModel>> valuesList({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
-    DocumentSnapshot lastDoc;
-    List<PolicyPresentationModel> _values = await getQuery(PolicyPresentationCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
+  Future<List<PolicyPresentationModel?>> valuesList({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) async {
+    DocumentSnapshot? lastDoc;
+    List<PolicyPresentationModel?> _values = await getQuery(PolicyPresentationCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.get().then((value) {
       var list = value.docs;
       return list.map((doc) { 
         lastDoc = doc;
@@ -149,9 +149,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     return _values;
   }
 
-  Future<List<PolicyPresentationModel>> valuesListWithDetails({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
-    DocumentSnapshot lastDoc;
-    List<PolicyPresentationModel> _values = await getQuery(PolicyPresentationCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
+  Future<List<PolicyPresentationModel?>> valuesListWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) async {
+    DocumentSnapshot? lastDoc;
+    List<PolicyPresentationModel?> _values = await getQuery(PolicyPresentationCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.get().then((value) {
       var list = value.docs;
       return Future.wait(list.map((doc) {
         lastDoc = doc;
@@ -176,11 +176,11 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     return PolicyPresentationCollection.doc(documentId).collection(name);
   }
 
-  String timeStampToString(dynamic timeStamp) {
+  String? timeStampToString(dynamic timeStamp) {
     return firestoreTimeStampToString(timeStamp);
   } 
 
-  Future<PolicyPresentationModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
+  Future<PolicyPresentationModel?> changeValue(String documentId, String fieldName, num changeByThisValue) {
     var change = FieldValue.increment(changeByThisValue);
     return PolicyPresentationCollection.doc(documentId).update({fieldName: change}).then((v) => get(documentId));
   }

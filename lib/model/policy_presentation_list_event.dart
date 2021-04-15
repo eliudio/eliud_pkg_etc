@@ -19,7 +19,7 @@ import 'package:eliud_pkg_etc/model/policy_presentation_model.dart';
 abstract class PolicyPresentationListEvent extends Equatable {
   const PolicyPresentationListEvent();
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LoadPolicyPresentationList extends PolicyPresentationListEvent {}
@@ -27,49 +27,49 @@ class LoadPolicyPresentationList extends PolicyPresentationListEvent {}
 class NewPage extends PolicyPresentationListEvent {}
 
 class AddPolicyPresentationList extends PolicyPresentationListEvent {
-  final PolicyPresentationModel value;
+  final PolicyPresentationModel? value;
 
   const AddPolicyPresentationList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'AddPolicyPresentationList{ value: $value }';
 }
 
 class UpdatePolicyPresentationList extends PolicyPresentationListEvent {
-  final PolicyPresentationModel value;
+  final PolicyPresentationModel? value;
 
   const UpdatePolicyPresentationList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'UpdatePolicyPresentationList{ value: $value }';
 }
 
 class DeletePolicyPresentationList extends PolicyPresentationListEvent {
-  final PolicyPresentationModel value;
+  final PolicyPresentationModel? value;
 
   const DeletePolicyPresentationList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'DeletePolicyPresentationList{ value: $value }';
 }
 
 class PolicyPresentationListUpdated extends PolicyPresentationListEvent {
-  final List<PolicyPresentationModel> value;
-  final bool mightHaveMore;
+  final List<PolicyPresentationModel?>? value;
+  final bool? mightHaveMore;
 
   const PolicyPresentationListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  List<Object> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [ value, mightHaveMore ];
 
   @override
   String toString() => 'PolicyPresentationListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';

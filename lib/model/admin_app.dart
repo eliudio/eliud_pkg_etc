@@ -53,7 +53,7 @@ class AdminApp extends AdminAppInstallerBase {
 
 
   PageModel _policyPresentationsPages() {
-    List<BodyComponentModel> components = List();
+    List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
       documentID: "internalWidget-policyPresentations", componentName: "eliud_pkg_etc_internalWidgets", componentId: "policyPresentations"));
     PageModel page = PageModel(
@@ -78,7 +78,7 @@ class AdminApp extends AdminAppInstallerBase {
 
   Future<void> _setupAdminPages() {
 
-    return pageRepository(appId: appId).add(_policyPresentationsPages())
+    return pageRepository(appId: appId)!.add(_policyPresentationsPages())
 
     ;
   }
@@ -94,7 +94,7 @@ class AdminApp extends AdminAppInstallerBase {
 class AdminMenu extends AdminAppMenuInstallerBase {
 
   Future<MenuDefModel> menu(String appId) async {
-    List<MenuItemModel> menuItems = List<MenuItemModel>();
+    var menuItems = <MenuItemModel>[];
 
     menuItems.add(
       MenuItemModel(
@@ -113,7 +113,7 @@ class AdminMenu extends AdminAppMenuInstallerBase {
       name: "eliud_pkg_etc",
       menuItems: menuItems
     );
-    await menuDefRepository(appId: appId).add(menu);
+    await menuDefRepository(appId: appId)!.add(menu);
     return menu;
   }
 }

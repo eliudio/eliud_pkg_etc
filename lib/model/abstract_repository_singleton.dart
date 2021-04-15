@@ -19,15 +19,15 @@ import 'package:eliud_core/tools/common_tools.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_core/package/package.dart';
 
-PolicyPresentationRepository policyPresentationRepository({ String appId }) => AbstractRepositorySingleton.singleton.policyPresentationRepository(appId);
+PolicyPresentationRepository? policyPresentationRepository({ String? appId }) => AbstractRepositorySingleton.singleton.policyPresentationRepository(appId);
 
 abstract class AbstractRepositorySingleton {
   static List<MemberCollectionInfo> collections = [
   ];
-  static AbstractRepositorySingleton singleton;
+  static late AbstractRepositorySingleton singleton;
 
-  PolicyPresentationRepository policyPresentationRepository(String appId);
+  PolicyPresentationRepository? policyPresentationRepository(String? appId);
 
-  void flush(String appId) {
+  void flush(String? appId) {
   }
 }

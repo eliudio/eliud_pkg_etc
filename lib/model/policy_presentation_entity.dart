@@ -22,22 +22,22 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_etc/model/entity_export.dart';
 
 class PolicyPresentationEntity {
-  final String appId;
-  final String description;
-  final String policyId;
-  final ConditionsSimpleEntity conditions;
+  final String? appId;
+  final String? description;
+  final String? policyId;
+  final ConditionsSimpleEntity? conditions;
 
   PolicyPresentationEntity({this.appId, this.description, this.policyId, this.conditions, });
 
 
-  List<Object> get props => [appId, description, policyId, conditions, ];
+  List<Object?> get props => [appId, description, policyId, conditions, ];
 
   @override
   String toString() {
     return 'PolicyPresentationEntity{appId: $appId, description: $description, policyId: $policyId, conditions: $conditions}';
   }
 
-  static PolicyPresentationEntity fromMap(Map map) {
+  static PolicyPresentationEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var conditionsFromMap;
@@ -53,12 +53,12 @@ class PolicyPresentationEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final Map<String, dynamic> conditionsMap = conditions != null 
-        ? conditions.toDocument()
+  Map<String, Object?> toDocument() {
+    final Map<String, dynamic>? conditionsMap = conditions != null 
+        ? conditions!.toDocument()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
     if (description != null) theDocument["description"] = description;
@@ -70,8 +70,8 @@ class PolicyPresentationEntity {
     return theDocument;
   }
 
-  static PolicyPresentationEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static PolicyPresentationEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

@@ -25,8 +25,8 @@ import '../model/policy_presentation_model.dart';
 class RepositorySingleton extends AbstractRepositorySingleton {
     var _policyPresentationRepository = HashMap<String, PolicyPresentationRepository>();
 
-    PolicyPresentationRepository policyPresentationRepository(String appId) {
-      if (_policyPresentationRepository[appId] == null) _policyPresentationRepository[appId] = PolicyPresentationCache(PolicyPresentationFirestore(appRepository().getSubCollection(appId, 'policypresentation'), appId));
+    PolicyPresentationRepository? policyPresentationRepository(String? appId) {
+      if ((appId != null) && (_policyPresentationRepository[appId] == null)) _policyPresentationRepository[appId] = PolicyPresentationCache(PolicyPresentationFirestore(appRepository()!.getSubCollection(appId, 'policypresentation'), appId));
       return _policyPresentationRepository[appId];
     }
 
