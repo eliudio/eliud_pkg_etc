@@ -65,20 +65,20 @@ class PolicyPresentationFormBloc extends Bloc<PolicyPresentationFormEvent, Polic
 
       if (event is InitialisePolicyPresentationFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        PolicyPresentationFormLoaded loaded = PolicyPresentationFormLoaded(value: await policyPresentationRepository(appId: appId)!.get(event!.value!.documentID));
+        PolicyPresentationFormLoaded loaded = PolicyPresentationFormLoaded(value: await policyPresentationRepository(appId: appId)!.get(event.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialisePolicyPresentationFormNoLoadEvent) {
-        PolicyPresentationFormLoaded loaded = PolicyPresentationFormLoaded(value: event!.value);
+        PolicyPresentationFormLoaded loaded = PolicyPresentationFormLoaded(value: event.value);
         yield loaded;
         return;
       }
     } else if (currentState is PolicyPresentationFormInitialized) {
       PolicyPresentationModel? newValue = null;
       if (event is ChangedPolicyPresentationDocumentID) {
-        newValue = currentState.value!.copyWith(documentID: event!.value);
+        newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event!.value, newValue).asStream();
+          yield* _isDocumentIDValid(event.value, newValue).asStream();
         } else {
           yield SubmittablePolicyPresentationForm(value: newValue);
         }
@@ -86,20 +86,20 @@ class PolicyPresentationFormBloc extends Bloc<PolicyPresentationFormEvent, Polic
         return;
       }
       if (event is ChangedPolicyPresentationAppId) {
-        newValue = currentState.value!.copyWith(appId: event!.value);
+        newValue = currentState.value!.copyWith(appId: event.value);
         yield SubmittablePolicyPresentationForm(value: newValue);
 
         return;
       }
       if (event is ChangedPolicyPresentationDescription) {
-        newValue = currentState.value!.copyWith(description: event!.value);
+        newValue = currentState.value!.copyWith(description: event.value);
         yield SubmittablePolicyPresentationForm(value: newValue);
 
         return;
       }
       if (event is ChangedPolicyPresentationPolicy) {
-        if (event!.value != null)
-          newValue = currentState.value!.copyWith(policy: await memberMediumRepository(appId: appId)!.get(event!.value));
+        if (event.value != null)
+          newValue = currentState.value!.copyWith(policy: await memberMediumRepository(appId: appId)!.get(event.value));
         else
           newValue = new PolicyPresentationModel(
                                  documentID: currentState.value!.documentID,
@@ -113,7 +113,7 @@ class PolicyPresentationFormBloc extends Bloc<PolicyPresentationFormEvent, Polic
         return;
       }
       if (event is ChangedPolicyPresentationConditions) {
-        newValue = currentState.value!.copyWith(conditions: event!.value);
+        newValue = currentState.value!.copyWith(conditions: event.value);
         yield SubmittablePolicyPresentationForm(value: newValue);
 
         return;
