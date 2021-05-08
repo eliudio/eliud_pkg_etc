@@ -295,6 +295,13 @@ packages:
       relative: true
     source: path
     version: "1.0.0+1"
+  eliud_pkg_feed:
+    dependency: "direct main"
+    description:
+      path: "../eliud_pkg_feed"
+      relative: true
+    source: path
+    version: "0.0.1"
   eliud_pkg_follow:
     dependency: transitive
     description:
@@ -313,13 +320,6 @@ packages:
     dependency: transitive
     description:
       path: "../eliud_pkg_notifications"
-      relative: true
-    source: path
-    version: "0.0.1"
-  eliud_pkg_post:
-    dependency: "direct main"
-    description:
-      path: "../eliud_pkg_post"
       relative: true
     source: path
     version: "0.0.1"
@@ -454,13 +454,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.0.0"
-  flutter_carousel_slider:
-    dependency: transitive
-    description:
-      name: flutter_carousel_slider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.8"
   flutter_colorpicker:
     dependency: transitive
     description:
@@ -489,20 +482,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  flutter_stage:
-    dependency: transitive
-    description:
-      name: flutter_stage
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1"
-  flutter_staggered_grid_view:
-    dependency: transitive
-    description:
-      name: flutter_staggered_grid_view
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0"
   flutter_test:
     dependency: transitive
     description: flutter

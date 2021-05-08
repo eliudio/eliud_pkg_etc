@@ -15,8 +15,8 @@ dependencies:
   eliud_core:
     path: ../eliud_core
 
-  eliud_pkg_post:
-    path: ../eliud_pkg_post
+  eliud_pkg_feed:
+    path: ../eliud_pkg_feed
 
 dev_dependencies:
   build_runner: "1.11.5"

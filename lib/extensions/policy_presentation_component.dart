@@ -5,7 +5,7 @@ import 'package:eliud_core/core/widgets/progress_indicator.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/tools/storage/firestore_helper.dart';
-import 'package:eliud_pkg_post/tools/slider/carousel_slider.dart';
+import 'package:eliud_pkg_feed/tools/slider/carousel_slider.dart';
 import 'package:eliud_pkg_etc/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_component.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_model.dart';
