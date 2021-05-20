@@ -7,7 +7,6 @@ import 'package:eliud_core/package/package.dart';
 import 'package:flutter_bloc/src/bloc_provider.dart';
 import 'package:eliud_pkg_etc/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_etc/model/repository_singleton.dart';
-
 import 'package:eliud_pkg_etc/model/component_registry.dart';
 
 abstract class EtcPackage extends Package {

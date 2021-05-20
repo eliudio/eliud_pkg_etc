@@ -3,6 +3,7 @@ import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/core/widgets/progress_indicator.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
+import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/storage/medium_info.dart';
 import 'package:eliud_pkg_feed/tools/slider/carousel_slider.dart';
 import 'package:eliud_pkg_etc/model/abstract_repository_singleton.dart';
@@ -37,8 +38,8 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
     return FutureBuilder<List<String?>>(
         future: ChainOfMediumModels.getChainOfUrls(policyPresentationModel.appId!, policyPresentationModel.policy!),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return AlbumSlider(title: 'policyPresentationModel.title', urls: snapshot.data, initialPage: 0, withCloseButton: false, withNextPrevButton: true,);
+          if ((snapshot.hasData) && (snapshot.data != null)) {
+            return AlbumSlider(title: 'policyPresentationModel.title', slideImageProvider: UrlSlideImageProvider(ListHelper.getStringList(snapshot.data!)), initialPage: 0, withCloseButton: false, withNextPrevButton: true,);
           } else {
             return Center(
               child: DelayedCircularProgressIndicator(),
