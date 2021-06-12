@@ -131,7 +131,7 @@ class PolicyPresentationCache implements PolicyPresentationRepository {
     MemberMediumModel? policyHolder;
     if (model.policy != null) {
       try {
-        await memberMediumRepository(appId: model.policy!.appId)!.get(model.policy!.documentID).then((val) {
+        await memberMediumRepository(appId: model.appId)!.get(model.policy!.documentID).then((val) {
           policyHolder = val;
         }).catchError((error) {});
       } catch (_) {}
