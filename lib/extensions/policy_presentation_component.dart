@@ -1,18 +1,17 @@
-
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
-import 'package:eliud_core/core/widgets/progress_indicator.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
+import 'package:eliud_core/style/style_registry.dart';
+import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/storage/medium_info.dart';
-import 'package:eliud_pkg_feed/tools/slider/carousel_slider.dart';
 import 'package:eliud_pkg_etc/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_component.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_model.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_repository.dart';
-import 'package:eliud_core/tools/component_constructor.dart';
-import 'package:flutter/material.dart';
+import 'package:eliud_pkg_feed/tools/slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class PolicyPresentationComponentConstructorDefault
     implements ComponentConstructor {
@@ -41,9 +40,7 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
           if ((snapshot.hasData) && (snapshot.data != null)) {
             return AlbumSlider(title: 'policyPresentationModel.title', slideImageProvider: UrlSlideImageProvider(ListHelper.getStringList(snapshot.data!)), initialPage: 0, withCloseButton: false, withNextPrevButton: true,);
           } else {
-            return Center(
-              child: DelayedCircularProgressIndicator(),
-            );
+            return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
           }
         });
   }
