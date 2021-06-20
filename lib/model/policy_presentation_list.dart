@@ -100,7 +100,7 @@ class PolicyPresentationListWidgetState extends State<PolicyPresentationListWidg
     if (accessState is AppLoaded) {
       return BlocBuilder<PolicyPresentationListBloc, PolicyPresentationListState>(builder: (context, state) {
         if (state is PolicyPresentationListLoading) {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         } else if (state is PolicyPresentationListLoaded) {
           final values = state.values;
           if ((widget.isEmbedded != null) && widget.isEmbedded!) {
@@ -130,7 +130,7 @@ class PolicyPresentationListWidgetState extends State<PolicyPresentationListWidg
             return theList(context, values, accessState);
           }
         } else {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         }
       });
     } else {

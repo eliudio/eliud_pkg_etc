@@ -146,7 +146,7 @@ class _MyPolicyPresentationFormState extends State<MyPolicyPresentationForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<PolicyPresentationFormBloc, PolicyPresentationFormState>(builder: (context, state) {
       if (state is PolicyPresentationFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is PolicyPresentationFormLoaded) {
@@ -267,7 +267,7 @@ class _MyPolicyPresentationFormState extends State<MyPolicyPresentationForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }

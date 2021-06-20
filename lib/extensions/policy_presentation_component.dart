@@ -30,23 +30,39 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
   }
 
   @override
-  Widget yourWidget(BuildContext context, PolicyPresentationModel? policyPresentationModel) {
-    if (policyPresentationModel!.policy == null) return Text('Policy not available');
-    if (policyPresentationModel.policy!.mediumType != MediumType.Pdf) return Text('Policy not in pdf format. Not supported');
+  Widget yourWidget(
+      BuildContext context, PolicyPresentationModel? policyPresentationModel) {
+    if (policyPresentationModel!.policy == null)
+      return Text('Policy not available');
+    if (policyPresentationModel.policy!.mediumType != MediumType.Pdf)
+      return Text('Policy not in pdf format. Not supported');
 
     return FutureBuilder<List<String?>>(
-        future: ChainOfMediumModels.getChainOfUrls(policyPresentationModel.appId!, policyPresentationModel.policy!),
+        future: ChainOfMediumModels.getChainOfUrls(
+            policyPresentationModel.appId!, policyPresentationModel.policy!),
         builder: (context, snapshot) {
           if ((snapshot.hasData) && (snapshot.data != null)) {
-            return AlbumSlider(title: 'policyPresentationModel.title', slideImageProvider: UrlSlideImageProvider(ListHelper.getStringList(snapshot.data!)), initialPage: 0, withCloseButton: false, withNextPrevButton: true,);
+            return AlbumSlider(
+              title: 'policyPresentationModel.title',
+              slideImageProvider: UrlSlideImageProvider(
+                  ListHelper.getStringList(snapshot.data!)),
+              initialPage: 0,
+              withCloseButton: false,
+              withNextPrevButton: true,
+            );
           } else {
-            return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+            return StyleRegistry.registry()
+                .styleWithContext(context)
+                .frontEndStyle()
+                .progressIndicatorStyle()
+                .progressIndicator(context);
           }
         });
   }
 
   @override
-  PolicyPresentationRepository getPolicyPresentationRepository(BuildContext context) {
+  PolicyPresentationRepository getPolicyPresentationRepository(
+      BuildContext context) {
     return policyPresentationRepository(appId: AccessBloc.appId(context))!;
   }
 }
