@@ -81,6 +81,7 @@ class PolicyPresentationModel {
 
   static PolicyPresentationModel? fromEntity(String documentID, PolicyPresentationEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return PolicyPresentationModel(
           documentID: documentID, 
           appId: entity.appId, 
@@ -104,6 +105,7 @@ class PolicyPresentationModel {
       }
     }
 
+    var counter = 0;
     return PolicyPresentationModel(
           documentID: documentID, 
           appId: entity.appId, 
