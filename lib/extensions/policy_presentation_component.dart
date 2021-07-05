@@ -9,7 +9,7 @@ import 'package:eliud_pkg_etc/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_component.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_model.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_repository.dart';
-import 'package:eliud_pkg_feed/tools/slider/carousel_slider.dart';
+import 'package:eliud_pkg_medium/tools/slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
