@@ -16,6 +16,8 @@
 import 'abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'dart:collection';
+import '../model/member_action_repository.dart';
+import '../model/member_action_cache.dart';
 import '../model/policy_presentation_firestore.dart';
 import '../model/policy_presentation_repository.dart';
 import '../model/policy_presentation_cache.dart';

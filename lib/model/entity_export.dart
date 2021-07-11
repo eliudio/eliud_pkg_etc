@@ -13,4 +13,5 @@
 
 */
 
+export '../model/member_action_entity.dart';
 export '../model/policy_presentation_entity.dart';
