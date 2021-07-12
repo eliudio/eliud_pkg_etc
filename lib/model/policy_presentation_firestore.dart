@@ -49,11 +49,11 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
   }
 
   PolicyPresentationModel? _populateDoc(DocumentSnapshot value) {
-    return PolicyPresentationModel.fromEntity(value.id, PolicyPresentationEntity.fromMap(value.data()));
+    return PolicyPresentationModel.fromEntity(value.id, PolicyPresentationEntity.fromMap(value.data() as Map<String, dynamic>));
   }
 
   Future<PolicyPresentationModel?> _populateDocPlus(DocumentSnapshot value) async {
-    return PolicyPresentationModel.fromEntityPlus(value.id, PolicyPresentationEntity.fromMap(value.data()), appId: appId);  }
+    return PolicyPresentationModel.fromEntityPlus(value.id, PolicyPresentationEntity.fromMap(value.data() as Map<String, dynamic>), appId: appId);  }
 
   Future<PolicyPresentationModel?> get(String? id, {Function(Exception)? onError}) async {
     try {
