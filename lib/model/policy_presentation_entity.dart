@@ -37,8 +37,9 @@ class PolicyPresentationEntity {
     return 'PolicyPresentationEntity{appId: $appId, description: $description, policyId: $policyId, conditions: $conditions}';
   }
 
-  static PolicyPresentationEntity? fromMap(Map? map) {
-    if (map == null) return null;
+  static PolicyPresentationEntity? fromMap(Object? o) {
+    if (o == null) return null;
+    var map = o as Map<String, dynamic>;
 
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
