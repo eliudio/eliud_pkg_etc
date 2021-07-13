@@ -152,7 +152,7 @@ class PolicyPresentationListWidgetState extends State<PolicyPresentationListWidg
 
           return PolicyPresentationListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<PolicyPresentationListBloc>(context)
                   .add(DeletePolicyPresentationList(value: value));
@@ -199,7 +199,6 @@ class PolicyPresentationListWidgetState extends State<PolicyPresentationListWidg
 class PolicyPresentationListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final PolicyPresentationModel? value;
 
   PolicyPresentationListItem({
@@ -207,7 +206,6 @@ class PolicyPresentationListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override
