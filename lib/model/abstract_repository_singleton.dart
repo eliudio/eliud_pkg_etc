@@ -30,5 +30,6 @@ abstract class AbstractRepositorySingleton {
   PolicyPresentationRepository? policyPresentationRepository(String? appId);
 
   void flush(String? appId) {
+    policyPresentationRepository(appId)!.flush();
   }
 }
