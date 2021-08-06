@@ -23,7 +23,6 @@ import 'package:eliud_pkg_etc/model/member_action_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _memberActionLimit = 5;
 
 class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListState> {
   final MemberActionRepository _memberActionRepository;
@@ -34,8 +33,9 @@ class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListS
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int memberActionLimit;
 
-  MemberActionListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required MemberActionRepository memberActionRepository})
+  MemberActionListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required MemberActionRepository memberActionRepository, this.memberActionLimit = 5})
       : assert(memberActionRepository != null),
         _memberActionRepository = memberActionRepository,
         super(MemberActionListLoading());
@@ -48,7 +48,7 @@ class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListS
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _memberActionLimit : null
+      limit: ((paged != null) && paged!) ? pages * memberActionLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListS
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _memberActionLimit : null
+        limit: ((paged != null) && paged!) ? pages * memberActionLimit : null
     );
   }
 

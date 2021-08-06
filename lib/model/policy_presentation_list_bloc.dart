@@ -23,7 +23,6 @@ import 'package:eliud_pkg_etc/model/policy_presentation_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _policyPresentationLimit = 5;
 
 class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, PolicyPresentationListState> {
   final PolicyPresentationRepository _policyPresentationRepository;
@@ -34,8 +33,9 @@ class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, Polic
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int policyPresentationLimit;
 
-  PolicyPresentationListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required PolicyPresentationRepository policyPresentationRepository})
+  PolicyPresentationListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required PolicyPresentationRepository policyPresentationRepository, this.policyPresentationLimit = 5})
       : assert(policyPresentationRepository != null),
         _policyPresentationRepository = policyPresentationRepository,
         super(PolicyPresentationListLoading());
@@ -48,7 +48,7 @@ class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, Polic
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _policyPresentationLimit : null
+      limit: ((paged != null) && paged!) ? pages * policyPresentationLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, Polic
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _policyPresentationLimit : null
+        limit: ((paged != null) && paged!) ? pages * policyPresentationLimit : null
     );
   }
 
