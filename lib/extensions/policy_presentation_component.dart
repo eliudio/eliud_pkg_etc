@@ -16,13 +16,13 @@ import 'package:flutter/material.dart';
 class PolicyPresentationComponentConstructorDefault
     implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
-    return PolicyPresentation(id: id);
+  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
+    return PolicyPresentation(key: key, id: id);
   }
 }
 
 class PolicyPresentation extends AbstractPolicyPresentationComponent {
-  PolicyPresentation({String? id}) : super(policyPresentationID: id);
+  PolicyPresentation({Key? key, required String id}) : super(key: key, policyPresentationID: id);
 
   @override
   Widget alertWidget({title = String, content = String}) {

@@ -27,7 +27,7 @@ abstract class AbstractPolicyPresentationComponent extends StatelessWidget {
   static String componentName = "policyPresentations";
   final String? policyPresentationID;
 
-  AbstractPolicyPresentationComponent({this.policyPresentationID});
+  AbstractPolicyPresentationComponent({Key? key, this.policyPresentationID}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
