@@ -100,7 +100,7 @@ class _DecoratedAppBarWidgetState extends State<DecoratedAppBarWidget> {
             widget.model.iconMenu!.menuItems!.add(menuItemModelLocked);
             return widget.createOriginalAppBar();
           } else {
-            widget.model.iconMenu!.menuItems!.add(menuItemModelUnlocked!);
+            widget.model.iconMenu!.menuItems!.add(menuItemModelUnlocked);
             return widget.createOriginalAppBar();
           }
         });
