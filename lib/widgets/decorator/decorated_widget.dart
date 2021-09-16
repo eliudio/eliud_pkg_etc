@@ -22,7 +22,7 @@ class DecoratedWidget extends StatefulWidget {
   final Key? originalWidgetKey;
   final bool ensureHeight;
   final InitialPosition initialPosition;
-  final String label;
+  final String? label;
   final Color backgroundColor;
   final Icon iconOn;
   final Icon iconOff;
@@ -36,7 +36,7 @@ class DecoratedWidget extends StatefulWidget {
     required this.createOriginalWidget,
     required this.ensureHeight,
     required this.initialPosition,
-    required this.label,
+    this.label,
     required this.backgroundColor,
     required this.iconOn,
     required this.iconOff,

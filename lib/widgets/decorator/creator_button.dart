@@ -38,27 +38,6 @@ class CreatorButton extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _CreatorButtonState();
   }
-
-/*
-  static CreatorButton create(
-      {Key? key,
-      Key? toDecorateKey,
-      required InitialPosition initialPosition,
-      required Widget toDecorate,
-      required Function() doIt,
-      required bool ensureHeight,
-      String? label}) {
-    return CreatorButton(
-        key: key,
-        initialPosition: initialPosition,
-        toDecorateKey: toDecorateKey,
-        toDecorate: toDecorate,
-        ensureHeight: ensureHeight,
-        doIt: doIt,
-        label: label);
-  }
-*/
-
 }
 
 class _CreatorButtonState extends State<CreatorButton> {
