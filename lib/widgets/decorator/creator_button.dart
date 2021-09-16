@@ -8,14 +8,7 @@ enum InitialPosition {
 }
 
 class CreatorButton extends StatefulWidget {
-  static double BUTTON_HEIGHT = 35;
-/*
-  static Color BACKGROUND_COLOR = Colors.green.withOpacity(.3);
-  static Color ICON_COLOR = Colors.red;
-  static Color BORDER_COLOR = Colors.red;
-  static Color TEXT_COLOR = Colors.white;
-*/
-
+  static double BUTTON_HEIGHT = 25;
   final InitialPosition initialPosition;
   final String? label;
   final Widget toDecorate;
@@ -23,9 +16,9 @@ class CreatorButton extends StatefulWidget {
   final Function() doIt;
   final bool ensureHeight;
   final Color backgroundColor;
-  final Color iconColor;
   final Color borderColor;
   final Color textColor;
+  final Icon icon;
 
   CreatorButton(
       {Key? key,
@@ -35,7 +28,7 @@ class CreatorButton extends StatefulWidget {
       required this.doIt,
       required this.ensureHeight,
       required this.backgroundColor,
-      required this.iconColor,
+      required this.icon,
       required this.borderColor,
       required this.textColor,
       this.label})
@@ -141,11 +134,6 @@ class _CreatorButtonState extends State<CreatorButton> {
   @override
   Widget build(BuildContext context) {
     var button;
-    var icon = Icon(
-      Icons.edit,
-      color: widget.iconColor,
-      size: 15,
-    );
     if (widget.label == null) {
       button = Container(
           height: CreatorButton.BUTTON_HEIGHT,
@@ -153,7 +141,7 @@ class _CreatorButtonState extends State<CreatorButton> {
           decoration: BoxDecoration(
               color: widget.backgroundColor,
               border: Border.all(width: 1, color: widget.borderColor)),
-          child: GestureDetector(onTap: () => _doIt(), child: icon));
+          child: GestureDetector(onTap: () => _doIt(), child: widget.icon));
     } else {
       button = Container(
           height: CreatorButton.BUTTON_HEIGHT,
@@ -161,7 +149,7 @@ class _CreatorButtonState extends State<CreatorButton> {
               border: Border.all(width: 1, color: widget.borderColor)),
           child: ElevatedButton.icon(
               onPressed: () => _doIt(),
-              icon: icon,
+              icon: widget.icon,
               style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all(widget.backgroundColor),

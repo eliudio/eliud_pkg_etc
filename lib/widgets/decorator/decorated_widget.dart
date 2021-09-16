@@ -24,7 +24,8 @@ class DecoratedWidget extends StatefulWidget {
   final InitialPosition initialPosition;
   final String label;
   final Color backgroundColor;
-  final Color iconColor;
+  final Icon iconOn;
+  final Icon iconOff;
   final Color bordercolor;
   final Color textColor;
 
@@ -37,7 +38,8 @@ class DecoratedWidget extends StatefulWidget {
     required this.initialPosition,
     required this.label,
     required this.backgroundColor,
-    required this.iconColor,
+    required this.iconOn,
+    required this.iconOff,
     required this.bordercolor,
     required this.textColor,
   }) : super(key: key);
@@ -56,7 +58,8 @@ class _DecoratedWidgetState extends State<DecoratedWidget> with CanRefresh {
         valueListenable: widget.isCreationMode,
         builder: (context, value, child) {
             return CreatorButton(
-                iconColor: widget.iconColor,
+                icon: ((widget.isCreationMode != null) && (widget.isCreationMode.value)) ?
+                widget.iconOn : widget.iconOff,
                 borderColor: widget.bordercolor,
                 textColor: widget.textColor,
                 backgroundColor: widget.backgroundColor,
