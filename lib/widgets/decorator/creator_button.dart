@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum InitialPosition {
-  CenterTop, RightTop, CenterCenter, LeftCenter, LeftTop, LeftBottom // Horizontal X Vertical
+  CenterTop, RightTop, RightBottom, CenterCenter, LeftCenter, LeftTop, LeftBottom // Horizontal X Vertical
 }
 
 class CreatorButton extends StatefulWidget {
@@ -113,6 +113,10 @@ class _CreatorButtonState extends State<CreatorButton> {
             case InitialPosition.RightTop:
               position = Offset(
                   (sizeBox.width - width!), 0);
+              break;
+            case InitialPosition.RightBottom:
+              position = Offset(
+                  (sizeBox.width - width!), sizeBox.height - height!);
               break;
             case InitialPosition.LeftCenter:
               position = Offset(
