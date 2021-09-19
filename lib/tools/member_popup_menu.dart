@@ -1,3 +1,5 @@
+import 'package:eliud_core/style/frontend/has_button.dart';
+import 'package:eliud_core/style/frontend/has_dialog.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/action/action_model.dart';
 import 'package:eliud_pkg_etc/model/member_action_model.dart';
@@ -23,14 +25,14 @@ class MemberPopupMenu {
     var contents = ListView(
         shrinkWrap: true, physics: ScrollPhysics(), children: _buttons);
 
-    StyleRegistry.registry().styleWithContext(context).frontEndStyle().dialogStyle().openComplexDialog(context, title: "Member Actions",
+    openComplexDialog(context, title: "Member Actions",
         child: contents);
 
   }
 
   static Widget button1(
       BuildContext context, String label, VoidCallback voidCallback) {
-    return StyleRegistry.registry().styleWithContext(context).frontEndStyle().buttonStyle().button(context, label: label,
+    return button(context, label: label,
         onPressed: voidCallback
     );
   }
@@ -50,25 +52,9 @@ class MemberPopupMenu {
         text = '?';
       }
     }
-    return StyleRegistry.registry().styleWithContext(context).frontEndStyle().buttonStyle().button(context, label: text,
+    return button(context, label: text,
         onPressed: () =>
             eliudrouter.Router.navigateTo(context, action.action!, parameters: {'memberId' : memberId})
     );
   }
 }
-
-
-
-
-
-
-
-
-
-/*
-  Widget getFieldsWidget(BuildContext context, String appId,) {
-    return StyleRegistry.registry().styleWithContext(context).frontEndStyle().containerStyle().simpleTopicContainer(context, children: <Widget>[buttons(appId)],
-        height: 200, width: 200);
-  }
-
-*/
