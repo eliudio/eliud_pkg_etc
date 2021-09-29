@@ -215,8 +215,8 @@ class MemberActionListItem extends StatelessWidget {
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
-        title: value.text != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value.text!)) : Container(),
-        subtitle: value.description != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value.description!)) : Container(),
+        title: value.text != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.text!)) : Container(),
+        subtitle: value.description != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.description!)) : Container(),
       ),
     );
   }

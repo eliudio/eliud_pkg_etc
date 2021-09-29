@@ -16,8 +16,11 @@
 
 import '../model/internal_component.dart';
 import 'package:eliud_core/core/registry.dart';
+import 'package:eliud_core/tools/component/component_spec.dart';
 
 import '../extensions/policy_presentation_component.dart';
+import '../editors/policy_presentation_component_editor.dart';
+import 'policy_presentation_component_selector.dart';
 import 'package:eliud_pkg_etc/model/internal_component.dart';
 
 
@@ -31,6 +34,9 @@ class ComponentRegistry {
     Registry.registry()!.register(componentName: "eliud_pkg_etc_internalWidgets", componentConstructor: ListComponentFactory());
     Registry.registry()!.addDropDownSupporter("policyPresentations", DropdownButtonComponentFactory());
     Registry.registry()!.register(componentName: "policyPresentations", componentConstructor: PolicyPresentationComponentConstructorDefault());
+    Registry.registry()!.addComponentSpec('eliud_pkg_etc', [
+      ComponentSpec('policyPresentations', PolicyPresentationComponentConstructorDefault(), PolicyPresentationComponentSelector(), PolicyPresentationComponentEditorConstructor(), ), 
+    ]);
 
   }
 }
