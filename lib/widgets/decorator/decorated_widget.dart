@@ -51,31 +51,31 @@ class DecoratedWidget extends StatefulWidget {
 }
 
 class _DecoratedWidgetState extends State<DecoratedWidget> with CanRefresh {
-
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
         valueListenable: widget.isCreationMode,
         builder: (context, value, child) {
-            return CreatorButton(
-                icon: ((widget.isCreationMode != null) && (widget.isCreationMode.value)) ?
-                widget.iconOn : widget.iconOff,
-                borderColor: widget.bordercolor,
-                textColor: widget.textColor,
-                backgroundColor: widget.backgroundColor,
-                ensureHeight: widget.ensureHeight,
-                initialPosition: widget.initialPosition,
-                toDecorateKey: widget.originalWidgetKey,
-                toDecorate: widget.createOriginalWidget(),
-                label: widget.label,
-                doIt: () => widget.isCreationMode.value = !widget.isCreationMode.value);
-          }
-        );
+          return CreatorButton(
+              icon: ((widget.isCreationMode != null) &&
+                      (widget.isCreationMode.value))
+                  ? widget.iconOn
+                  : widget.iconOff,
+              borderColor: widget.bordercolor,
+              textColor: widget.textColor,
+              backgroundColor: widget.backgroundColor,
+              ensureHeight: widget.ensureHeight,
+              initialPosition: widget.initialPosition,
+              toDecorateKey: widget.originalWidgetKey,
+              toDecorate: widget.createOriginalWidget(),
+              label: widget.label,
+              onTap: () =>
+                  widget.isCreationMode.value = !widget.isCreationMode.value);
+        });
   }
 
   @override
   void refresh() {
-    setState(() {
-    });
+    setState(() {});
   }
 }

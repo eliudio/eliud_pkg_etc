@@ -4,7 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum InitialPosition {
-  CenterTop, RightTop, RightBottom, CenterCenter, LeftCenter, LeftTop, LeftBottom // Horizontal X Vertical
+  CenterTop,
+  RightTop,
+  RightBottom,
+  CenterCenter,
+  LeftCenter,
+  LeftTop,
+  LeftBottom // Horizontal X Vertical
 }
 
 class CreatorButton extends StatefulWidget {
@@ -13,7 +19,8 @@ class CreatorButton extends StatefulWidget {
   final String? label;
   final Widget toDecorate;
   final Key? toDecorateKey;
-  final Function() doIt;
+  final GestureTapDownCallback? onTapDown;
+  final GestureTapCallback? onTap;
   final bool ensureHeight;
   final Color backgroundColor;
   final Color borderColor;
@@ -25,7 +32,8 @@ class CreatorButton extends StatefulWidget {
       required this.initialPosition,
       required this.toDecorateKey,
       required this.toDecorate,
-      required this.doIt,
+      this.onTap,
+      this.onTapDown,
       required this.ensureHeight,
       required this.backgroundColor,
       required this.icon,
@@ -58,8 +66,7 @@ class _CreatorButtonState extends State<CreatorButton> {
 
   void _getWidgetInfo(_) {
     var key = widget.toDecorateKey;
-    if (key is GlobalKey)
-    {
+    if (key is GlobalKey) {
       var renderObject = key.currentContext?.findRenderObject();
       var renderButtonObject = _buttonKey.currentContext?.findRenderObject();
       if ((renderObject is RenderBox) && (renderButtonObject is RenderBox)) {
@@ -75,32 +82,27 @@ class _CreatorButtonState extends State<CreatorButton> {
         setState(() {
           switch (widget.initialPosition) {
             case InitialPosition.CenterTop:
-              position = Offset(
-                  (sizeBox.width - width!) / 2, 0);
+              position = Offset((sizeBox.width - width!) / 2, 0);
               break;
             case InitialPosition.CenterCenter:
               position = Offset(
                   (sizeBox.width - width!) / 2, (sizeBox.height - height!) / 2);
               break;
             case InitialPosition.RightTop:
-              position = Offset(
-                  (sizeBox.width - width!), 0);
+              position = Offset((sizeBox.width - width!), 0);
               break;
             case InitialPosition.RightBottom:
-              position = Offset(
-                  (sizeBox.width - width!), sizeBox.height - height!);
+              position =
+                  Offset((sizeBox.width - width!), sizeBox.height - height!);
               break;
             case InitialPosition.LeftCenter:
-              position = Offset(
-                  0, (sizeBox.height - height!) / 2);
+              position = Offset(0, (sizeBox.height - height!) / 2);
               break;
             case InitialPosition.LeftTop:
-              position = Offset(
-                  0, 20);
+              position = Offset(0, 20);
               break;
             case InitialPosition.LeftBottom:
-              position = Offset(
-                  0, sizeBox.height - height!);
+              position = Offset(0, sizeBox.height - height!);
               break;
           }
         });
@@ -113,6 +115,7 @@ class _CreatorButtonState extends State<CreatorButton> {
   @override
   Widget build(BuildContext context) {
     var button;
+
     if (widget.label == null) {
       button = Container(
           height: CreatorButton.BUTTON_HEIGHT,
@@ -120,27 +123,33 @@ class _CreatorButtonState extends State<CreatorButton> {
           decoration: BoxDecoration(
               color: widget.backgroundColor,
               border: Border.all(width: 1, color: widget.borderColor)),
-          child: GestureDetector(onTap: () => _doIt(), child: widget.icon));
+          child: GestureDetector(
+              onTap: widget.onTap,
+              onTapDown: widget.onTapDown,
+              child: widget.icon));
     } else {
-      button = Container(
+      button = GestureDetector(
+          onTap: widget.onTap,
+          onTapDown: widget.onTapDown,
+          child: Container(
           height: CreatorButton.BUTTON_HEIGHT,
           decoration: BoxDecoration(
               border: Border.all(width: 1, color: widget.borderColor)),
           child: ElevatedButton.icon(
-              onPressed: () => _doIt(),
+              onPressed: widget.onTap,
               icon: widget.icon,
               style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(widget.backgroundColor),
+                  MaterialStateProperty.all(widget.backgroundColor),
                   padding: MaterialStateProperty.all(EdgeInsets.all(5)),
                   textStyle:
-                      MaterialStateProperty.all(TextStyle(fontSize: 30))),
+                  MaterialStateProperty.all(TextStyle(fontSize: 30))),
               label: Text(widget.label!,
                   maxLines: 1,
                   style: TextStyle(
                       fontSize: 10.0,
                       fontWeight: FontWeight.normal,
-                      color: widget.textColor))));
+                      color: widget.textColor)))));
     }
 
     var draggable = Draggable(
@@ -169,9 +178,5 @@ class _CreatorButtonState extends State<CreatorButton> {
       position = Offset(min(max(0, newPosition.dx), size.width - width!),
           min(max(0, newPosition.dy), size.height - height!));
     }
-  }
-
-  void _doIt() {
-    widget.doIt();
   }
 }
