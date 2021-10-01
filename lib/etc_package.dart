@@ -10,6 +10,8 @@ import 'package:eliud_pkg_etc/model/repository_singleton.dart';
 import 'package:eliud_pkg_etc/model/component_registry.dart';
 
 abstract class EtcPackage extends Package {
+  EtcPackage() : super('eliud_pkg_etc');
+
   @override
   BlocProvider? createMainBloc(NavigatorBloc navigatorBloc, AccessBloc accessBloc) => null;
 
