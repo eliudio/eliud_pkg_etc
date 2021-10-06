@@ -41,14 +41,14 @@ class PolicyPresentationModel {
   // This is the identifier of the app to which this belongs
   String? appId;
   String? description;
-  MemberMediumModel? policy;
+  PlatformMediumModel? policy;
   ConditionsSimpleModel? conditions;
 
   PolicyPresentationModel({this.documentID, this.appId, this.description, this.policy, this.conditions, })  {
     assert(documentID != null);
   }
 
-  PolicyPresentationModel copyWith({String? documentID, String? appId, String? description, MemberMediumModel? policy, ConditionsSimpleModel? conditions, }) {
+  PolicyPresentationModel copyWith({String? documentID, String? appId, String? description, PlatformMediumModel? policy, ConditionsSimpleModel? conditions, }) {
     return PolicyPresentationModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, policy: policy ?? this.policy, conditions: conditions ?? this.conditions, );
   }
 
@@ -95,13 +95,13 @@ class PolicyPresentationModel {
   static Future<PolicyPresentationModel?> fromEntityPlus(String documentID, PolicyPresentationEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    MemberMediumModel? policyHolder;
+    PlatformMediumModel? policyHolder;
     if (entity.policyId != null) {
       try {
-          policyHolder = await memberMediumRepository(appId: appId)!.get(entity.policyId);
+          policyHolder = await platformMediumRepository(appId: appId)!.get(entity.policyId);
       } on Exception catch(e) {
         print('Error whilst trying to initialise policy');
-        print('Error whilst retrieving memberMedium with id ${entity.policyId}');
+        print('Error whilst retrieving platformMedium with id ${entity.policyId}');
         print('Exception: $e');
       }
     }

@@ -202,7 +202,7 @@ class _MyPolicyPresentationFormState extends State<MyPolicyPresentationForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(id: "memberMediums", value: _policy, trigger: _onPolicySelected, optional: true),
+                DropdownButtonComponentFactory().createNew(id: "platformMediums", value: _policy, trigger: _onPolicySelected, optional: true),
           );
 
 

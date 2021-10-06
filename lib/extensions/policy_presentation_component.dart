@@ -39,7 +39,7 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
       return Text('Policy not in pdf format. Not supported');
 
     return FutureBuilder<List<String?>>(
-        future: ChainOfMediumModels.getChainOfUrls(
+        future: ChainOfMediumModels.getPlatformMediumChainOfUrls(
             policyPresentationModel.appId!, policyPresentationModel.policy!),
         builder: (context, snapshot) {
           if ((snapshot.hasData) && (snapshot.data != null)) {

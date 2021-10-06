@@ -128,10 +128,10 @@ class PolicyPresentationCache implements PolicyPresentationRepository {
 
   static Future<PolicyPresentationModel> refreshRelations(PolicyPresentationModel model) async {
 
-    MemberMediumModel? policyHolder;
+    PlatformMediumModel? policyHolder;
     if (model.policy != null) {
       try {
-        await memberMediumRepository(appId: model.appId)!.get(model.policy!.documentID).then((val) {
+        await platformMediumRepository(appId: model.appId)!.get(model.policy!.documentID).then((val) {
           policyHolder = val;
         }).catchError((error) {});
       } catch (_) {}
