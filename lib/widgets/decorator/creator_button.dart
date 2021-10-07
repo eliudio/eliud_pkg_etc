@@ -49,7 +49,7 @@ class CreatorButton extends StatefulWidget {
 }
 
 class _CreatorButtonState extends State<CreatorButton> {
-  Offset? position = Offset(-1000, -1000);
+  Offset? position = Offset(0, 0);
   double? width;
   double? height;
 
@@ -166,7 +166,8 @@ class _CreatorButtonState extends State<CreatorButton> {
     return Stack(children: [
       widget.toDecorate,
       if (widget.ensureHeight) Container(height: height),
-      Positioned(left: position!.dx, top: position!.dy, child: draggable),
+      if (position != null) Positioned(left: position!.dx, top: position!.dy, child: draggable),
+      if (position == null) Positioned(left: 0, top: 0, child: draggable),
     ]);
   }
 
@@ -175,8 +176,13 @@ class _CreatorButtonState extends State<CreatorButton> {
     if ((renderObject != null) && (renderObject is RenderBox)) {
       var size = renderObject.size;
       var newPosition = renderObject.globalToLocal(details.offset);
-      position = Offset(min(max(0, newPosition.dx), size.width - width!),
-          min(max(0, newPosition.dy), size.height - height!));
+      if ((width != null) && (height != null)) {
+        position = Offset(min(max(0, newPosition.dx), size.width - width!),
+            min(max(0, newPosition.dy), size.height - height!));
+      } else {
+        position = Offset(min(max(0, newPosition.dx), size.width - 30),
+            min(max(0, newPosition.dy), size.height - 20));
+      }
     }
   }
 }
