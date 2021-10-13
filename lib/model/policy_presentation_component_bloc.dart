@@ -25,42 +25,30 @@ import 'package:flutter/services.dart';
 
 class PolicyPresentationComponentBloc extends Bloc<PolicyPresentationComponentEvent, PolicyPresentationComponentState> {
   final PolicyPresentationRepository? policyPresentationRepository;
+  StreamSubscription? _policyPresentationSubscription;
+
+  Stream<PolicyPresentationComponentState> _mapLoadPolicyPresentationComponentUpdateToState(String documentId) async* {
+    _policyPresentationSubscription?.cancel();
+    _policyPresentationSubscription = policyPresentationRepository!.listenTo(documentId, (value) {
+      if (value != null) add(PolicyPresentationComponentUpdated(value: value!));
+    });
+  }
 
   PolicyPresentationComponentBloc({ this.policyPresentationRepository }): super(PolicyPresentationComponentUninitialized());
+
   @override
   Stream<PolicyPresentationComponentState> mapEventToState(PolicyPresentationComponentEvent event) async* {
     final currentState = state;
     if (event is FetchPolicyPresentationComponent) {
-      try {
-        if (currentState is PolicyPresentationComponentUninitialized) {
-          bool permissionDenied = false;
-          final model = await policyPresentationRepository!.get(event.id, onError: (error) {
-            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
-              permissionDenied = true;
-            }
-          });
-          if (permissionDenied) {
-            yield PolicyPresentationComponentPermissionDenied();
-          } else {
-            if (model != null) {
-              yield PolicyPresentationComponentLoaded(value: model);
-            } else {
-              String? id = event.id;
-              yield PolicyPresentationComponentError(
-                  message: "PolicyPresentation with id = '$id' not found");
-            }
-          }
-          return;
-        }
-      } catch (_) {
-        yield PolicyPresentationComponentError(message: "Unknown error whilst retrieving PolicyPresentation");
-      }
+      yield* _mapLoadPolicyPresentationComponentUpdateToState(event.id!);
+    } else if (event is PolicyPresentationComponentUpdated) {
+      yield PolicyPresentationComponentLoaded(value: event.value);
     }
   }
 
   @override
   Future<void> close() {
+    _policyPresentationSubscription?.cancel();
     return super.close();
   }
 

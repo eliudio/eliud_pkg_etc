@@ -14,6 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
+import 'package:eliud_pkg_etc/model/policy_presentation_model.dart';
 
 abstract class PolicyPresentationComponentEvent extends Equatable {
   @override
@@ -25,4 +26,11 @@ class FetchPolicyPresentationComponent extends PolicyPresentationComponentEvent 
 
   FetchPolicyPresentationComponent({ this.id });
 }
+
+class PolicyPresentationComponentUpdated extends PolicyPresentationComponentEvent {
+  final PolicyPresentationModel value;
+
+  PolicyPresentationComponentUpdated({ required this.value });
+}
+
 

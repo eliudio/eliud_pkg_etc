@@ -7,6 +7,7 @@ enum InitialPosition {
   CenterTop,
   RightTop,
   RightBottom,
+  RightAlmostBottom,
   CenterCenter,
   LeftCenter,
   LeftTop,
@@ -94,6 +95,10 @@ class _CreatorButtonState extends State<CreatorButton> {
             case InitialPosition.RightBottom:
               position =
                   Offset((sizeBox.width - width!), sizeBox.height - height!);
+              break;
+            case InitialPosition.RightAlmostBottom:
+              position =
+                  Offset((sizeBox.width - width!), sizeBox.height - kBottomNavigationBarHeight);
               break;
             case InitialPosition.LeftCenter:
               position = Offset(0, (sizeBox.height - height!) / 2);
