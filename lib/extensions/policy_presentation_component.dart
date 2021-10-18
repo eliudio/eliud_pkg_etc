@@ -1,7 +1,9 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
+import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
+import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_core/tools/etc.dart';
@@ -38,7 +40,7 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
       BuildContext context, PolicyPresentationModel? policyPresentationModel) {
     if (policyPresentationModel!.policy == null)
       return Text('Policy not available');
-    if (policyPresentationModel.policy!.mediumType != MediumType.Pdf)
+    if (policyPresentationModel.policy!.mediumType != PlatformMediumType.Pdf)
       return Text('Policy not in pdf format. Not supported');
 
     return FutureBuilder<List<String?>>(
@@ -46,14 +48,18 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
             policyPresentationModel.appId!, policyPresentationModel.policy!),
         builder: (context, snapshot) {
           if ((snapshot.hasData) && (snapshot.data != null)) {
-            return AlbumSlider(
-              title: 'policyPresentationModel.title',
-              slideImageProvider: UrlSlideImageProvider(
-                  ListHelper.getStringList(snapshot.data!)),
-              initialPage: 0,
-              withCloseButton: false,
-              withNextPrevButton: true,
-            );
+            if (snapshot.data!.isNotEmpty) {
+              return AlbumSlider(
+                title: 'policyPresentationModel.title',
+                slideImageProvider: UrlSlideImageProvider(
+                    ListHelper.getStringList(snapshot.data!)),
+                initialPage: 0,
+                withCloseButton: false,
+                withNextPrevButton: true,
+              );
+            } else {
+              return text(context, 'No contents');
+            }
           } else {
             return progressIndicator(context);
           }

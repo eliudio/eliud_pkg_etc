@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 /*
- * The DecoratedAppBarWidget can be used to extend the app bar. It's used for example within eliud_decor_*
- * packages to add an extra icon.
+ * The DecoratedAppBarWidget can be used to extend the app bar. It's used for example within eliud_pkg_create
+ * to add an extra icon.
  *
  * The DecoratedAppBarWidget adds an icon to the app bar in case we're logged in as the owner of the app.
  * This icon allows to switch on / off the creator mode. The isCreationMode ValueNotifier is/should be used

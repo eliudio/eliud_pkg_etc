@@ -11,8 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 /*
- * The DecoratedAppBarWidget2 can be used to extend the app bar. It's used for example within eliud_decor_*
- * packages to add an extra icon.
+ * The DecoratedAppBarWidget2 can be used to extend the app bar. It's used for example within eliud_pkg_create to add an extra icon.
  *
  * The DecoratedAppBarWidget2 adds an icon to the app bar in case we're logged in as the owner of the app.
  * This icon allows to run an action
