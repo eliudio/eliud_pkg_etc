@@ -30,7 +30,7 @@ class PolicyPresentationComponentBloc extends Bloc<PolicyPresentationComponentEv
   Stream<PolicyPresentationComponentState> _mapLoadPolicyPresentationComponentUpdateToState(String documentId) async* {
     _policyPresentationSubscription?.cancel();
     _policyPresentationSubscription = policyPresentationRepository!.listenTo(documentId, (value) {
-      if (value != null) add(PolicyPresentationComponentUpdated(value: value!));
+      if (value != null) add(PolicyPresentationComponentUpdated(value: value));
     });
   }
 
