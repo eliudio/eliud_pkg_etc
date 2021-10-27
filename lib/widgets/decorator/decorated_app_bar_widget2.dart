@@ -55,7 +55,7 @@ class _DecoratedAppBarWidgetState2 extends State<DecoratedAppBarWidget2> {
         text: 'Lock ' + widget.label,
         description: '',
         icon: widget.iconModel,
-        action: FunctionToRun(widget.model.appId, actionToRun: () {
+        action: FunctionToRun(widget.model.appId!, actionToRun: () {
           widget.action();
         }));
   }

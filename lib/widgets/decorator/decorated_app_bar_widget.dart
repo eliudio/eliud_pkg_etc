@@ -61,7 +61,7 @@ class _DecoratedAppBarWidgetState extends State<DecoratedAppBarWidget> {
         text: 'Lock ' + widget.label,
         description: '',
         icon: widget.lockedIconModel,
-        action: FunctionToRun(widget.model.appId, actionToRun: () {
+        action: FunctionToRun(widget.model.appId!, actionToRun: () {
           setState(() {
             widget.isCreationMode.value = false;
           });
@@ -74,7 +74,7 @@ class _DecoratedAppBarWidgetState extends State<DecoratedAppBarWidget> {
         text: 'Lock Open ' + widget.label,
         description: '',
         icon: widget.unlockedIconModel,
-        action: FunctionToRun(widget.model.appId, actionToRun: () {
+        action: FunctionToRun(widget.model.appId!, actionToRun: () {
           setState(() {
             widget.isCreationMode.value = true;
           });
