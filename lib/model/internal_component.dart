@@ -15,7 +15,7 @@
 
 
 import 'package:eliud_core/tools/component/component_constructor.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -109,7 +109,7 @@ class ListComponent extends StatelessWidget with HasFab {
       providers: [
         BlocProvider<PolicyPresentationListBloc>(
           create: (context) => PolicyPresentationListBloc(
-            policyPresentationRepository: policyPresentationRepository(appId: AccessBloc.appId(context))!,
+            policyPresentationRepository: policyPresentationRepository(appId: AccessBloc.currentAppId(context))!,
           )..add(LoadPolicyPresentationList()),
         )
       ],
@@ -143,7 +143,7 @@ class DropdownButtonComponent extends StatelessWidget {
       providers: [
         BlocProvider<PolicyPresentationListBloc>(
           create: (context) => PolicyPresentationListBloc(
-            policyPresentationRepository: policyPresentationRepository(appId: AccessBloc.appId(context))!,
+            policyPresentationRepository: policyPresentationRepository(appId: AccessBloc.currentAppId(context))!,
           )..add(LoadPolicyPresentationList()),
         )
       ],

@@ -1,4 +1,4 @@
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
@@ -69,6 +69,6 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
   @override
   PolicyPresentationRepository getPolicyPresentationRepository(
       BuildContext context) {
-    return policyPresentationRepository(appId: AccessBloc.appId(context))!;
+    return policyPresentationRepository(appId: AccessBloc.currentAppId(context))!;
   }
 }
