@@ -3,12 +3,9 @@ import 'package:eliud_core/model/body_component_model.dart';
 import 'package:eliud_core/model/dialog_model.dart';
 import 'package:eliud_core/model/drawer_model.dart';
 import 'package:eliud_core/model/page_model.dart';
-import 'package:eliud_pkg_etc/widgets/decorator/can_refresh.dart';
 import 'package:eliud_pkg_etc/widgets/decorator/creator_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
-typedef StateCallBack = void Function(CanRefresh canRefresh);
 
 /*
  * This is a replacement widget to replace DecoratedAppBarWidget and DecoratedAppBarWidget2
@@ -50,7 +47,7 @@ class DecoratedWidget extends StatefulWidget {
   }
 }
 
-class _DecoratedWidgetState extends State<DecoratedWidget> with CanRefresh {
+class _DecoratedWidgetState extends State<DecoratedWidget> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
