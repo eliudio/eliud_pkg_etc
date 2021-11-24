@@ -13,9 +13,6 @@
 
 */
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eliud_core/style/style_registry.dart';
 
 import 'package:eliud_pkg_etc/model/policy_presentation_component_bloc.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_component_event.dart';
@@ -23,18 +20,26 @@ import 'package:eliud_pkg_etc/model/policy_presentation_model.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_repository.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_component_state.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/style/style_registry.dart';
+import 'abstract_repository_singleton.dart';
+import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
+
 abstract class AbstractPolicyPresentationComponent extends StatelessWidget {
   static String componentName = "policyPresentations";
-  final String? policyPresentationID;
+  final String theAppId;
+  final String policyPresentationId;
 
-  AbstractPolicyPresentationComponent({Key? key, this.policyPresentationID}): super(key: key);
+  AbstractPolicyPresentationComponent({Key? key, required this.theAppId, required this.policyPresentationId}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PolicyPresentationComponentBloc> (
           create: (context) => PolicyPresentationComponentBloc(
-            policyPresentationRepository: getPolicyPresentationRepository(context))
-        ..add(FetchPolicyPresentationComponent(id: policyPresentationID)),
+            policyPresentationRepository: policyPresentationRepository(appId: theAppId)!)
+        ..add(FetchPolicyPresentationComponent(id: policyPresentationId)),
       child: _policyPresentationBlockBuilder(context),
     );
   }
@@ -43,7 +48,7 @@ abstract class AbstractPolicyPresentationComponent extends StatelessWidget {
     return BlocBuilder<PolicyPresentationComponentBloc, PolicyPresentationComponentState>(builder: (context, state) {
       if (state is PolicyPresentationComponentLoaded) {
         if (state.value == null) {
-          return alertWidget(title: 'Error', content: 'No PolicyPresentation defined');
+          return AlertWidget(title: "Error", content: 'No PolicyPresentation defined');
         } else {
           return yourWidget(context, state.value);
         }
@@ -54,7 +59,7 @@ abstract class AbstractPolicyPresentationComponent extends StatelessWidget {
           size: 30.0,
         );
       } else if (state is PolicyPresentationComponentError) {
-        return alertWidget(title: 'Error', content: state.message);
+        return AlertWidget(title: 'Error', content: state.message);
       } else {
         return Center(
           child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicatorStyle().progressIndicator(context),
@@ -63,8 +68,6 @@ abstract class AbstractPolicyPresentationComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, PolicyPresentationModel? value);
-  Widget alertWidget({ title: String, content: String});
-  PolicyPresentationRepository getPolicyPresentationRepository(BuildContext context);
+  Widget yourWidget(BuildContext context, PolicyPresentationModel value);
 }
 

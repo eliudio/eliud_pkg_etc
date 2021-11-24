@@ -35,9 +35,9 @@ class PolicyPresentationComponentPermissionDenied extends PolicyPresentationComp
 }
 
 class PolicyPresentationComponentLoaded extends PolicyPresentationComponentState {
-  final PolicyPresentationModel? value;
+  final PolicyPresentationModel value;
 
-  const PolicyPresentationComponentLoaded({ this.value });
+  const PolicyPresentationComponentLoaded({ required this.value });
 
   PolicyPresentationComponentLoaded copyWith({ PolicyPresentationModel? copyThis }) {
     return PolicyPresentationComponentLoaded(value: copyThis ?? this.value);

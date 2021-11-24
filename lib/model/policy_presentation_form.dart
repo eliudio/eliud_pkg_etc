@@ -74,6 +74,7 @@ class PolicyPresentationForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<PolicyPresentationFormBloc >(
             create: (context) => PolicyPresentationFormBloc(AccessBloc.currentAppId(context),
@@ -143,6 +144,7 @@ class _MyPolicyPresentationFormState extends State<MyPolicyPresentationForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<PolicyPresentationFormBloc, PolicyPresentationFormState>(builder: (context, state) {
       if (state is PolicyPresentationFormUninitialized) return Center(
@@ -203,7 +205,7 @@ class _MyPolicyPresentationFormState extends State<MyPolicyPresentationForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(id: "platformMediums", value: _policy, trigger: _onPolicySelected, optional: true),
+                DropdownButtonComponentFactory().createNew(appId: appId, id: "platformMediums", value: _policy, trigger: _onPolicySelected, optional: true),
           );
 
 

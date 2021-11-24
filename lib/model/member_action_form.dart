@@ -69,6 +69,7 @@ class MemberActionForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<MemberActionFormBloc >(
             create: (context) => MemberActionFormBloc(AccessBloc.currentAppId(context),
@@ -134,6 +135,7 @@ class _MyMemberActionFormState extends State<MyMemberActionForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<MemberActionFormBloc, MemberActionFormState>(builder: (context, state) {
       if (state is MemberActionFormUninitialized) return Center(

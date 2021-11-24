@@ -19,8 +19,8 @@ import 'package:flutter/material.dart';
 class PolicyPresentationComponentConstructorDefault
     implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
-    return PolicyPresentation(key: key, id: id);
+  Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
+    return PolicyPresentation(key: key, appId: appId, id: id);
   }
 
   @override
@@ -28,12 +28,7 @@ class PolicyPresentationComponentConstructorDefault
 }
 
 class PolicyPresentation extends AbstractPolicyPresentationComponent {
-  PolicyPresentation({Key? key, required String id}) : super(key: key, policyPresentationID: id);
-
-  @override
-  Widget alertWidget({title = String, content = String}) {
-    return AlertWidget(title: title, content: content);
-  }
+  PolicyPresentation({Key? key, required String appId, required String id}) : super(key: key, theAppId: appId, policyPresentationId: id);
 
   @override
   Widget yourWidget(
@@ -64,11 +59,5 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
             return progressIndicator(context);
           }
         });
-  }
-
-  @override
-  PolicyPresentationRepository getPolicyPresentationRepository(
-      BuildContext context) {
-    return policyPresentationRepository(appId: AccessBloc.currentAppId(context))!;
   }
 }
