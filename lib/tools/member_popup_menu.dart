@@ -1,3 +1,4 @@
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_dialog.dart';
 import 'package:eliud_core/style/style_registry.dart';
@@ -25,7 +26,7 @@ class MemberPopupMenu {
     var contents = ListView(
         shrinkWrap: true, physics: ScrollPhysics(), children: _buttons);
 
-    openComplexDialog(context, title: "Member Actions",
+    openComplexDialog(context, AccessBloc.currentAppId(context) + '/memberactions', title: "Member Actions",
         child: contents);
 
   }
