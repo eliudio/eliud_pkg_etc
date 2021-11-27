@@ -35,10 +35,11 @@ class PolicyPresentationComponentSelector extends ComponentSelector {
   @override
   Widget createSelectWidget(BuildContext context, double height,
       SelectComponent selected, editorConstructor) {
+    var appId = AccessBloc.currentAppId(context);
     return BlocProvider<PolicyPresentationListBloc>(
           create: (context) => PolicyPresentationListBloc(
             policyPresentationRepository:
-                policyPresentationRepository(appId: AccessBloc.currentAppId(context))!,
+                policyPresentationRepository(appId: appId)!,
           )..add(LoadPolicyPresentationList()),
       child: SelectPolicyPresentationWidget(
           height: height,
