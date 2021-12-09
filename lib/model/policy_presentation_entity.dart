@@ -26,7 +26,7 @@ class PolicyPresentationEntity {
   final String? appId;
   final String? description;
   final String? policyId;
-  final ConditionsSimpleEntity? conditions;
+  final StorageConditionsEntity? conditions;
 
   PolicyPresentationEntity({this.appId, this.description, this.policyId, this.conditions, });
 
@@ -45,7 +45,7 @@ class PolicyPresentationEntity {
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
 
     return PolicyPresentationEntity(
       appId: map['appId'], 

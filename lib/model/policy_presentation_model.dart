@@ -42,13 +42,13 @@ class PolicyPresentationModel {
   String? appId;
   String? description;
   PlatformMediumModel? policy;
-  ConditionsSimpleModel? conditions;
+  StorageConditionsModel? conditions;
 
   PolicyPresentationModel({this.documentID, this.appId, this.description, this.policy, this.conditions, })  {
     assert(documentID != null);
   }
 
-  PolicyPresentationModel copyWith({String? documentID, String? appId, String? description, PlatformMediumModel? policy, ConditionsSimpleModel? conditions, }) {
+  PolicyPresentationModel copyWith({String? documentID, String? appId, String? description, PlatformMediumModel? policy, StorageConditionsModel? conditions, }) {
     return PolicyPresentationModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, policy: policy ?? this.policy, conditions: conditions ?? this.conditions, );
   }
 
@@ -88,7 +88,7 @@ class PolicyPresentationModel {
           appId: entity.appId, 
           description: entity.description, 
           conditions: 
-            ConditionsSimpleModel.fromEntity(entity.conditions), 
+            StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -113,7 +113,7 @@ class PolicyPresentationModel {
           description: entity.description, 
           policy: policyHolder, 
           conditions: 
-            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
+            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

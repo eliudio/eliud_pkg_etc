@@ -108,7 +108,7 @@ class ChangedPolicyPresentationPolicy extends PolicyPresentationFormEvent {
 }
 
 class ChangedPolicyPresentationConditions extends PolicyPresentationFormEvent {
-  final ConditionsSimpleModel? value;
+  final StorageConditionsModel? value;
 
   ChangedPolicyPresentationConditions({this.value});
 
