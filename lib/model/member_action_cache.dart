@@ -118,7 +118,12 @@ class MemberActionCache implements MemberActionRepository {
 
   @override
   StreamSubscription<MemberActionModel?> listenTo(String documentId, MemberActionChanged changed) {
-    return reference.listenTo(documentId, changed);
+    return reference.listenTo(documentId, ((value) {
+      if (value != null) {
+        fullCache[value.documentID] = value;
+      }
+      changed(value);
+    }));
   }
 
   static Future<MemberActionModel> refreshRelations(MemberActionModel model) async {
