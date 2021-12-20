@@ -28,7 +28,7 @@ class RepositorySingleton extends AbstractRepositorySingleton {
     var _policyPresentationRepository = HashMap<String, PolicyPresentationRepository>();
 
     PolicyPresentationRepository? policyPresentationRepository(String? appId) {
-      if ((appId != null) && (_policyPresentationRepository[appId] == null)) _policyPresentationRepository[appId] = PolicyPresentationCache(PolicyPresentationFirestore(appRepository()!.getSubCollection(appId, 'policypresentation'), appId));
+      if ((appId != null) && (_policyPresentationRepository[appId] == null)) _policyPresentationRepository[appId] = PolicyPresentationCache(PolicyPresentationFirestore(() => appRepository()!.getSubCollection(appId, 'policypresentation'), appId));
       return _policyPresentationRepository[appId];
     }
 
