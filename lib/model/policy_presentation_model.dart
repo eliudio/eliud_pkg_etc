@@ -80,7 +80,7 @@ class PolicyPresentationModel {
     );
   }
 
-  static PolicyPresentationModel? fromEntity(String documentID, PolicyPresentationEntity? entity) {
+  static Future<PolicyPresentationModel?> fromEntity(String documentID, PolicyPresentationEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return PolicyPresentationModel(
@@ -88,7 +88,7 @@ class PolicyPresentationModel {
           appId: entity.appId, 
           description: entity.description, 
           conditions: 
-            StorageConditionsModel.fromEntity(entity.conditions), 
+            await StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 

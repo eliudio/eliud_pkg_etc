@@ -1,5 +1,6 @@
 import 'package:eliud_core/decoration/decoration.dart' as deco;
 import 'package:eliud_core/model/app_bar_model.dart';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/model/decoration_color_model.dart';
 import 'package:eliud_core/model/icon_model.dart';
@@ -17,6 +18,7 @@ import 'package:flutter/src/widgets/framework.dart';
  * This icon allows to run an action
  */
 class DecoratedAppBarWidget2 extends StatefulWidget {
+  final AppModel app;
   final deco.CreateWidget createOriginalAppBar;
   final String label;
   AppBarModel model;
@@ -26,6 +28,7 @@ class DecoratedAppBarWidget2 extends StatefulWidget {
 
   DecoratedAppBarWidget2({
     Key? key,
+    required this.app,
     required this.label,
     required this.appBarKey,
     required this.model,
@@ -55,7 +58,7 @@ class _DecoratedAppBarWidgetState2 extends State<DecoratedAppBarWidget2> {
         text: 'Lock ' + widget.label,
         description: '',
         icon: widget.iconModel,
-        action: FunctionToRun(widget.model.appId!, actionToRun: () {
+        action: FunctionToRun(widget.app, actionToRun: () {
           widget.action();
         }));
   }

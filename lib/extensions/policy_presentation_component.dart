@@ -1,5 +1,6 @@
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
@@ -19,16 +20,16 @@ import 'package:flutter/material.dart';
 class PolicyPresentationComponentConstructorDefault
     implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
-    return PolicyPresentation(key: key, appId: appId, id: id);
+  Widget createNew({Key? key, required AppModel app, required String id, Map<String, dynamic>? parameters}) {
+    return PolicyPresentation(key: key, app: app, id: id);
   }
 
   @override
-  Future<dynamic> getModel({required String appId, required String id}) async => await policyPresentationRepository(appId: appId)!.get(id);
+  Future<dynamic> getModel({required AppModel app, required String id}) async => await policyPresentationRepository(appId: app.documentID!)!.get(id);
 }
 
 class PolicyPresentation extends AbstractPolicyPresentationComponent {
-  PolicyPresentation({Key? key, required String appId, required String id}) : super(key: key, theAppId: appId, policyPresentationId: id);
+  PolicyPresentation({Key? key, required AppModel app, required String id}) : super(key: key, app: app, policyPresentationId: id);
 
   @override
   Widget yourWidget(
@@ -44,7 +45,7 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
         builder: (context, snapshot) {
           if ((snapshot.hasData) && (snapshot.data != null)) {
             if (snapshot.data!.isNotEmpty) {
-              return AlbumSlider(
+              return AlbumSlider(app: app,
                 title: 'policyPresentationModel.title',
                 slideImageProvider: UrlSlideImageProvider(
                     ListHelper.getStringList(snapshot.data!)),
@@ -53,10 +54,10 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
                 withNextPrevButton: true,
               );
             } else {
-              return text(context, 'No contents');
+              return text(app, context, 'No contents');
             }
           } else {
-            return progressIndicator(context);
+            return progressIndicator(app, context);
           }
         });
   }

@@ -1,5 +1,6 @@
 import 'package:eliud_core/decoration/decoration.dart' as deco;
 import 'package:eliud_core/model/app_bar_model.dart';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/model/decoration_color_model.dart';
 import 'package:eliud_core/model/icon_model.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/src/widgets/framework.dart';
  * to propagate this switch to other widgets
  */
 class DecoratedAppBarWidget extends StatefulWidget {
+  final AppModel app;
   final ValueNotifier<bool> isCreationMode;
   final deco.CreateWidget createOriginalAppBar;
   final String label;
@@ -29,6 +31,7 @@ class DecoratedAppBarWidget extends StatefulWidget {
 
   DecoratedAppBarWidget({
     Key? key,
+    required this.app,
     required this.label,
     required this.isCreationMode,
     required this.appBarKey,
@@ -61,7 +64,7 @@ class _DecoratedAppBarWidgetState extends State<DecoratedAppBarWidget> {
         text: 'Lock ' + widget.label,
         description: '',
         icon: widget.lockedIconModel,
-        action: FunctionToRun(widget.model.appId!, actionToRun: () {
+        action: FunctionToRun(widget.app, actionToRun: () {
           setState(() {
             widget.isCreationMode.value = false;
           });
@@ -74,7 +77,7 @@ class _DecoratedAppBarWidgetState extends State<DecoratedAppBarWidget> {
         text: 'Lock Open ' + widget.label,
         description: '',
         icon: widget.unlockedIconModel,
-        action: FunctionToRun(widget.model.appId!, actionToRun: () {
+        action: FunctionToRun(widget.app, actionToRun: () {
           setState(() {
             widget.isCreationMode.value = true;
           });

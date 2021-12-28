@@ -42,7 +42,7 @@
       "fieldName": "action",
       "group": "action",
       "fieldType": "Action",
-      "bespokeFormField": "ActionField(AccessBloc.currentAppId(context), state.value!.action, _onActionChanged)"
+      "bespokeFormField": "ActionField(widget.app, state.value!.action, _onActionChanged)"
     }
   ],
   "groups": [
@@ -56,7 +56,7 @@
     }
   ],
   "listFields": {
-    "title": "value.text != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.text!)) : Container()",
-    "subTitle": "value.description != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.description!)) : Container()"
+    "title": "value.text != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.text!)) : Container()",
+    "subTitle": "value.description != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.description!)) : Container()"
   }
 }

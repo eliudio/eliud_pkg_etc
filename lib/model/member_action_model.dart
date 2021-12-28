@@ -71,7 +71,7 @@ class MemberActionModel {
     );
   }
 
-  static MemberActionModel? fromEntity(String documentID, MemberActionEntity? entity) {
+  static Future<MemberActionModel?> fromEntity(String documentID, MemberActionEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return MemberActionModel(
@@ -79,7 +79,7 @@ class MemberActionModel {
           text: entity.text, 
           description: entity.description, 
           action: 
-            ActionModel.fromEntity(entity.action), 
+            await ActionModel.fromEntity(entity.action), 
     );
   }
 

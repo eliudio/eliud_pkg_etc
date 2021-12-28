@@ -1,4 +1,5 @@
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_dialog.dart';
 import 'package:eliud_core/style/style_registry.dart';
@@ -10,6 +11,7 @@ import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 
 class MemberPopupMenu {
   static void showPopupMenuWithAllActions(
+      AppModel app,
       BuildContext context,
       String extraLabel,
       VoidCallback callback,
@@ -17,28 +19,28 @@ class MemberPopupMenu {
       String memberId) async {
     List<Widget> _buttons = [];
 
-    _buttons.add(button1(context, extraLabel, callback));
+    _buttons.add(button1(app, context, extraLabel, callback));
     if (memberActions != null) {
       for (var memberAction in memberActions) {
-        _buttons.add(button2(context, memberAction, memberId));
+        _buttons.add(button2(app, context, memberAction, memberId));
       }
     }
     var contents = ListView(
         shrinkWrap: true, physics: ScrollPhysics(), children: _buttons);
 
-    openComplexDialog(context, AccessBloc.currentAppId(context) + '/memberactions', title: "Member Actions",
+    openComplexDialog(app, context, app.documentID! + '/memberactions', title: "Member Actions",
         child: contents);
 
   }
 
-  static Widget button1(
+  static Widget button1(AppModel app,
       BuildContext context, String label, VoidCallback voidCallback) {
-    return button(context, label: label,
+    return button(app, context, label: label,
         onPressed: voidCallback
     );
   }
 
-  static Widget button2(
+  static Widget button2(AppModel app,
       BuildContext context, MemberActionModel action, String memberId) {
     var text;
     if (action.text != null) {
@@ -53,7 +55,7 @@ class MemberPopupMenu {
         text = '?';
       }
     }
-    return button(context, label: text,
+    return button(app, context, label: text,
         onPressed: () =>
             eliudrouter.Router.navigateTo(context, action.action!, parameters: {'memberId' : memberId})
     );

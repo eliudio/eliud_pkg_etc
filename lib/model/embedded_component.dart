@@ -17,6 +17,7 @@
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
+import 'package:eliud_core/model/app_model.dart';
 
 import 'dart:async';
 
@@ -32,11 +33,11 @@ import '../model/member_action_repository.dart';
 
 typedef MemberActionListChanged(List<MemberActionModel> values);
 
-memberActionsList(context, value, trigger) => EmbeddedComponentFactory.memberActionsList(context, value, trigger);
+memberActionsList(app, context, value, trigger) => EmbeddedComponentFactory.memberActionsList(app, context, value, trigger);
 
 class EmbeddedComponentFactory {
 
-static Widget memberActionsList(BuildContext context, List<MemberActionModel> values, MemberActionListChanged trigger) {
+static Widget memberActionsList(BuildContext context, AppModel app, List<MemberActionModel> values, MemberActionListChanged trigger) {
   MemberActionInMemoryRepository inMemoryRepository = MemberActionInMemoryRepository(trigger, values,);
   return MultiBlocProvider(
     providers: [
@@ -46,7 +47,7 @@ static Widget memberActionsList(BuildContext context, List<MemberActionModel> va
           )..add(LoadMemberActionList()),
         )
         ],
-    child: MemberActionListWidget(isEmbedded: true),
+    child: MemberActionListWidget(app: app, isEmbedded: true),
   );
 }
 

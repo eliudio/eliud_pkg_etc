@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/core/blocs/access/state/logged_in.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
@@ -58,17 +59,16 @@ import 'package:eliud_pkg_etc/model/member_action_form_state.dart';
 
 
 class MemberActionForm extends StatelessWidget {
+  final AppModel app;
   FormAction formAction;
   MemberActionModel? value;
   ActionModel? submitAction;
 
-  MemberActionForm({Key? key, required this.formAction, required this.value, this.submitAction}) : super(key: key);
+  MemberActionForm({Key? key, required this.app, required this.formAction, required this.value, this.submitAction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var app = AccessBloc.currentApp(context);
-    if (app == null) return Text("No app available");
     var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<MemberActionFormBloc >(
@@ -76,7 +76,7 @@ class MemberActionForm extends StatelessWidget {
                                        
                                                 )..add(InitialiseMemberActionFormEvent(value: value)),
   
-        child: MyMemberActionForm(submitAction: submitAction, formAction: formAction),
+        child: MyMemberActionForm(app:app, submitAction: submitAction, formAction: formAction),
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<MemberActionFormBloc >(
@@ -84,17 +84,17 @@ class MemberActionForm extends StatelessWidget {
                                        
                                                 )..add(InitialiseMemberActionFormNoLoadEvent(value: value)),
   
-        child: MyMemberActionForm(submitAction: submitAction, formAction: formAction),
+        child: MyMemberActionForm(app:app, submitAction: submitAction, formAction: formAction),
           );
     } else {
       return Scaffold(
-        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update MemberAction' : 'Add MemberAction'),
+        appBar: StyleRegistry.registry().styleWithApp(app).adminFormStyle().appBarWithString(app, context, title: formAction == FormAction.UpdateAction ? 'Update MemberAction' : 'Add MemberAction'),
         body: BlocProvider<MemberActionFormBloc >(
             create: (context) => MemberActionFormBloc(appId,
                                        
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseMemberActionFormEvent(value: value) : InitialiseNewMemberActionFormEvent())),
   
-        child: MyMemberActionForm(submitAction: submitAction, formAction: formAction),
+        child: MyMemberActionForm(app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
@@ -102,10 +102,11 @@ class MemberActionForm extends StatelessWidget {
 
 
 class MyMemberActionForm extends StatefulWidget {
+  final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyMemberActionForm({this.formAction, this.submitAction});
+  MyMemberActionForm({required this.app, this.formAction, this.submitAction});
 
   _MyMemberActionFormState createState() => _MyMemberActionFormState(this.formAction);
 }
@@ -133,13 +134,10 @@ class _MyMemberActionFormState extends State<MyMemberActionForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AccessBloc.currentApp(context);
-    if (app == null) return Text('No app available');
-    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<MemberActionFormBloc, MemberActionFormState>(builder: (context, state) {
       if (state is MemberActionFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithApp(widget.app).adminListStyle().progressIndicator(widget.app, context),
       );
 
       if (state is MemberActionFormLoaded) {
@@ -161,42 +159,42 @@ class _MyMemberActionFormState extends State<MyMemberActionForm> {
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithContext(context).adminFormStyle().groupTitle(context, 'General')
+                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'General')
                 ));
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'text', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _textController, keyboardType: TextInputType.text, validator: (_) => state is TextMemberActionFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'text', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _textController, keyboardType: TextInputType.text, validator: (_) => state is TextMemberActionFormError ? state.message : null, hintText: null)
           );
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionMemberActionFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionMemberActionFormError ? state.message : null, hintText: null)
           );
 
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().divider(context));
+        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
 
 
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithContext(context).adminFormStyle().groupTitle(context, 'Action')
+                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'Action')
                 ));
 
         children.add(
 
-                ActionField(AccessBloc.currentAppId(context), state.value!.action, _onActionChanged)
+                ActionField(widget.app, state.value!.action, _onActionChanged)
           );
 
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().divider(context));
+        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
-          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().button(context, label: 'Submit',
+          children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().button(widget.app, context, label: 'Submit',
                   onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is MemberActionFormError) {
                       return null;
@@ -227,7 +225,7 @@ class _MyMemberActionFormState extends State<MyMemberActionForm> {
                   },
                 ));
 
-        return StyleRegistry.registry().styleWithContext(context).adminFormStyle().container(context, Form(
+        return StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().container(widget.app, context, Form(
             child: ListView(
               padding: const EdgeInsets.all(8),
               physics: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? NeverScrollableScrollPhysics() : null,
@@ -237,7 +235,7 @@ class _MyMemberActionFormState extends State<MyMemberActionForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithApp(widget.app).adminListStyle().progressIndicator(widget.app, context);
       }
     });
   }
@@ -273,7 +271,7 @@ class _MyMemberActionFormState extends State<MyMemberActionForm> {
   }
 
   bool _readOnly(AccessState accessState, MemberActionFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(AccessBloc.currentAppId(context)));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
   }
   
 
