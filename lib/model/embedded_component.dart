@@ -37,7 +37,7 @@ memberActionsList(app, context, value, trigger) => EmbeddedComponentFactory.memb
 
 class EmbeddedComponentFactory {
 
-static Widget memberActionsList(BuildContext context, AppModel app, List<MemberActionModel> values, MemberActionListChanged trigger) {
+static Widget memberActionsList(AppModel app, BuildContext context, List<MemberActionModel> values, MemberActionListChanged trigger) {
   MemberActionInMemoryRepository inMemoryRepository = MemberActionInMemoryRepository(trigger, values,);
   return MultiBlocProvider(
     providers: [
