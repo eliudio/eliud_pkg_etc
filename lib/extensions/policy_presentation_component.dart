@@ -9,6 +9,7 @@ import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_core/tools/etc.dart';
+import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_core/tools/storage/medium_info.dart';
 import 'package:eliud_pkg_etc/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_component.dart';
@@ -45,15 +46,16 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
             policyPresentationModel.appId!, policyPresentationModel.policy!),
         builder: (context, snapshot) {
           if ((snapshot.hasData) && (snapshot.data != null)) {
+            var height = fullScreenHeight(context);
             if (snapshot.data!.isNotEmpty) {
-              return AlbumSlider(app: app,
+              return Container(height: height, child: AlbumSlider(app: app,
                 title: 'policyPresentationModel.title',
                 slideImageProvider: UrlSlideImageProvider(
                     ListHelper.getStringList(snapshot.data!)),
                 initialPage: 0,
                 withCloseButton: false,
                 withNextPrevButton: true,
-              );
+              ));
             } else {
               return text(app, context, 'No contents');
             }

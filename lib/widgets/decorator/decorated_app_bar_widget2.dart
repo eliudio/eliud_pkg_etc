@@ -5,7 +5,6 @@ import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/model/decoration_color_model.dart';
 import 'package:eliud_core/model/icon_model.dart';
 import 'package:eliud_core/model/menu_item_model.dart';
-import 'package:eliud_core/style/tools/colors.dart';
 import 'package:eliud_core/tools/action/action_model.dart';
 import 'package:eliud_pkg_etc/widgets/decorator/creator_button.dart';
 import 'package:flutter/material.dart';
