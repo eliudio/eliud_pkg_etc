@@ -27,7 +27,7 @@ class CreatorButton extends StatefulWidget {
   final Color backgroundColor;
   final Color borderColor;
   final Color textColor;
-  final Icon icon;
+  final Widget icon;
 
   CreatorButton(
       {Key? key,

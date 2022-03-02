@@ -21,8 +21,8 @@ class DecoratedWidget extends StatefulWidget {
   final InitialPosition initialPosition;
   final String? label;
   final Color backgroundColor;
-  final Icon iconOn;
-  final Icon iconOff;
+  final Widget iconOn;
+  final Widget iconOff;
   final Color bordercolor;
   final Color textColor;
 
