@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 enum InitialPosition {
   CenterTop,
+  CenterBottom,
   RightTop,
   RightBottom,
   RightAlmostBottom,
@@ -85,6 +86,9 @@ class _CreatorButtonState extends State<CreatorButton> {
           switch (widget.initialPosition) {
             case InitialPosition.CenterTop:
               position = Offset((sizeBox.width - width!) / 2, 0);
+              break;
+            case InitialPosition.CenterBottom:
+              position = Offset((sizeBox.width - width!) / 2, sizeBox.height - height!);
               break;
             case InitialPosition.CenterCenter:
               position = Offset(
