@@ -38,8 +38,8 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
       BuildContext context, PolicyPresentationModel? policyPresentationModel) {
     if (policyPresentationModel!.policy == null)
       return Text('Policy not available');
-    if (policyPresentationModel.policy!.mediumType != PublicMediumType.Pdf)
-      return Text('Policy not in pdf format. Not supported');
+//    if (policyPresentationModel.policy!.mediumType != PublicMediumType.Pdf)
+//      return Text('Policy not in pdf format. Not supported');
 
     return FutureBuilder<List<String?>>(
         future: ChainOfMediumModels.getPublicMediumChainOfUrls(
