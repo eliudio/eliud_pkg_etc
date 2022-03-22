@@ -52,26 +52,23 @@ class PolicyPresentationBloc
     } else if (state is PolicyPresentationInitialised) {
       var theState = state as PolicyPresentationInitialised;
       if (event is NewPolicyPageEvent) {
-        List<PublicMediumModel> newMedia =
-            theState.media != null ? theState.media.map((v) => v).toList() : [];
+        List<PublicMediumModel> newMedia = theState.media.map((v) => v).toList();
         newMedia.add(event.newPage);
         yield PolicyPresentationInitialised(theState.model, newMedia);
       }
       if (event is DeletePolicyPageEvent) {
-        if (theState.media != null) {
-          List<PublicMediumModel> newMedia = [];
-          for (var medium in theState.media) {
-            if (medium != event.deletePage) {
-              newMedia.add(medium);
-            }
+        List<PublicMediumModel> newMedia = [];
+        for (var medium in theState.media) {
+          if (medium != event.deletePage) {
+            newMedia.add(medium);
           }
-          yield PolicyPresentationInitialised(theState.model, newMedia);
         }
+        yield PolicyPresentationInitialised(theState.model, newMedia);
       }
     }
   }
 
-  Future<void> save(PolicyPresentationInitialiseApplyChanges event) async {
+  Future<void> save(PolicyPresentationApplyChanges event) async {
     if (state is PolicyPresentationInitialised) {
       var theState = state as PolicyPresentationInitialised;
       var newModel = theState.model.copyWith();

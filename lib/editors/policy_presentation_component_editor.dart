@@ -51,10 +51,16 @@ class PolicyPresentationComponentEditorConstructor
 
   @override
   void updateComponentWithID(
-      AppModel app, BuildContext context, String id, EditorFeedback feedback) {
-    openErrorDialog(app, context, app.documentID! + '/_error',
-        title: 'Problem',
-        errorMessage: 'No editor for this component available yet');
+      AppModel app, BuildContext context, String id, EditorFeedback feedback) async {
+    var policyPresentation =
+        await policyPresentationRepository(appId: app.documentID!)!
+        .get(id);
+    if (policyPresentation != null) {
+      _openIt(app, context, false, policyPresentation, feedback);
+    } else {
+      openErrorDialog(app, context, app.documentID! + '/_error',
+          title: 'Error', errorMessage: 'Cannot find policyPresentation with id $id');
+    }
   }
 
   void _openIt(AppModel app, BuildContext context, bool create,
@@ -114,7 +120,7 @@ class _PolicyPresentationComponentEditorState
                     title: 'Policy Presentation',
                     okAction: () async {
                       BlocProvider.of<PolicyPresentationBloc>(context).save(
-                          PolicyPresentationInitialiseApplyChanges(
+                          PolicyPresentationApplyChanges(
                               policyPresentationState.model,
                               policyPresentationState.media));
                       return true;

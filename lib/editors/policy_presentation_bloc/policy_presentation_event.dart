@@ -29,11 +29,11 @@ class PolicyPresentationInitialise extends PolicyPresentationEvent {
               model == other.model;
 }
 
-class PolicyPresentationInitialiseApplyChanges extends PolicyPresentationEvent {
+class PolicyPresentationApplyChanges extends PolicyPresentationEvent {
   final PolicyPresentationModel model;
   final List<PublicMediumModel>? media;
 
-  PolicyPresentationInitialiseApplyChanges(this.model, this.media);
+  PolicyPresentationApplyChanges(this.model, this.media);
 
   @override
   List<Object?> get props => [model, media];
@@ -41,7 +41,7 @@ class PolicyPresentationInitialiseApplyChanges extends PolicyPresentationEvent {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is PolicyPresentationInitialiseApplyChanges &&
+          other is PolicyPresentationApplyChanges &&
               model == other.model &&
               ListEquality().equals(media, other.media);
 }
