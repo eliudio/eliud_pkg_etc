@@ -27,7 +27,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, PolicyPresentationListState> {
   final PolicyPresentationRepository _policyPresentationRepository;
   StreamSubscription? _policyPresentationsListSubscription;
-  final EliudQuery? eliudQuery;
+  EliudQuery? eliudQuery;
   int pages = 1;
   final bool? paged;
   final String? orderBy;
@@ -99,6 +99,13 @@ class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, Polic
     if (event is NewPage) {
       pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadPolicyPresentationListWithDetailsToState();
+    } else if (event is PolicyPresentationChangeQuery) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        yield* _mapLoadPolicyPresentationListToState();
+      } else {
+        yield* _mapLoadPolicyPresentationListWithDetailsToState();
+      }
     } else if (event is AddPolicyPresentationList) {
       yield* _mapAddPolicyPresentationListToState(event);
     } else if (event is UpdatePolicyPresentationList) {

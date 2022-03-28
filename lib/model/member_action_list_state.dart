@@ -13,6 +13,7 @@
 
 */
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_etc/model/member_action_model.dart';
 
@@ -36,6 +37,13 @@ class MemberActionListLoaded extends MemberActionListState {
 
   @override
   String toString() => 'MemberActionListLoaded { values: $values }';
+
+  @override
+  bool operator ==(Object other) => 
+          other is MemberActionListLoaded &&
+              runtimeType == other.runtimeType &&
+              ListEquality().equals(values, other.values) &&
+              mightHaveMore == other.mightHaveMore;
 }
 
 class MemberActionNotLoaded extends MemberActionListState {}

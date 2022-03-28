@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_model.dart';
 
@@ -73,5 +74,17 @@ class PolicyPresentationListUpdated extends PolicyPresentationListEvent {
 
   @override
   String toString() => 'PolicyPresentationListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+}
+
+class PolicyPresentationChangeQuery extends PolicyPresentationListEvent {
+  final EliudQuery newQuery;
+
+  const PolicyPresentationChangeQuery({ required this.newQuery });
+
+  @override
+  List<Object?> get props => [ newQuery ];
+
+  @override
+  String toString() => 'PolicyPresentationChangeQuery{ value: $newQuery }';
 }
 
