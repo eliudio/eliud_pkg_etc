@@ -138,6 +138,12 @@ class _PolicyPresentationComponentEditorState
                             leading: Icon(Icons.vpn_key),
                             title: text(widget.app, context,
                                 policyPresentationState.model.documentID!)),
+                      ]),
+                  topicContainer(widget.app, context,
+                      title: 'Condition',
+                      collapsible: true,
+                      collapsed: true,
+                      children: [
                         getListTile(context, widget.app,
                             leading: Icon(Icons.security),
                             title: ConditionsSimpleWidget(
