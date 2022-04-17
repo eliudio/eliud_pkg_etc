@@ -203,7 +203,7 @@ class _MyPolicyPresentationFormState extends State<MyPolicyPresentationForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(app: widget.app, id: "publicMediums", value: _policy, trigger: _onPolicySelected, optional: true),
+                DropdownButtonComponentFactory().createNew(app: widget.app, id: "publicMediums", value: _policy, trigger: (value, privilegeLevel) => _onPolicySelected(value), optional: true),
           );
 
 
