@@ -1,5 +1,6 @@
 import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/model_export.dart';
@@ -19,7 +20,6 @@ import 'package:eliud_pkg_etc/editors/policy_presentation_bloc/policy_presentati
 import 'package:eliud_pkg_etc/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_model.dart';
 import 'package:eliud_core/package/access_rights.dart';
-import 'package:eliud_pkg_medium/platform/medium_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -184,8 +184,7 @@ class _PolicyPresentationComponentEditorState
               BlocProvider.of<PolicyPresentationBloc>(context)
                   .add(DeletePolicyPageEvent(medium));
             } else if (value == 2) {
-              AbstractMediumPlatform.platform!
-                  .showPhotosPublic(context, widget.app, state.media, index);
+              Registry.registry()!.getMediumApi().showPhotosPublic(context, widget.app, state.media, index);
             }
           },
           itemBuilder: (context) => [
@@ -223,7 +222,7 @@ class _PolicyPresentationComponentEditorState
           child: Icon(Icons.add),
           elevation: 10,
           itemBuilder: (context) => [
-                if (AbstractMediumPlatform.platform!.hasCamera())
+                if (Registry.registry()!.getMediumApi().hasCamera())
                   PopupMenuItem(
                     value: 0,
                     child: text(widget.app, context, 'Take photo'),
@@ -235,7 +234,7 @@ class _PolicyPresentationComponentEditorState
               ],
           onSelected: (value) async {
             if (value == 0) {
-              AbstractMediumPlatform.platform!.takePhoto(
+              Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
                   widget.app.ownerID!,
@@ -244,7 +243,7 @@ class _PolicyPresentationComponentEditorState
                   _photoUploading,
                   allowCrop: false);
             } else if (value == 1) {
-              AbstractMediumPlatform.platform!.uploadPhoto(
+              Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
                   widget.app.ownerID!,
