@@ -17,7 +17,7 @@ enum InitialPosition {
 }
 
 class CreatorButton extends StatefulWidget {
-  static double BUTTON_HEIGHT = kBottomNavigationBarHeight / 2;
+  static double BUTTON_HEIGHT = kBottomNavigationBarHeight/3*2;
   final InitialPosition initialPosition;
   final String? label;
   final Widget toDecorate;

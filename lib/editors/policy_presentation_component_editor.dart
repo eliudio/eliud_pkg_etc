@@ -42,6 +42,7 @@ class PolicyPresentationComponentEditorConstructor
         PolicyPresentationModel(
           appId: app.documentID,
           documentID: newRandomKey(),
+          description: 'Policy presentation',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
                   PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
@@ -140,6 +141,13 @@ class _PolicyPresentationComponentEditorState
                                 policyPresentationState.model.documentID!)),
                       ]),
                   topicContainer(widget.app, context,
+                      title: 'Pages',
+                      collapsible: true,
+                      collapsed: true,
+                      children: [
+                        _images(policyPresentationState),
+                      ]),
+                  topicContainer(widget.app, context,
                       title: 'Condition',
                       collapsible: true,
                       collapsed: true,
@@ -151,13 +159,6 @@ class _PolicyPresentationComponentEditorState
                               value: policyPresentationState.model.conditions!,
                             )),
                       ]),
-                  topicContainer(widget.app, context,
-                      title: 'Pages',
-                      collapsible: true,
-                      collapsed: true,
-                      children: [
-                        _images(policyPresentationState),
-                      ])
                 ]);
           } else {
             return progressIndicator(widget.app, context);

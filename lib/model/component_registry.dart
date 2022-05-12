@@ -34,7 +34,7 @@ class ComponentRegistry {
     Registry.registry()!.register(componentName: "eliud_pkg_etc_internalWidgets", componentConstructor: ListComponentFactory());
     Registry.registry()!.addDropDownSupporter("policyPresentations", DropdownButtonComponentFactory());
     Registry.registry()!.register(componentName: "policyPresentations", componentConstructor: PolicyPresentationComponentConstructorDefault());
-    Registry.registry()!.addComponentSpec('eliud_pkg_etc', [
+    Registry.registry()!.addComponentSpec('eliud_pkg_etc', 'etc', [
       ComponentSpec('policyPresentations', PolicyPresentationComponentConstructorDefault(), PolicyPresentationComponentSelector(), PolicyPresentationComponentEditorConstructor(), ), 
     ]);
 
