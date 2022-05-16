@@ -4,6 +4,7 @@ import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/model_export.dart';
+import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_container.dart';
 import 'package:eliud_core/style/frontend/has_dialog.dart';
 import 'package:eliud_core/style/frontend/has_dialog_field.dart';
@@ -175,10 +176,10 @@ class _PolicyPresentationComponentEditorState
     if (state.media != null) {
       int index = 0;
       for (var medium in state.media) {
-        widgets.add(PopupMenuButton(
+        widgets.add(popupMenuButton(
+          widget.app, context,
           icon: Image.network(
             medium.url!,
-//            height: height,
           ),
           onSelected: (value) async {
             if (value == 1) {
@@ -189,13 +190,15 @@ class _PolicyPresentationComponentEditorState
             }
           },
           itemBuilder: (context) => [
-            PopupMenuItem(
+            popupMenuItem(
+              widget.app, context,
               value: 1,
-              child: text(widget.app, context, 'Delete'),
+              label: 'Delete'
             ),
-            PopupMenuItem(
+            popupMenuItem(
+              widget.app, context,
               value: 2,
-              child: text(widget.app, context, 'View'),
+              label: 'View'
             ),
           ],
         ));
@@ -219,18 +222,20 @@ class _PolicyPresentationComponentEditorState
     if (_progress != null) {
       return progressIndicatorWithValue(widget.app, context, value: _progress!);
     } else {
-      return PopupMenuButton<int>(
+      return popupMenuButton<int>(
+          widget.app, context,
           child: Icon(Icons.add),
-          elevation: 10,
           itemBuilder: (context) => [
                 if (Registry.registry()!.getMediumApi().hasCamera())
-                  PopupMenuItem(
+                  popupMenuItem(
+                    widget.app, context,
                     value: 0,
-                    child: text(widget.app, context, 'Take photo'),
+                    label: 'Take photo'
                   ),
-                PopupMenuItem(
+                popupMenuItem(
+                  widget.app, context,
                   value: 1,
-                  child: text(widget.app, context, 'Upload image'),
+                  label: 'Upload image'
                 ),
               ],
           onSelected: (value) async {
