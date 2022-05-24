@@ -15,6 +15,7 @@
 
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_pkg_etc/model/abstract_repository_singleton.dart';
@@ -31,13 +32,13 @@ import 'package:eliud_core/tools/random.dart';
 
 
 
-class MemberActionModel {
-  String? documentID;
+class MemberActionModel implements ModelBase {
+  String documentID;
   String? text;
   String? description;
   ActionModel? action;
 
-  MemberActionModel({this.documentID, this.text, this.description, this.action, })  {
+  MemberActionModel({required this.documentID, this.text, this.description, this.action, })  {
     assert(documentID != null);
   }
 

@@ -39,7 +39,7 @@ abstract class AbstractPolicyPresentationComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<PolicyPresentationComponentBloc> (
           create: (context) => PolicyPresentationComponentBloc(
-            policyPresentationRepository: policyPresentationRepository(appId: app.documentID!)!)
+            policyPresentationRepository: policyPresentationRepository(appId: app.documentID)!)
         ..add(FetchPolicyPresentationComponent(id: policyPresentationId)),
       child: _policyPresentationBlockBuilder(context),
     );

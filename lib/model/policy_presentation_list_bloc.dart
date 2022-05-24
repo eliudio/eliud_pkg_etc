@@ -38,9 +38,47 @@ class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, Polic
   PolicyPresentationListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required PolicyPresentationRepository policyPresentationRepository, this.policyPresentationLimit = 5})
       : assert(policyPresentationRepository != null),
         _policyPresentationRepository = policyPresentationRepository,
-        super(PolicyPresentationListLoading());
+        super(PolicyPresentationListLoading()) {
+    on <LoadPolicyPresentationList> ((event, emit) {
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadPolicyPresentationListToState();
+      } else {
+        _mapLoadPolicyPresentationListWithDetailsToState();
+      }
+    });
+    
+    on <NewPage> ((event, emit) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+      _mapLoadPolicyPresentationListWithDetailsToState();
+    });
+    
+    on <PolicyPresentationChangeQuery> ((event, emit) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadPolicyPresentationListToState();
+      } else {
+        _mapLoadPolicyPresentationListWithDetailsToState();
+      }
+    });
+      
+    on <AddPolicyPresentationList> ((event, emit) async {
+      await _mapAddPolicyPresentationListToState(event);
+    });
+    
+    on <UpdatePolicyPresentationList> ((event, emit) async {
+      await _mapUpdatePolicyPresentationListToState(event);
+    });
+    
+    on <DeletePolicyPresentationList> ((event, emit) async {
+      await _mapDeletePolicyPresentationListToState(event);
+    });
+    
+    on <PolicyPresentationListUpdated> ((event, emit) {
+      emit(_mapPolicyPresentationListUpdatedToState(event));
+    });
+  }
 
-  Stream<PolicyPresentationListState> _mapLoadPolicyPresentationListToState() async* {
+  Future<void> _mapLoadPolicyPresentationListToState() async {
     int amountNow =  (state is PolicyPresentationListLoaded) ? (state as PolicyPresentationListLoaded).values!.length : 0;
     _policyPresentationsListSubscription?.cancel();
     _policyPresentationsListSubscription = _policyPresentationRepository.listen(
@@ -52,7 +90,7 @@ class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, Polic
     );
   }
 
-  Stream<PolicyPresentationListState> _mapLoadPolicyPresentationListWithDetailsToState() async* {
+  Future<void> _mapLoadPolicyPresentationListWithDetailsToState() async {
     int amountNow =  (state is PolicyPresentationListLoaded) ? (state as PolicyPresentationListLoaded).values!.length : 0;
     _policyPresentationsListSubscription?.cancel();
     _policyPresentationsListSubscription = _policyPresentationRepository.listenWithDetails(
@@ -64,58 +102,29 @@ class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, Polic
     );
   }
 
-  Stream<PolicyPresentationListState> _mapAddPolicyPresentationListToState(AddPolicyPresentationList event) async* {
+  Future<void> _mapAddPolicyPresentationListToState(AddPolicyPresentationList event) async {
     var value = event.value;
-    if (value != null) 
-      _policyPresentationRepository.add(value);
-  }
-
-  Stream<PolicyPresentationListState> _mapUpdatePolicyPresentationListToState(UpdatePolicyPresentationList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _policyPresentationRepository.update(value);
-  }
-
-  Stream<PolicyPresentationListState> _mapDeletePolicyPresentationListToState(DeletePolicyPresentationList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _policyPresentationRepository.delete(value);
-  }
-
-  Stream<PolicyPresentationListState> _mapPolicyPresentationListUpdatedToState(
-      PolicyPresentationListUpdated event) async* {
-    yield PolicyPresentationListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
-  }
-
-  @override
-  Stream<PolicyPresentationListState> mapEventToState(PolicyPresentationListEvent event) async* {
-    if (event is LoadPolicyPresentationList) {
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadPolicyPresentationListToState();
-      } else {
-        yield* _mapLoadPolicyPresentationListWithDetailsToState();
-      }
-    }
-    if (event is NewPage) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
-      yield* _mapLoadPolicyPresentationListWithDetailsToState();
-    } else if (event is PolicyPresentationChangeQuery) {
-      eliudQuery = event.newQuery;
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadPolicyPresentationListToState();
-      } else {
-        yield* _mapLoadPolicyPresentationListWithDetailsToState();
-      }
-    } else if (event is AddPolicyPresentationList) {
-      yield* _mapAddPolicyPresentationListToState(event);
-    } else if (event is UpdatePolicyPresentationList) {
-      yield* _mapUpdatePolicyPresentationListToState(event);
-    } else if (event is DeletePolicyPresentationList) {
-      yield* _mapDeletePolicyPresentationListToState(event);
-    } else if (event is PolicyPresentationListUpdated) {
-      yield* _mapPolicyPresentationListUpdatedToState(event);
+    if (value != null) {
+      await _policyPresentationRepository.add(value);
     }
   }
+
+  Future<void> _mapUpdatePolicyPresentationListToState(UpdatePolicyPresentationList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _policyPresentationRepository.update(value);
+    }
+  }
+
+  Future<void> _mapDeletePolicyPresentationListToState(DeletePolicyPresentationList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _policyPresentationRepository.delete(value);
+    }
+  }
+
+  PolicyPresentationListLoaded _mapPolicyPresentationListUpdatedToState(
+      PolicyPresentationListUpdated event) => PolicyPresentationListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {

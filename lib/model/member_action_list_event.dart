@@ -77,7 +77,7 @@ class MemberActionListUpdated extends MemberActionListEvent {
 }
 
 class MemberActionChangeQuery extends MemberActionListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const MemberActionChangeQuery({ required this.newQuery });
 

@@ -51,74 +51,57 @@ class PolicyPresentationFormBloc extends Bloc<PolicyPresentationFormEvent, Polic
   Stream<PolicyPresentationFormState> mapEventToState(PolicyPresentationFormEvent event) async* {
     final currentState = state;
     if (currentState is PolicyPresentationFormUninitialized) {
-      if (event is InitialiseNewPolicyPresentationFormEvent) {
+      on <InitialiseNewPolicyPresentationFormEvent> ((event, emit) {
         PolicyPresentationFormLoaded loaded = PolicyPresentationFormLoaded(value: PolicyPresentationModel(
                                                documentID: "",
                                  appId: "",
                                  description: "",
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialisePolicyPresentationFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
         PolicyPresentationFormLoaded loaded = PolicyPresentationFormLoaded(value: await policyPresentationRepository(appId: appId)!.get(event.value!.documentID));
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialisePolicyPresentationFormNoLoadEvent) {
         PolicyPresentationFormLoaded loaded = PolicyPresentationFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is PolicyPresentationFormInitialized) {
       PolicyPresentationModel? newValue = null;
-      if (event is ChangedPolicyPresentationDocumentID) {
+      on <ChangedPolicyPresentationDocumentID> ((event, emit) async {
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          emit(await _isDocumentIDValid(event.value, newValue!));
         } else {
-          yield SubmittablePolicyPresentationForm(value: newValue);
+          emit(SubmittablePolicyPresentationForm(value: newValue));
         }
 
-        return;
-      }
-      if (event is ChangedPolicyPresentationAppId) {
+      });
+      on <ChangedPolicyPresentationAppId> ((event, emit) async {
         newValue = currentState.value!.copyWith(appId: event.value);
-        yield SubmittablePolicyPresentationForm(value: newValue);
+        emit(SubmittablePolicyPresentationForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedPolicyPresentationDescription) {
+      });
+      on <ChangedPolicyPresentationDescription> ((event, emit) async {
         newValue = currentState.value!.copyWith(description: event.value);
-        yield SubmittablePolicyPresentationForm(value: newValue);
+        emit(SubmittablePolicyPresentationForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedPolicyPresentationPolicy) {
+      });
+      on <ChangedPolicyPresentationPolicy> ((event, emit) async {
         if (event.value != null)
           newValue = currentState.value!.copyWith(policy: await publicMediumRepository(appId: appId)!.get(event.value));
-        else
-          newValue = new PolicyPresentationModel(
-                                 documentID: currentState.value!.documentID,
-                                 appId: currentState.value!.appId,
-                                 description: currentState.value!.description,
-                                 policy: null,
-                                 conditions: currentState.value!.conditions,
-          );
-        yield SubmittablePolicyPresentationForm(value: newValue);
+        emit(SubmittablePolicyPresentationForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedPolicyPresentationConditions) {
+      });
+      on <ChangedPolicyPresentationConditions> ((event, emit) async {
         newValue = currentState.value!.copyWith(conditions: event.value);
-        yield SubmittablePolicyPresentationForm(value: newValue);
+        emit(SubmittablePolicyPresentationForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

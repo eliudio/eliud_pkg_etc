@@ -96,7 +96,7 @@ class _MemberActionModelWidgetState extends State<MemberActionModelWidget> {
             getListTile(context, widget.app,
                 leading: Icon(Icons.vpn_key),
                 title: text(
-                    widget.app, context, widget.memberActionModel.documentID!)),
+                    widget.app, context, widget.memberActionModel.documentID)),
             getListTile(context, widget.app,
                 leading: Icon(Icons.description),
                 title: dialogField(

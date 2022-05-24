@@ -28,7 +28,7 @@ class PolicyPresentationEntity {
   final String? policyId;
   final StorageConditionsEntity? conditions;
 
-  PolicyPresentationEntity({this.appId, this.description, this.policyId, this.conditions, });
+  PolicyPresentationEntity({required this.appId, this.description, this.policyId, this.conditions, });
 
 
   List<Object?> get props => [appId, description, policyId, conditions, ];

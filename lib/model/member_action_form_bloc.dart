@@ -46,48 +46,41 @@ class MemberActionFormBloc extends Bloc<MemberActionFormEvent, MemberActionFormS
   Stream<MemberActionFormState> mapEventToState(MemberActionFormEvent event) async* {
     final currentState = state;
     if (currentState is MemberActionFormUninitialized) {
-      if (event is InitialiseNewMemberActionFormEvent) {
+      on <InitialiseNewMemberActionFormEvent> ((event, emit) {
         MemberActionFormLoaded loaded = MemberActionFormLoaded(value: MemberActionModel(
                                                documentID: "IDENTIFIER", 
                                  text: "",
                                  description: "",
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseMemberActionFormEvent) {
         MemberActionFormLoaded loaded = MemberActionFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseMemberActionFormNoLoadEvent) {
         MemberActionFormLoaded loaded = MemberActionFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is MemberActionFormInitialized) {
       MemberActionModel? newValue = null;
-      if (event is ChangedMemberActionText) {
+      on <ChangedMemberActionText> ((event, emit) async {
         newValue = currentState.value!.copyWith(text: event.value);
-        yield SubmittableMemberActionForm(value: newValue);
+        emit(SubmittableMemberActionForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedMemberActionDescription) {
+      });
+      on <ChangedMemberActionDescription> ((event, emit) async {
         newValue = currentState.value!.copyWith(description: event.value);
-        yield SubmittableMemberActionForm(value: newValue);
+        emit(SubmittableMemberActionForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedMemberActionAction) {
+      });
+      on <ChangedMemberActionAction> ((event, emit) async {
         newValue = currentState.value!.copyWith(action: event.value);
-        yield SubmittableMemberActionForm(value: newValue);
+        emit(SubmittableMemberActionForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

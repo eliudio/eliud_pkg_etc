@@ -114,9 +114,9 @@ class ListComponent extends StatelessWidget with HasFab {
           create: (context) => PolicyPresentationListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            policyPresentationRepository: policyPresentationRepository(appId: app.documentID!)!,
+            policyPresentationRepository: policyPresentationRepository(appId: app.documentID)!,
           )..add(LoadPolicyPresentationList()),
         )
       ],
@@ -154,9 +154,9 @@ class DropdownButtonComponent extends StatelessWidget {
           create: (context) => PolicyPresentationListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            policyPresentationRepository: policyPresentationRepository(appId: app.documentID!)!,
+            policyPresentationRepository: policyPresentationRepository(appId: app.documentID)!,
           )..add(LoadPolicyPresentationList()),
         )
       ],

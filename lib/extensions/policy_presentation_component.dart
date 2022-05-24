@@ -27,7 +27,7 @@ class PolicyPresentationComponentConstructorDefault
   }
 
   @override
-  Future<dynamic> getModel({required AppModel app, required String id}) async => await policyPresentationRepository(appId: app.documentID!)!.get(id);
+  Future<dynamic> getModel({required AppModel app, required String id}) async => await policyPresentationRepository(appId: app.documentID)!.get(id);
 }
 
 class PolicyPresentation extends AbstractPolicyPresentationComponent {
@@ -43,7 +43,7 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
 
     return FutureBuilder<List<String?>>(
         future: ChainOfMediumModels.getPublicMediumChainOfUrls(
-            policyPresentationModel.appId!, policyPresentationModel.policy!),
+            policyPresentationModel.appId, policyPresentationModel.policy!),
         builder: (context, snapshot) {
           if ((snapshot.hasData) && (snapshot.data != null)) {
             var height = fullScreenHeight(context);

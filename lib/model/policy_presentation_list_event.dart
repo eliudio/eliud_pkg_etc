@@ -77,7 +77,7 @@ class PolicyPresentationListUpdated extends PolicyPresentationListEvent {
 }
 
 class PolicyPresentationChangeQuery extends PolicyPresentationListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const PolicyPresentationChangeQuery({ required this.newQuery });
 

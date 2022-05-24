@@ -28,7 +28,7 @@ class MemberPopupMenu {
     var contents = ListView(
         shrinkWrap: true, physics: ScrollPhysics(), children: _buttons);
 
-    openComplexDialog(app, context, app.documentID! + '/memberactions', title: "Member Actions",
+    openComplexDialog(app, context, app.documentID + '/memberactions', title: "Member Actions",
         child: contents);
 
   }

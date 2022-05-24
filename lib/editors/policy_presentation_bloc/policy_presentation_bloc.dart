@@ -14,12 +14,8 @@ class PolicyPresentationBloc
   final EditorFeedback feedback;
 
   PolicyPresentationBloc(this.appId, /*this.create, */ this.feedback)
-      : super(PolicyPresentationUninitialised());
-
-  @override
-  Stream<PolicyPresentationState> mapEventToState(
-      PolicyPresentationEvent event) async* {
-    if (event is PolicyPresentationInitialise) {
+      : super(PolicyPresentationUninitialised()) {
+    on<PolicyPresentationInitialise>((event, emit) async {
       List<PublicMediumModel>? media = [];
       // retrieve the model, as it was retrieved without links
       var modelWithLinks = await policyPresentationRepository(appId: appId)!
@@ -40,32 +36,34 @@ class PolicyPresentationBloc
             }
           }
         }
-        yield PolicyPresentationInitialised(modelWithLinks, media);
+        emit(PolicyPresentationInitialised(modelWithLinks, media));
       } else {
-        yield PolicyPresentationInitialised(
+        emit(PolicyPresentationInitialised(
             event.model.copyWith(
                 conditions: StorageConditionsModel(
                     privilegeLevelRequired: PrivilegeLevelRequiredSimple
                         .NoPrivilegeRequiredSimple)),
-            []);
+            []));
       }
-    } else if (state is PolicyPresentationInitialised) {
+    });
+
+    on<NewPolicyPageEvent>((event, emit) {
       var theState = state as PolicyPresentationInitialised;
-      if (event is NewPolicyPageEvent) {
-        List<PublicMediumModel> newMedia = theState.media.map((v) => v).toList();
-        newMedia.add(event.newPage);
-        yield PolicyPresentationInitialised(theState.model, newMedia);
-      }
-      if (event is DeletePolicyPageEvent) {
-        List<PublicMediumModel> newMedia = [];
-        for (var medium in theState.media) {
-          if (medium != event.deletePage) {
-            newMedia.add(medium);
-          }
+      List<PublicMediumModel> newMedia = theState.media.map((v) => v).toList();
+      newMedia.add(event.newPage);
+      emit(PolicyPresentationInitialised(theState.model, newMedia));
+    });
+
+    on<DeletePolicyPageEvent>((event, emit) {
+      var theState = state as PolicyPresentationInitialised;
+      List<PublicMediumModel> newMedia = [];
+      for (var medium in theState.media) {
+        if (medium != event.deletePage) {
+          newMedia.add(medium);
         }
-        yield PolicyPresentationInitialised(theState.model, newMedia);
       }
-    }
+      emit(PolicyPresentationInitialised(theState.model, newMedia));
+    });
   }
 
   Future<void> save(PolicyPresentationApplyChanges event) async {
@@ -76,7 +74,7 @@ class PolicyPresentationBloc
         newModel = newModel.copyWith(policy: theState.media[0]);
         for (var medium in theState.media) {
           if (await publicMediumRepository(appId: appId)!
-                  .get(medium.documentID!) ==
+                  .get(medium.documentID) ==
               null) {
             await publicMediumRepository(appId: appId)!.add(medium);
           } else {
@@ -85,7 +83,7 @@ class PolicyPresentationBloc
         }
       }
       if (await policyPresentationRepository(appId: appId)!
-              .get(newModel.documentID!) ==
+              .get(newModel.documentID) ==
           null) {
         await policyPresentationRepository(appId: appId)!.add(newModel);
       } else {

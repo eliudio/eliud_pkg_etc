@@ -28,7 +28,7 @@ import 'package:eliud_pkg_etc/model/entity_export.dart';
 import 'dart:async';
 import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
-import 'package:eliud_core/tools/repository_base.dart';
+import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef MemberActionModelTrigger(List<MemberActionModel?> list);
 typedef MemberActionChanged(MemberActionModel? value);

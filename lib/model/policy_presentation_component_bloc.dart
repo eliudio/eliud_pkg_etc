@@ -27,23 +27,22 @@ class PolicyPresentationComponentBloc extends Bloc<PolicyPresentationComponentEv
   final PolicyPresentationRepository? policyPresentationRepository;
   StreamSubscription? _policyPresentationSubscription;
 
-  Stream<PolicyPresentationComponentState> _mapLoadPolicyPresentationComponentUpdateToState(String documentId) async* {
+  void _mapLoadPolicyPresentationComponentUpdateToState(String documentId) {
     _policyPresentationSubscription?.cancel();
     _policyPresentationSubscription = policyPresentationRepository!.listenTo(documentId, (value) {
-      if (value != null) add(PolicyPresentationComponentUpdated(value: value));
+      if (value != null) {
+        add(PolicyPresentationComponentUpdated(value: value));
+      }
     });
   }
 
-  PolicyPresentationComponentBloc({ this.policyPresentationRepository }): super(PolicyPresentationComponentUninitialized());
-
-  @override
-  Stream<PolicyPresentationComponentState> mapEventToState(PolicyPresentationComponentEvent event) async* {
-    final currentState = state;
-    if (event is FetchPolicyPresentationComponent) {
-      yield* _mapLoadPolicyPresentationComponentUpdateToState(event.id!);
-    } else if (event is PolicyPresentationComponentUpdated) {
-      yield PolicyPresentationComponentLoaded(value: event.value);
-    }
+  PolicyPresentationComponentBloc({ this.policyPresentationRepository }): super(PolicyPresentationComponentUninitialized()) {
+    on <FetchPolicyPresentationComponent> ((event, emit) {
+      _mapLoadPolicyPresentationComponentUpdateToState(event.id!);
+    });
+    on <PolicyPresentationComponentUpdated> ((event, emit) {
+      emit(PolicyPresentationComponentLoaded(value: event.value));
+    });
   }
 
   @override

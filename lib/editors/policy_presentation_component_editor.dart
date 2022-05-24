@@ -55,19 +55,19 @@ class PolicyPresentationComponentEditorConstructor
   void updateComponentWithID(
       AppModel app, BuildContext context, String id, EditorFeedback feedback) async {
     var policyPresentation =
-        await policyPresentationRepository(appId: app.documentID!)!
+        await policyPresentationRepository(appId: app.documentID)!
         .get(id);
     if (policyPresentation != null) {
       _openIt(app, context, false, policyPresentation, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID! + '/_error',
+      openErrorDialog(app, context, app.documentID + '/_error',
           title: 'Error', errorMessage: 'Cannot find policyPresentation with id $id');
     }
   }
 
   void _openIt(AppModel app, BuildContext context, bool create,
       PolicyPresentationModel model, EditorFeedback feedback) {
-    openComplexDialog(app, context, app.documentID! + '/policypresentation',
+    openComplexDialog(app, context, app.documentID + '/policypresentation',
         title: create
             ? 'Create policy presentation'
             : 'Update policy presentation',
@@ -75,7 +75,7 @@ class PolicyPresentationComponentEditorConstructor
         widthFraction: .9,
         child: BlocProvider<PolicyPresentationBloc>(
           create: (context) => PolicyPresentationBloc(
-            app.documentID!,
+            app.documentID,
             /*create,
             */
             feedback,
@@ -139,7 +139,7 @@ class _PolicyPresentationComponentEditorState
                         getListTile(context, widget.app,
                             leading: Icon(Icons.vpn_key),
                             title: text(widget.app, context,
-                                policyPresentationState.model.documentID!)),
+                                policyPresentationState.model.documentID)),
                       ]),
                   topicContainer(widget.app, context,
                       title: 'Pages',
@@ -243,7 +243,7 @@ class _PolicyPresentationComponentEditorState
               Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID!,
+                  widget.app.ownerID,
                   () => PublicMediumAccessRights(),
                   (photo) => _photoFeedbackFunction(photo),
                   _photoUploading,
@@ -252,7 +252,7 @@ class _PolicyPresentationComponentEditorState
               Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID!,
+                  widget.app.ownerID,
                   () => PublicMediumAccessRights(),
                   (photo) => _photoFeedbackFunction(photo),
                   _photoUploading,

@@ -64,7 +64,7 @@ class _CreatorButtonState extends State<CreatorButton> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance?.addPostFrameCallback(_getWidgetInfo);
+    WidgetsBinding.instance.addPostFrameCallback(_getWidgetInfo);
   }
 
   void _getWidgetInfo(_) {
