@@ -63,6 +63,7 @@ class AdminApp extends AdminAppInstallerBase {
         appId: appId,
         documentID: "eliud_pkg_etc_policypresentations_page",
         title: "PolicyPresentations",
+        description: "PolicyPresentations",
         drawer: _drawer,
         endDrawer: _endDrawer,
         appBar: _appBar,
