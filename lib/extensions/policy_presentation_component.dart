@@ -15,7 +15,8 @@ import 'package:eliud_pkg_etc/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_component.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_model.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_repository.dart';
-import 'package:eliud_pkg_medium/tools/slider/carousel_slider.dart';
+import 'package:eliud_pkg_medium/tools/slider/album_slider.dart';
+import 'package:eliud_pkg_medium/tools/slider/slide_image_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -46,16 +47,15 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
             policyPresentationModel.appId, policyPresentationModel.policy!),
         builder: (context, snapshot) {
           if ((snapshot.hasData) && (snapshot.data != null)) {
-            var height = fullScreenHeight(context);
+            var height = fullScreenHeight(context) - 30;
             if (snapshot.data!.isNotEmpty) {
-              return Container(height: height, child: AlbumSlider(app: app,
-                title: 'policyPresentationModel.title',
+              //title: 'Policy',
+              return AlbumSlider(app: app,
+                height: height,
                 slideImageProvider: UrlSlideImageProvider(
                     ListHelper.getStringList(snapshot.data!)),
                 initialPage: 0,
-                withCloseButton: false,
-                withNextPrevButton: true,
-              ));
+              );
             } else {
               return text(app, context, 'No contents');
             }
