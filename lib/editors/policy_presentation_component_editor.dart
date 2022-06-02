@@ -243,7 +243,6 @@ class _PolicyPresentationComponentEditorState
               Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID,
                   () => PublicMediumAccessRights(),
                   (photo) => _photoFeedbackFunction(photo),
                   _photoUploading,
@@ -252,7 +251,6 @@ class _PolicyPresentationComponentEditorState
               Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID,
                   () => PublicMediumAccessRights(),
                   (photo) => _photoFeedbackFunction(photo),
                   _photoUploading,
