@@ -156,7 +156,7 @@ class PolicyPresentationListWidgetState extends State<PolicyPresentationListWidg
             onDismissed: (direction) {
               BlocProvider.of<PolicyPresentationListBloc>(context)
                   .add(DeletePolicyPresentationList(value: value));
-              Scaffold.of(context).showSnackBar(DeleteSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(DeleteSnackBar(
                 message: "PolicyPresentation " + value.documentID,
                 onUndo: () => BlocProvider.of<PolicyPresentationListBloc>(context)
                     .add(AddPolicyPresentationList(value: value)),
@@ -168,7 +168,7 @@ class PolicyPresentationListWidgetState extends State<PolicyPresentationListWidg
                               value: BlocProvider.of<PolicyPresentationListBloc>(context),
                               child: getForm(value, FormAction.UpdateAction))));
                       if (removedItem != null) {
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           DeleteSnackBar(
                         message: "PolicyPresentation " + value.documentID,
                             onUndo: () => BlocProvider.of<PolicyPresentationListBloc>(context)
