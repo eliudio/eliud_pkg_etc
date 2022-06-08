@@ -67,6 +67,10 @@ class PolicyPresentationModel implements ModelBase, WithAppId {
           policy == other.policy &&
           conditions == other.conditions;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     return 'PolicyPresentationModel{documentID: $documentID, appId: $appId, description: $description, policy: $policy, conditions: $conditions}';

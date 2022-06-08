@@ -59,6 +59,10 @@ class MemberActionModel implements ModelBase {
           description == other.description &&
           action == other.action;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     return 'MemberActionModel{documentID: $documentID, text: $text, description: $description, action: $action}';
