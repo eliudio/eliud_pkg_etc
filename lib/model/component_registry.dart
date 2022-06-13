@@ -17,6 +17,7 @@
 import '../model/internal_component.dart';
 import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/tools/component/component_spec.dart';
+import 'abstract_repository_singleton.dart';
 
 import '../extensions/policy_presentation_component.dart';
 import '../editors/policy_presentation_component_editor.dart';
@@ -35,7 +36,7 @@ class ComponentRegistry {
     Registry.registry()!.addDropDownSupporter("policyPresentations", DropdownButtonComponentFactory());
     Registry.registry()!.register(componentName: "policyPresentations", componentConstructor: PolicyPresentationComponentConstructorDefault());
     Registry.registry()!.addComponentSpec('eliud_pkg_etc', 'etc', [
-      ComponentSpec('policyPresentations', PolicyPresentationComponentConstructorDefault(), PolicyPresentationComponentSelector(), PolicyPresentationComponentEditorConstructor(), ), 
+      ComponentSpec('policyPresentations', PolicyPresentationComponentConstructorDefault(), PolicyPresentationComponentSelector(), PolicyPresentationComponentEditorConstructor(), ({String? appId}) => policyPresentationRepository(appId: appId)! ), 
     ]);
 
   }

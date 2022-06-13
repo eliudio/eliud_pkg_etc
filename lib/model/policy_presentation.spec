@@ -47,6 +47,7 @@
       "fieldName": "policy",
       "displayName": "Policy",
       "fieldType": "PublicMedium",
+      "extractImage": "url",
       "association": true,
       "optional": true,
       "group": "policy"
