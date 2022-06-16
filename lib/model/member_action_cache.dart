@@ -42,6 +42,14 @@ class MemberActionCache implements MemberActionRepository {
     });
   }
 
+  Future<MemberActionEntity> addEntity(String documentID, MemberActionEntity value) {
+    return reference.addEntity(documentID, value);
+  }
+
+  Future<MemberActionEntity> updateEntity(String documentID, MemberActionEntity value) {
+    return reference.updateEntity(documentID, value);
+  }
+
   Future<void> delete(MemberActionModel value){
     fullCache.remove(value.documentID);
     reference.delete(value);

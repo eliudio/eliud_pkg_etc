@@ -36,6 +36,14 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class PolicyPresentationFirestore implements PolicyPresentationRepository {
+  Future<PolicyPresentationEntity> addEntity(String documentID, PolicyPresentationEntity value) {
+    return PolicyPresentationCollection.doc(documentID).set(value.toDocument()).then((_) => value);
+  }
+
+  Future<PolicyPresentationEntity> updateEntity(String documentID, PolicyPresentationEntity value) {
+    return PolicyPresentationCollection.doc(documentID).update(value.toDocument()).then((_) => value);
+  }
+
   Future<PolicyPresentationModel> add(PolicyPresentationModel value) {
     return PolicyPresentationCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
@@ -54,6 +62,21 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
 
   Future<PolicyPresentationModel?> _populateDocPlus(DocumentSnapshot value) async {
     return PolicyPresentationModel.fromEntityPlus(value.id, PolicyPresentationEntity.fromMap(value.data()), appId: appId);  }
+
+  Future<PolicyPresentationEntity?> getEntity(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = PolicyPresentationCollection.doc(id);
+      var doc = await collection.get();
+      return PolicyPresentationEntity.fromMap(doc.data());
+    } on Exception catch(e) {
+      if (onError != null) {
+        onError(e);
+      } else {
+        print("Error whilst retrieving PolicyPresentation with id $id");
+        print("Exceptoin: $e");
+      }
+    };
+  }
 
   Future<PolicyPresentationModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

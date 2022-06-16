@@ -34,6 +34,8 @@ typedef MemberActionModelTrigger(List<MemberActionModel?> list);
 typedef MemberActionChanged(MemberActionModel? value);
 
 abstract class MemberActionRepository extends RepositoryBase<MemberActionModel> {
+  Future<MemberActionEntity> addEntity(String documentID, MemberActionEntity value);
+  Future<MemberActionEntity> updateEntity(String documentID, MemberActionEntity value);
   Future<MemberActionModel> add(MemberActionModel value);
   Future<void> delete(MemberActionModel value);
   Future<MemberActionModel?> get(String? id, { Function(Exception)? onError });

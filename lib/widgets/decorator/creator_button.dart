@@ -138,12 +138,24 @@ class _CreatorButtonState extends State<CreatorButton> {
               color: widget.backgroundColor,
               border: Border.all(width: 1, color: widget.borderColor)),
           child: GestureDetector(
-              onTap: widget.onTap,
-              onTapDown: widget.onTapDown,
+              onTap:
+                  () =>
+                      widget.onTap,
+              onDoubleTap:
+                  () =>
+              widget.onTap,
+              onLongPress:
+                  () =>
+              widget.onTap,
+              onTapDown:
+                (_) =>
+                  widget.onTapDown,
               child: widget.icon));
     } else {
       button = GestureDetector(
           onTap: widget.onTap,
+          onDoubleTap:  widget.onTap,
+          onLongPress:  widget.onTap,
           onTapDown: widget.onTapDown,
           child: Container(
           height: CreatorButton.BUTTON_HEIGHT,

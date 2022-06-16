@@ -29,6 +29,7 @@ import '../model/member_action_list_bloc.dart';
 import '../model/member_action_list.dart';
 import '../model/member_action_list_event.dart';
 import '../model/member_action_model.dart';
+import '../model/member_action_entity.dart';
 import '../model/member_action_repository.dart';
 
 typedef MemberActionListChanged(List<MemberActionModel> values);
@@ -74,6 +75,14 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
         i++;
       }
       return -1;
+    }
+
+    Future<MemberActionEntity> addEntity(String documentID, MemberActionEntity value) {
+      throw Exception('Not implemented'); 
+    }
+
+    Future<MemberActionEntity> updateEntity(String documentID, MemberActionEntity value) {
+      throw Exception('Not implemented'); 
     }
 
     Future<MemberActionModel> add(MemberActionModel value) {

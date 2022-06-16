@@ -38,6 +38,8 @@ typedef PolicyPresentationModelTrigger(List<PolicyPresentationModel?> list);
 typedef PolicyPresentationChanged(PolicyPresentationModel? value);
 
 abstract class PolicyPresentationRepository extends RepositoryBase<PolicyPresentationModel> {
+  Future<PolicyPresentationEntity> addEntity(String documentID, PolicyPresentationEntity value);
+  Future<PolicyPresentationEntity> updateEntity(String documentID, PolicyPresentationEntity value);
   Future<PolicyPresentationModel> add(PolicyPresentationModel value);
   Future<void> delete(PolicyPresentationModel value);
   Future<PolicyPresentationModel?> get(String? id, { Function(Exception)? onError });
