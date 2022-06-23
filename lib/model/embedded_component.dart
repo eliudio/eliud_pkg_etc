@@ -162,6 +162,15 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
     throw UnimplementedError();
   }
   
+  @override
+  Future<MemberActionEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  MemberActionEntity? fromMap(Object? o) {
+    throw UnimplementedError();
+  }
 
     Future<void> deleteAll() async {}
 }

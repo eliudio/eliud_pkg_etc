@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef PolicyPresentationModelTrigger(List<PolicyPresentationModel?> list);
 typedef PolicyPresentationChanged(PolicyPresentationModel? value);
 
-abstract class PolicyPresentationRepository extends RepositoryBase<PolicyPresentationModel> {
+abstract class PolicyPresentationRepository extends RepositoryBase<PolicyPresentationModel, PolicyPresentationEntity> {
   Future<PolicyPresentationEntity> addEntity(String documentID, PolicyPresentationEntity value);
   Future<PolicyPresentationEntity> updateEntity(String documentID, PolicyPresentationEntity value);
   Future<PolicyPresentationModel> add(PolicyPresentationModel value);

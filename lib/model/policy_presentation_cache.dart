@@ -115,6 +115,16 @@ class PolicyPresentationCache implements PolicyPresentationRepository {
     });
   }
 
+  @override
+  Future<PolicyPresentationEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+    return reference.getEntity(id, onError: onError);
+  }
+
+  @override
+  PolicyPresentationEntity? fromMap(Object? o) {
+    return reference.fromMap(o);
+  }
+
   Future<void> deleteAll() {
     return reference.deleteAll();
   }
