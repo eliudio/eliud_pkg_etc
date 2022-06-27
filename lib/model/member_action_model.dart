@@ -36,6 +36,9 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class MemberActionModel implements ModelBase {
+  static const String packageName = 'eliud_pkg_etc';
+  static const String id = 'MemberAction';
+
   String documentID;
   String? text;
   String? description;
@@ -67,7 +70,7 @@ class MemberActionModel implements ModelBase {
     return 'MemberActionModel{documentID: $documentID, text: $text, description: $description, action: $action}';
   }
 
-  MemberActionEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+  MemberActionEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return MemberActionEntity(
