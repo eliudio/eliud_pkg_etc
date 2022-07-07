@@ -70,7 +70,7 @@ class MemberActionModel implements ModelBase {
     return 'MemberActionModel{documentID: $documentID, text: $text, description: $description, action: $action}';
   }
 
-  MemberActionEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  MemberActionEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return MemberActionEntity(
