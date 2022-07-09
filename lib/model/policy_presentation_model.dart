@@ -41,7 +41,7 @@ import 'package:eliud_core/tools/random.dart';
 
 class PolicyPresentationModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_etc';
-  static const String id = 'PolicyPresentation';
+  static const String id = 'policyPresentations';
 
   String documentID;
 

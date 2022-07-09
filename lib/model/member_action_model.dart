@@ -37,7 +37,7 @@ import 'package:eliud_core/tools/random.dart';
 
 class MemberActionModel implements ModelBase {
   static const String packageName = 'eliud_pkg_etc';
-  static const String id = 'MemberAction';
+  static const String id = 'memberActions';
 
   String documentID;
   String? text;

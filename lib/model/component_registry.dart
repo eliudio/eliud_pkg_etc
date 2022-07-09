@@ -38,6 +38,7 @@ class ComponentRegistry {
     Registry.registry()!.addComponentSpec('eliud_pkg_etc', 'etc', [
       ComponentSpec('policyPresentations', PolicyPresentationComponentConstructorDefault(), PolicyPresentationComponentSelector(), PolicyPresentationComponentEditorConstructor(), ({String? appId}) => policyPresentationRepository(appId: appId)! ), 
     ]);
+      Registry.registry()!.registerRetrieveRepository('eliud_pkg_etc', 'policyPresentations', ({String? appId}) => policyPresentationRepository(appId: appId)!);
 
   }
 }
