@@ -78,15 +78,22 @@ class PolicyPresentationModel implements ModelBase, WithAppId {
     return 'PolicyPresentationModel{documentID: $documentID, appId: $appId, description: $description, policy: $policy, conditions: $conditions}';
   }
 
-  PolicyPresentationEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
-      if (policy != null) referencesCollector.add(ModelReference(PublicMediumModel.packageName, PublicMediumModel.id, policy!));
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (policy != null) {
+      referencesCollector.add(ModelReference(PublicMediumModel.packageName, PublicMediumModel.id, policy!));
     }
+    if (policy != null) referencesCollector.addAll(await policy!.collectReferences(appId: appId));
+    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  PolicyPresentationEntity toEntity({String? appId}) {
     return PolicyPresentationEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
           policyId: (policy != null) ? policy!.documentID : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 

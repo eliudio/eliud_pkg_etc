@@ -70,13 +70,17 @@ class MemberActionModel implements ModelBase {
     return 'MemberActionModel{documentID: $documentID, text: $text, description: $description, action: $action}';
   }
 
-  MemberActionEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
-    }
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (action != null) referencesCollector.addAll(await action!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  MemberActionEntity toEntity({String? appId}) {
     return MemberActionEntity(
           text: (text != null) ? text : null, 
           description: (description != null) ? description : null, 
-          action: (action != null) ? action!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          action: (action != null) ? action!.toEntity(appId: appId) : null, 
     );
   }
 
