@@ -29,7 +29,9 @@ class MemberActionEntity implements EntityBase {
 
   MemberActionEntity({this.text, this.description, this.action, });
 
-
+  MemberActionEntity copyWith({String? documentID, String? text, String? description, ActionEntity? action, }) {
+    return MemberActionEntity(text : text ?? this.text, description : description ?? this.description, action : action ?? this.action, );
+  }
   List<Object?> get props => [text, description, action, ];
 
   @override
@@ -66,6 +68,12 @@ class MemberActionEntity implements EntityBase {
     if (action != null) theDocument["action"] = actionMap;
       else theDocument["action"] = null;
     return theDocument;
+  }
+
+  @override
+  MemberActionEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith();
+    return newEntity;
   }
 
   static MemberActionEntity? fromJsonString(String json) {

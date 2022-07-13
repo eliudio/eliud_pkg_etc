@@ -31,7 +31,9 @@ class PolicyPresentationEntity implements EntityBase {
 
   PolicyPresentationEntity({required this.appId, this.description, this.policyId, this.conditions, });
 
-
+  PolicyPresentationEntity copyWith({String? documentID, String? appId, String? description, String? policyId, StorageConditionsEntity? conditions, }) {
+    return PolicyPresentationEntity(appId : appId ?? this.appId, description : description ?? this.description, policyId : policyId ?? this.policyId, conditions : conditions ?? this.conditions, );
+  }
   List<Object?> get props => [appId, description, policyId, conditions, ];
 
   @override
@@ -71,6 +73,12 @@ class PolicyPresentationEntity implements EntityBase {
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;
+  }
+
+  @override
+  PolicyPresentationEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith(appId: newAppId);
+    return newEntity;
   }
 
   static PolicyPresentationEntity? fromJsonString(String json) {
