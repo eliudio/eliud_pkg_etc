@@ -41,11 +41,7 @@ import 'package:eliud_pkg_etc/model/member_action_repository.dart';
 class MemberActionFormBloc extends Bloc<MemberActionFormEvent, MemberActionFormState> {
   final String? appId;
 
-  MemberActionFormBloc(this.appId, ): super(MemberActionFormUninitialized());
-  @override
-  Stream<MemberActionFormState> mapEventToState(MemberActionFormEvent event) async* {
-    final currentState = state;
-    if (currentState is MemberActionFormUninitialized) {
+  MemberActionFormBloc(this.appId, ): super(MemberActionFormUninitialized()) {
       on <InitialiseNewMemberActionFormEvent> ((event, emit) {
         MemberActionFormLoaded loaded = MemberActionFormLoaded(value: MemberActionModel(
                                                documentID: "IDENTIFIER", 
@@ -57,31 +53,39 @@ class MemberActionFormBloc extends Bloc<MemberActionFormEvent, MemberActionFormS
       });
 
 
-      if (event is InitialiseMemberActionFormEvent) {
+      on <InitialiseMemberActionFormEvent> ((event, emit) async {
         MemberActionFormLoaded loaded = MemberActionFormLoaded(value: event.value);
         emit(loaded);
-      } else if (event is InitialiseMemberActionFormNoLoadEvent) {
+      });
+      on <InitialiseMemberActionFormNoLoadEvent> ((event, emit) async {
         MemberActionFormLoaded loaded = MemberActionFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is MemberActionFormInitialized) {
+      });
       MemberActionModel? newValue = null;
       on <ChangedMemberActionText> ((event, emit) async {
+      if (state is MemberActionFormInitialized) {
+        final currentState = state as MemberActionFormInitialized;
         newValue = currentState.value!.copyWith(text: event.value);
         emit(SubmittableMemberActionForm(value: newValue));
 
+      }
       });
       on <ChangedMemberActionDescription> ((event, emit) async {
+      if (state is MemberActionFormInitialized) {
+        final currentState = state as MemberActionFormInitialized;
         newValue = currentState.value!.copyWith(description: event.value);
         emit(SubmittableMemberActionForm(value: newValue));
 
+      }
       });
       on <ChangedMemberActionAction> ((event, emit) async {
+      if (state is MemberActionFormInitialized) {
+        final currentState = state as MemberActionFormInitialized;
         newValue = currentState.value!.copyWith(action: event.value);
         emit(SubmittableMemberActionForm(value: newValue));
 
+      }
       });
-    }
   }
 
 

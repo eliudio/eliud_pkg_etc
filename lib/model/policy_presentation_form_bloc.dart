@@ -46,11 +46,7 @@ class PolicyPresentationFormBloc extends Bloc<PolicyPresentationFormEvent, Polic
   final FormAction? formAction;
   final String? appId;
 
-  PolicyPresentationFormBloc(this.appId, { this.formAction }): super(PolicyPresentationFormUninitialized());
-  @override
-  Stream<PolicyPresentationFormState> mapEventToState(PolicyPresentationFormEvent event) async* {
-    final currentState = state;
-    if (currentState is PolicyPresentationFormUninitialized) {
+  PolicyPresentationFormBloc(this.appId, { this.formAction }): super(PolicyPresentationFormUninitialized()) {
       on <InitialiseNewPolicyPresentationFormEvent> ((event, emit) {
         PolicyPresentationFormLoaded loaded = PolicyPresentationFormLoaded(value: PolicyPresentationModel(
                                                documentID: "",
@@ -62,17 +58,19 @@ class PolicyPresentationFormBloc extends Bloc<PolicyPresentationFormEvent, Polic
       });
 
 
-      if (event is InitialisePolicyPresentationFormEvent) {
+      on <InitialisePolicyPresentationFormEvent> ((event, emit) async {
         // Need to re-retrieve the document from the repository so that I get all associated types
         PolicyPresentationFormLoaded loaded = PolicyPresentationFormLoaded(value: await policyPresentationRepository(appId: appId)!.get(event.value!.documentID));
         emit(loaded);
-      } else if (event is InitialisePolicyPresentationFormNoLoadEvent) {
+      });
+      on <InitialisePolicyPresentationFormNoLoadEvent> ((event, emit) async {
         PolicyPresentationFormLoaded loaded = PolicyPresentationFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is PolicyPresentationFormInitialized) {
+      });
       PolicyPresentationModel? newValue = null;
       on <ChangedPolicyPresentationDocumentID> ((event, emit) async {
+      if (state is PolicyPresentationFormInitialized) {
+        final currentState = state as PolicyPresentationFormInitialized;
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
           emit(await _isDocumentIDValid(event.value, newValue!));
@@ -80,29 +78,41 @@ class PolicyPresentationFormBloc extends Bloc<PolicyPresentationFormEvent, Polic
           emit(SubmittablePolicyPresentationForm(value: newValue));
         }
 
+      }
       });
       on <ChangedPolicyPresentationAppId> ((event, emit) async {
+      if (state is PolicyPresentationFormInitialized) {
+        final currentState = state as PolicyPresentationFormInitialized;
         newValue = currentState.value!.copyWith(appId: event.value);
         emit(SubmittablePolicyPresentationForm(value: newValue));
 
+      }
       });
       on <ChangedPolicyPresentationDescription> ((event, emit) async {
+      if (state is PolicyPresentationFormInitialized) {
+        final currentState = state as PolicyPresentationFormInitialized;
         newValue = currentState.value!.copyWith(description: event.value);
         emit(SubmittablePolicyPresentationForm(value: newValue));
 
+      }
       });
       on <ChangedPolicyPresentationPolicy> ((event, emit) async {
+      if (state is PolicyPresentationFormInitialized) {
+        final currentState = state as PolicyPresentationFormInitialized;
         if (event.value != null)
           newValue = currentState.value!.copyWith(policy: await publicMediumRepository(appId: appId)!.get(event.value));
         emit(SubmittablePolicyPresentationForm(value: newValue));
 
+      }
       });
       on <ChangedPolicyPresentationConditions> ((event, emit) async {
+      if (state is PolicyPresentationFormInitialized) {
+        final currentState = state as PolicyPresentationFormInitialized;
         newValue = currentState.value!.copyWith(conditions: event.value);
         emit(SubmittablePolicyPresentationForm(value: newValue));
 
+      }
       });
-    }
   }
 
 
