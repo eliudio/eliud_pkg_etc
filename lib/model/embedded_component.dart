@@ -168,7 +168,7 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
   }
 
   @override
-  MemberActionEntity? fromMap(Object? o) {
+  MemberActionEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     throw UnimplementedError();
   }
 

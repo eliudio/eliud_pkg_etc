@@ -15,6 +15,7 @@
 
 import 'dart:collection';
 import 'dart:convert';
+import 'package:eliud_core/tools/random.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/entity_base.dart';
@@ -39,14 +40,14 @@ class MemberActionEntity implements EntityBase {
     return 'MemberActionEntity{text: $text, description: $description, action: $action}';
   }
 
-  static MemberActionEntity? fromMap(Object? o) {
+  static MemberActionEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
     var actionFromMap;
     actionFromMap = map['action'];
     if (actionFromMap != null)
-      actionFromMap = ActionEntity.fromMap(actionFromMap);
+      actionFromMap = ActionEntity.fromMap(actionFromMap, newDocumentIds: newDocumentIds);
 
     return MemberActionEntity(
       text: map['text'], 
@@ -76,9 +77,9 @@ class MemberActionEntity implements EntityBase {
     return newEntity;
   }
 
-  static MemberActionEntity? fromJsonString(String json) {
+  static MemberActionEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
-    return fromMap(generationSpecificationMap);
+    return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
 
   String toJsonString() {

@@ -116,8 +116,8 @@ class MemberActionCache implements MemberActionRepository {
   }
 
   @override
-  MemberActionEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  MemberActionEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {

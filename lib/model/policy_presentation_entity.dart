@@ -15,6 +15,7 @@
 
 import 'dart:collection';
 import 'dart:convert';
+import 'package:eliud_core/tools/random.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/entity_base.dart';
@@ -41,19 +42,25 @@ class PolicyPresentationEntity implements EntityBase {
     return 'PolicyPresentationEntity{appId: $appId, description: $description, policyId: $policyId, conditions: $conditions}';
   }
 
-  static PolicyPresentationEntity? fromMap(Object? o) {
+  static PolicyPresentationEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
+    var policyIdNewDocmentId = map['policyId'];
+    if ((newDocumentIds != null) && (policyIdNewDocmentId != null)) {
+      var policyIdOldDocmentId = policyIdNewDocmentId;
+      policyIdNewDocmentId = newRandomKey();
+      newDocumentIds[policyIdOldDocmentId] = policyIdNewDocmentId;
+    }
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap, newDocumentIds: newDocumentIds);
 
     return PolicyPresentationEntity(
       appId: map['appId'], 
       description: map['description'], 
-      policyId: map['policyId'], 
+      policyId: policyIdNewDocmentId, 
       conditions: conditionsFromMap, 
     );
   }
@@ -81,9 +88,9 @@ class PolicyPresentationEntity implements EntityBase {
     return newEntity;
   }
 
-  static PolicyPresentationEntity? fromJsonString(String json) {
+  static PolicyPresentationEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
-    return fromMap(generationSpecificationMap);
+    return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
 
   String toJsonString() {

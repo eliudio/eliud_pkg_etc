@@ -121,8 +121,8 @@ class PolicyPresentationCache implements PolicyPresentationRepository {
   }
 
   @override
-  PolicyPresentationEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  PolicyPresentationEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {

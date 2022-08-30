@@ -37,8 +37,8 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class PolicyPresentationFirestore implements PolicyPresentationRepository {
   @override
-  PolicyPresentationEntity? fromMap(Object? o) {
-    return PolicyPresentationEntity.fromMap(o);
+  PolicyPresentationEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return PolicyPresentationEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<PolicyPresentationEntity> addEntity(String documentID, PolicyPresentationEntity value) {
