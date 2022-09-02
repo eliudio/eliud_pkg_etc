@@ -89,7 +89,7 @@ class PolicyPresentationBloc
       } else {
         await policyPresentationRepository(appId: appId)!.update(newModel);
       }
-      feedback(true);
+      feedback(true, newModel);
     }
   }
 }
