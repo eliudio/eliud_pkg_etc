@@ -178,6 +178,7 @@ class _PolicyPresentationComponentEditorState
       for (var medium in state.media) {
         widgets.add(popupMenuButton(
           widget.app, context,
+          tooltip: _message(medium),
           icon: Image.network(
             medium.url!,
           ),
@@ -216,6 +217,14 @@ class _PolicyPresentationComponentEditorState
         shrinkWrap: true,
         children: widgets);
     return Column(children: widgets);
+  }
+
+  String _message(PublicMediumModel? item) {
+    if (item == null) {
+      return '?';
+    } else {
+      return ((item.base == null) ? 'no name' : item.base!) + '.' + ((item.ext == null) ? 'no ext' : item.ext!);
+    }
   }
 
   Widget _addButton() {
