@@ -7,13 +7,12 @@ import 'package:eliud_core/model/app_policy_model.dart';
 import 'package:eliud_core/model/storage_conditions_model.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
+import 'package:eliud_core/tools/widgets/app_policy_dashboard.dart';
 import 'package:eliud_core/tools/widgets/editor/select_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/cupertino.dart';
-
-import 'app_policy_dashboard.dart';
 
 Widget selectAppPolicyWidget(BuildContext context, AppModel app, StorageConditionsModel? containerStorageConditions, AppPolicyModel? appPolicy, Function (dynamic selected) selectedCallback) {
   return SelectWidget<AppPolicyModel>(
