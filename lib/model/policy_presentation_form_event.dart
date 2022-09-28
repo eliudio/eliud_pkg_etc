@@ -95,16 +95,16 @@ class ChangedPolicyPresentationDescription extends PolicyPresentationFormEvent {
   String toString() => 'ChangedPolicyPresentationDescription{ value: $value }';
 }
 
-class ChangedPolicyPresentationPolicy extends PolicyPresentationFormEvent {
+class ChangedPolicyPresentationPolicies extends PolicyPresentationFormEvent {
   final String? value;
 
-  ChangedPolicyPresentationPolicy({this.value});
+  ChangedPolicyPresentationPolicies({this.value});
 
   @override
   List<Object?> get props => [ value ];
 
   @override
-  String toString() => 'ChangedPolicyPresentationPolicy{ value: $value }';
+  String toString() => 'ChangedPolicyPresentationPolicies{ value: $value }';
 }
 
 class ChangedPolicyPresentationConditions extends PolicyPresentationFormEvent {

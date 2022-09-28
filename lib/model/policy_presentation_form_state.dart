@@ -111,15 +111,15 @@ class DescriptionPolicyPresentationFormError extends PolicyPresentationFormError
 }
 
 
-class PolicyPolicyPresentationFormError extends PolicyPresentationFormError { 
-  const PolicyPolicyPresentationFormError({ String? message, PolicyPresentationModel? value }): super(message: message, value: value);
+class PoliciesPolicyPresentationFormError extends PolicyPresentationFormError { 
+  const PoliciesPolicyPresentationFormError({ String? message, PolicyPresentationModel? value }): super(message: message, value: value);
 
   @override
   List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
-    return '''PolicyPolicyPresentationFormError {
+    return '''PoliciesPolicyPresentationFormError {
       value: $value,
       message: $message,
     }''';

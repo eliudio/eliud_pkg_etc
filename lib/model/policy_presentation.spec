@@ -44,9 +44,9 @@
       "group": "general"
     },
     {
-      "fieldName": "policy",
+      "fieldName": "policies",
       "displayName": "Policy",
-      "fieldType": "PublicMedium",
+      "fieldType": "AppPolicy",
       "association": true,
       "optional": true,
       "group": "policy"

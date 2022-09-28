@@ -1,5 +1,6 @@
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/core/widgets/public_medium_dialog.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
@@ -37,14 +38,14 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
   @override
   Widget yourWidget(
       BuildContext context, PolicyPresentationModel? policyPresentationModel) {
-    if (policyPresentationModel!.policy == null)
-      return Text('Policy not available');
-//    if (policyPresentationModel.policy!.mediumType != PublicMediumType.Pdf)
-//      return Text('Policy not in pdf format. Not supported');
+    if (policyPresentationModel!.policies == null)
+      return text(app, context, 'Policy not available');
+    if (policyPresentationModel.policies!.policy == null)
+      return text(app, context, 'Policy has no pages');
 
     return FutureBuilder<List<String?>>(
         future: ChainOfMediumModels.getPublicMediumChainOfUrls(
-            policyPresentationModel.appId, policyPresentationModel.policy!),
+            policyPresentationModel.appId, policyPresentationModel.policies!.policy!),
         builder: (context, snapshot) {
           if ((snapshot.hasData) && (snapshot.data != null)) {
             var height = fullScreenHeight(context) - 30;

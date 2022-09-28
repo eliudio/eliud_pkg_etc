@@ -127,7 +127,7 @@ class _MyPolicyPresentationFormState extends State<MyPolicyPresentationForm> {
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _appIdController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  String? _policy;
+  String? _policies;
 
 
   _MyPolicyPresentationFormState(this.formAction);
@@ -162,10 +162,10 @@ class _MyPolicyPresentationFormState extends State<MyPolicyPresentationForm> {
           _descriptionController.text = state.value!.description.toString();
         else
           _descriptionController.text = "";
-        if (state.value!.policy != null)
-          _policy= state.value!.policy!.documentID;
+        if (state.value!.policies != null)
+          _policies= state.value!.policies!.documentID;
         else
-          _policy= "";
+          _policies= "";
       }
       if (state is PolicyPresentationFormInitialized) {
         List<Widget> children = [];
@@ -203,7 +203,7 @@ class _MyPolicyPresentationFormState extends State<MyPolicyPresentationForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(app: widget.app, id: "publicMediums", value: _policy, trigger: (value, privilegeLevel) => _onPolicySelected(value), optional: true),
+                DropdownButtonComponentFactory().createNew(app: widget.app, id: "appPolicys", value: _policies, trigger: (value, privilegeLevel) => _onPoliciesSelected(value), optional: true),
           );
 
 
@@ -235,7 +235,7 @@ class _MyPolicyPresentationFormState extends State<MyPolicyPresentationForm> {
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
                               description: state.value!.description, 
-                              policy: state.value!.policy, 
+                              policies: state.value!.policies, 
                               conditions: state.value!.conditions, 
                         )));
                       } else {
@@ -244,7 +244,7 @@ class _MyPolicyPresentationFormState extends State<MyPolicyPresentationForm> {
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
                               description: state.value!.description, 
-                              policy: state.value!.policy, 
+                              policies: state.value!.policies, 
                               conditions: state.value!.conditions, 
                           )));
                       }
@@ -287,11 +287,11 @@ class _MyPolicyPresentationFormState extends State<MyPolicyPresentationForm> {
   }
 
 
-  void _onPolicySelected(String? val) {
+  void _onPoliciesSelected(String? val) {
     setState(() {
-      _policy = val;
+      _policies = val;
     });
-    _myFormBloc.add(ChangedPolicyPresentationPolicy(value: val));
+    _myFormBloc.add(ChangedPolicyPresentationPolicies(value: val));
   }
 
 

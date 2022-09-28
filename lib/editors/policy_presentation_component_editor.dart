@@ -1,10 +1,7 @@
 import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
-import 'package:eliud_core/core/registry.dart';
-import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/model/app_model.dart';
-import 'package:eliud_core/model/model_export.dart';
-import 'package:eliud_core/style/frontend/has_button.dart';
+import 'package:eliud_core/model/storage_conditions_model.dart';
 import 'package:eliud_core/style/frontend/has_container.dart';
 import 'package:eliud_core/style/frontend/has_dialog.dart';
 import 'package:eliud_core/style/frontend/has_dialog_field.dart';
@@ -12,21 +9,25 @@ import 'package:eliud_core/style/frontend/has_list_tile.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/component/component_spec.dart';
+import 'package:eliud_core/tools/helpers/parse_helper.dart';
 import 'package:eliud_core/tools/random.dart';
+import 'package:eliud_core/tools/rgb_formfield.dart';
 import 'package:eliud_core/tools/widgets/condition_simple_widget.dart';
 import 'package:eliud_core/tools/widgets/header_widget.dart';
-import 'package:eliud_pkg_etc/editors/policy_presentation_bloc/policy_presentation_bloc.dart';
-import 'package:eliud_pkg_etc/editors/policy_presentation_bloc/policy_presentation_event.dart';
-import 'package:eliud_pkg_etc/editors/policy_presentation_bloc/policy_presentation_state.dart';
-import 'package:eliud_pkg_etc/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_etc/model/policy_presentation_model.dart';
-import 'package:eliud_core/package/access_rights.dart';
+import 'package:eliud_pkg_etc/editors/widgets/select_app_policy_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PolicyPresentationComponentEditorConstructor
-    extends ComponentEditorConstructor {
+import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_bloc.dart';
+import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_event.dart';
+import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_state.dart';
+
+import '../model/abstract_repository_singleton.dart';
+import '../model/policy_presentation_model.dart';
+import 'bloc/policy_presentation_bloc.dart';
+
+class PolicyPresentationComponentEditorConstructor extends ComponentEditorConstructor {
   @override
   void updateComponent(
       AppModel app, BuildContext context, model, EditorFeedback feedback) {
@@ -43,7 +44,7 @@ class PolicyPresentationComponentEditorConstructor
         PolicyPresentationModel(
           appId: app.documentID,
           documentID: newRandomKey(),
-          description: 'Policy presentation',
+          description: 'New policy',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
                   PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
@@ -52,67 +53,64 @@ class PolicyPresentationComponentEditorConstructor
   }
 
   @override
-  void updateComponentWithID(
-      AppModel app, BuildContext context, String id, EditorFeedback feedback) async {
-    var policyPresentation =
-        await policyPresentationRepository(appId: app.documentID)!
-        .get(id);
+  void updateComponentWithID(AppModel app, BuildContext context, String id,
+      EditorFeedback feedback) async {
+    var policyPresentation = await policyPresentationRepository(appId: app.documentID)!.get(id);
     if (policyPresentation != null) {
       _openIt(app, context, false, policyPresentation, feedback);
     } else {
       openErrorDialog(app, context, app.documentID + '/_error',
-          title: 'Error', errorMessage: 'Cannot find policyPresentation with id $id');
+          title: 'Error',
+          errorMessage: 'Cannot find policy with id $id');
     }
   }
 
   void _openIt(AppModel app, BuildContext context, bool create,
       PolicyPresentationModel model, EditorFeedback feedback) {
-    openComplexDialog(app, context, app.documentID + '/policypresentation',
-        title: create
-            ? 'Create policy presentation'
-            : 'Update policy presentation',
-        includeHeading: false,
-        widthFraction: .9,
-        child: BlocProvider<PolicyPresentationBloc>(
+    openComplexDialog(
+      app,
+      context,
+      app.documentID + '/notificationdashboard',
+      title: create
+          ? 'Create Notification Dashboard'
+          : 'Update Notification Dashboard',
+      includeHeading: false,
+      widthFraction: .9,
+      child: BlocProvider<PolicyPresentationBloc>(
           create: (context) => PolicyPresentationBloc(
-            app.documentID,
-            /*create,
+                app.documentID,
+                /*create,
             */
-            feedback,
-          )..add(PolicyPresentationInitialise(model)),
-          child: PolicyPresentationComponentEditor(
+                feedback,
+              )..add(EditorBaseInitialise<PolicyPresentationModel>(model)),
+          child: DividerComponentEditor(
             app: app,
-          ),
-        ));
+          )),
+    );
   }
 }
 
-class PolicyPresentationComponentEditor extends StatefulWidget {
+class DividerComponentEditor extends StatefulWidget {
   final AppModel app;
 
-  const PolicyPresentationComponentEditor({
+  const DividerComponentEditor({
     Key? key,
     required this.app,
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() =>
-      _PolicyPresentationComponentEditorState();
+  State<StatefulWidget> createState() => _DividerComponentEditorState();
 }
 
-class _PolicyPresentationComponentEditorState
-    extends State<PolicyPresentationComponentEditor> {
-  static double height = 200;
-  double? _progress;
-
+class _DividerComponentEditorState extends State<DividerComponentEditor> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AccessBloc, AccessState>(
         builder: (aContext, accessState) {
       if (accessState is AccessDetermined) {
-        return BlocBuilder<PolicyPresentationBloc, PolicyPresentationState>(
+        return BlocBuilder<PolicyPresentationBloc, EditorBaseState<PolicyPresentationModel>>(
             builder: (ppContext, policyPresentationState) {
-          if (policyPresentationState is PolicyPresentationInitialised) {
+          if (policyPresentationState is EditorBaseInitialised<PolicyPresentationModel>) {
             return ListView(
                 shrinkWrap: true,
                 physics: ScrollPhysics(),
@@ -121,10 +119,9 @@ class _PolicyPresentationComponentEditorState
                     app: widget.app,
                     title: 'Policy Presentation',
                     okAction: () async {
-                      BlocProvider.of<PolicyPresentationBloc>(context).save(
-                          PolicyPresentationApplyChanges(
-                              policyPresentationState.model,
-                              policyPresentationState.media));
+                      await BlocProvider.of<PolicyPresentationBloc>(context).save(
+                          EditorBaseApplyChanges<PolicyPresentationModel>(
+                              model: policyPresentationState.model));
                       return true;
                     },
                     cancelAction: () async {
@@ -140,14 +137,25 @@ class _PolicyPresentationComponentEditorState
                             leading: Icon(Icons.vpn_key),
                             title: text(widget.app, context,
                                 policyPresentationState.model.documentID)),
+                        getListTile(context, widget.app,
+                            leading: Icon(Icons.description),
+                            title: dialogField(
+                              widget.app,
+                              context,
+                              initialValue: policyPresentationState.model.description,
+                              valueChanged: (value) {
+                                policyPresentationState.model.description = value;
+                              },
+                              maxLines: 1,
+                              decoration: const InputDecoration(
+                                hintText: 'Description',
+                                labelText: 'Description',
+                              ),
+                            )),
                       ]),
-                  topicContainer(widget.app, context,
-                      title: 'Pages',
-                      collapsible: true,
-                      collapsed: true,
-                      children: [
-                        _images(policyPresentationState),
-                      ]),
+                  selectAppPolicyWidget(context, widget.app, policyPresentationState.model.conditions,
+                      policyPresentationState.model.policies, (selected) {}
+                  ),
                   topicContainer(widget.app, context,
                       title: 'Condition',
                       collapsible: true,
@@ -168,121 +176,6 @@ class _PolicyPresentationComponentEditorState
       } else {
         return progressIndicator(widget.app, context);
       }
-    });
-  }
-
-  Widget _images(PolicyPresentationInitialised state) {
-    List<Widget> widgets = [];
-    if (state.media != null) {
-      int index = 0;
-      for (var medium in state.media) {
-        widgets.add(popupMenuButton(
-          widget.app, context,
-          tooltip: _message(medium),
-          icon: Image.network(
-            medium.url!,
-          ),
-          onSelected: (value) async {
-            if (value == 1) {
-              BlocProvider.of<PolicyPresentationBloc>(context)
-                  .add(DeletePolicyPageEvent(medium));
-            } else if (value == 2) {
-              Registry.registry()!.getMediumApi().showPhotosPublic(context, widget.app, state.media, index);
-            }
-          },
-          itemBuilder: (context) => [
-            popupMenuItem(
-              widget.app, context,
-              value: 1,
-              label: 'Delete'
-            ),
-            popupMenuItem(
-              widget.app, context,
-              value: 2,
-              label: 'View'
-            ),
-          ],
-        ));
-        index++;
-      }
-    }
-    widgets.add(_addButton());
-
-    return GridView.extent(
-        maxCrossAxisExtent: 200,
-        padding: const EdgeInsets.all(0),
-        mainAxisSpacing: 20,
-        crossAxisSpacing: 20,
-        physics: const ScrollPhysics(), // to disable GridView's scrolling
-        shrinkWrap: true,
-        children: widgets);
-    return Column(children: widgets);
-  }
-
-  String _message(PublicMediumModel? item) {
-    if (item == null) {
-      return '?';
-    } else {
-      return ((item.base == null) ? 'no name' : item.base!) + '.' + ((item.ext == null) ? 'no ext' : item.ext!);
-    }
-  }
-
-  Widget _addButton() {
-    if (_progress != null) {
-      return progressIndicatorWithValue(widget.app, context, value: _progress!);
-    } else {
-      return popupMenuButton<int>(
-          widget.app, context,
-          child: Icon(Icons.add),
-          itemBuilder: (context) => [
-                if (Registry.registry()!.getMediumApi().hasCamera())
-                  popupMenuItem(
-                    widget.app, context,
-                    value: 0,
-                    label: 'Take photo'
-                  ),
-                popupMenuItem(
-                  widget.app, context,
-                  value: 1,
-                  label: 'Upload image'
-                ),
-              ],
-          onSelected: (value) async {
-            if (value == 0) {
-              Registry.registry()!.getMediumApi().takePhoto(
-                  context,
-                  widget.app,
-                  () => PublicMediumAccessRights(),
-                  (photo) => _photoFeedbackFunction(photo),
-                  _photoUploading,
-                  allowCrop: false);
-            } else if (value == 1) {
-              Registry.registry()!.getMediumApi().uploadPhoto(
-                  context,
-                  widget.app,
-                  () => PublicMediumAccessRights(),
-                  (photo) => _photoFeedbackFunction(photo),
-                  _photoUploading,
-                  allowCrop: false);
-            }
-          });
-    }
-  }
-
-  void _photoFeedbackFunction(PublicMediumModel? platformMediumModel) {
-    setState(() {
-      _progress = null;
-      if (platformMediumModel != null) {
-        BlocProvider.of<PolicyPresentationBloc>(context)
-            .add(NewPolicyPageEvent(platformMediumModel));
-      }
-    });
-  }
-
-  void _photoUploading(dynamic progress) {
-    if (progress != null) {}
-    setState(() {
-      _progress = progress;
     });
   }
 }

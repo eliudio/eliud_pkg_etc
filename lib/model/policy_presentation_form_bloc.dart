@@ -96,11 +96,11 @@ class PolicyPresentationFormBloc extends Bloc<PolicyPresentationFormEvent, Polic
 
       }
       });
-      on <ChangedPolicyPresentationPolicy> ((event, emit) async {
+      on <ChangedPolicyPresentationPolicies> ((event, emit) async {
       if (state is PolicyPresentationFormInitialized) {
         final currentState = state as PolicyPresentationFormInitialized;
         if (event.value != null)
-          newValue = currentState.value!.copyWith(policy: await publicMediumRepository(appId: appId)!.get(event.value));
+          newValue = currentState.value!.copyWith(policies: await appPolicyRepository(appId: appId)!.get(event.value));
         emit(SubmittablePolicyPresentationForm(value: newValue));
 
       }

@@ -27,31 +27,25 @@ import 'package:eliud_core/tools/common_tools.dart';
 class PolicyPresentationEntity implements EntityBase {
   final String? appId;
   final String? description;
-  final String? policyId;
+  final String? policiesId;
   final StorageConditionsEntity? conditions;
 
-  PolicyPresentationEntity({required this.appId, this.description, this.policyId, this.conditions, });
+  PolicyPresentationEntity({required this.appId, this.description, this.policiesId, this.conditions, });
 
-  PolicyPresentationEntity copyWith({String? documentID, String? appId, String? description, String? policyId, StorageConditionsEntity? conditions, }) {
-    return PolicyPresentationEntity(appId : appId ?? this.appId, description : description ?? this.description, policyId : policyId ?? this.policyId, conditions : conditions ?? this.conditions, );
+  PolicyPresentationEntity copyWith({String? documentID, String? appId, String? description, String? policiesId, StorageConditionsEntity? conditions, }) {
+    return PolicyPresentationEntity(appId : appId ?? this.appId, description : description ?? this.description, policiesId : policiesId ?? this.policiesId, conditions : conditions ?? this.conditions, );
   }
-  List<Object?> get props => [appId, description, policyId, conditions, ];
+  List<Object?> get props => [appId, description, policiesId, conditions, ];
 
   @override
   String toString() {
-    return 'PolicyPresentationEntity{appId: $appId, description: $description, policyId: $policyId, conditions: $conditions}';
+    return 'PolicyPresentationEntity{appId: $appId, description: $description, policiesId: $policiesId, conditions: $conditions}';
   }
 
   static PolicyPresentationEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
-    var policyIdNewDocmentId = map['policyId'];
-    if ((newDocumentIds != null) && (policyIdNewDocmentId != null)) {
-      var policyIdOldDocmentId = policyIdNewDocmentId;
-      policyIdNewDocmentId = newRandomKey();
-      newDocumentIds[policyIdOldDocmentId] = policyIdNewDocmentId;
-    }
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
@@ -60,7 +54,7 @@ class PolicyPresentationEntity implements EntityBase {
     return PolicyPresentationEntity(
       appId: map['appId'], 
       description: map['description'], 
-      policyId: policyIdNewDocmentId, 
+      policiesId: map['policiesId'], 
       conditions: conditionsFromMap, 
     );
   }
@@ -75,8 +69,8 @@ class PolicyPresentationEntity implements EntityBase {
       else theDocument["appId"] = null;
     if (description != null) theDocument["description"] = description;
       else theDocument["description"] = null;
-    if (policyId != null) theDocument["policyId"] = policyId;
-      else theDocument["policyId"] = null;
+    if (policiesId != null) theDocument["policiesId"] = policiesId;
+      else theDocument["policiesId"] = null;
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;

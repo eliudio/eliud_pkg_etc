@@ -48,19 +48,19 @@ class PolicyPresentationModel implements ModelBase, WithAppId {
   // This is the identifier of the app to which this belongs
   String appId;
   String? description;
-  PublicMediumModel? policy;
+  AppPolicyModel? policies;
   StorageConditionsModel? conditions;
 
-  PolicyPresentationModel({required this.documentID, required this.appId, this.description, this.policy, this.conditions, })  {
+  PolicyPresentationModel({required this.documentID, required this.appId, this.description, this.policies, this.conditions, })  {
     assert(documentID != null);
   }
 
-  PolicyPresentationModel copyWith({String? documentID, String? appId, String? description, PublicMediumModel? policy, StorageConditionsModel? conditions, }) {
-    return PolicyPresentationModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, policy: policy ?? this.policy, conditions: conditions ?? this.conditions, );
+  PolicyPresentationModel copyWith({String? documentID, String? appId, String? description, AppPolicyModel? policies, StorageConditionsModel? conditions, }) {
+    return PolicyPresentationModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, policies: policies ?? this.policies, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ policy.hashCode ^ conditions.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ policies.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -70,20 +70,20 @@ class PolicyPresentationModel implements ModelBase, WithAppId {
           documentID == other.documentID &&
           appId == other.appId &&
           description == other.description &&
-          policy == other.policy &&
+          policies == other.policies &&
           conditions == other.conditions;
 
   @override
   String toString() {
-    return 'PolicyPresentationModel{documentID: $documentID, appId: $appId, description: $description, policy: $policy, conditions: $conditions}';
+    return 'PolicyPresentationModel{documentID: $documentID, appId: $appId, description: $description, policies: $policies, conditions: $conditions}';
   }
 
   Future<List<ModelReference>> collectReferences({String? appId}) async {
     List<ModelReference> referencesCollector = [];
-    if (policy != null) {
-      referencesCollector.add(ModelReference(PublicMediumModel.packageName, PublicMediumModel.id, policy!));
+    if (policies != null) {
+      referencesCollector.add(ModelReference(AppPolicyModel.packageName, AppPolicyModel.id, policies!));
     }
-    if (policy != null) referencesCollector.addAll(await policy!.collectReferences(appId: appId));
+    if (policies != null) referencesCollector.addAll(await policies!.collectReferences(appId: appId));
     if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
     return referencesCollector;
   }
@@ -92,7 +92,7 @@ class PolicyPresentationModel implements ModelBase, WithAppId {
     return PolicyPresentationEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
-          policyId: (policy != null) ? policy!.documentID : null, 
+          policiesId: (policies != null) ? policies!.documentID : null, 
           conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
@@ -112,13 +112,13 @@ class PolicyPresentationModel implements ModelBase, WithAppId {
   static Future<PolicyPresentationModel?> fromEntityPlus(String documentID, PolicyPresentationEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    PublicMediumModel? policyHolder;
-    if (entity.policyId != null) {
+    AppPolicyModel? policiesHolder;
+    if (entity.policiesId != null) {
       try {
-          policyHolder = await publicMediumRepository(appId: appId)!.get(entity.policyId);
+          policiesHolder = await appPolicyRepository(appId: appId)!.get(entity.policiesId);
       } on Exception catch(e) {
-        print('Error whilst trying to initialise policy');
-        print('Error whilst retrieving publicMedium with id ${entity.policyId}');
+        print('Error whilst trying to initialise policies');
+        print('Error whilst retrieving appPolicy with id ${entity.policiesId}');
         print('Exception: $e');
       }
     }
@@ -128,7 +128,7 @@ class PolicyPresentationModel implements ModelBase, WithAppId {
           documentID: documentID, 
           appId: entity.appId ?? '', 
           description: entity.description, 
-          policy: policyHolder, 
+          policies: policiesHolder, 
           conditions: 
             await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
