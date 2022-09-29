@@ -21,7 +21,7 @@ Widget selectAppPolicyWidget(BuildContext context, AppModel app, StorageConditio
       title: 'AppPolicy',
       selectTitle: 'Select appPolicy',
       displayItemFunction: (item) => text(app, context,
-          item.documentID + ' ' + (item.description ?? '?')),
+          item.documentID + ' ' + (item.name ?? '?')),
       blocProviderProvider: () => BlocProvider<AppPolicyListBloc>(
         create: (context) => AppPolicyListBloc(
           eliudQuery: getComponentSelectorQuery(0, app.documentID),

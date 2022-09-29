@@ -154,7 +154,11 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                             )),
                       ]),
                   selectAppPolicyWidget(context, widget.app, policyPresentationState.model.conditions,
-                      policyPresentationState.model.policies, (selected) {}
+                      policyPresentationState.model.policies, (selected) {
+                        setState(() {
+                          policyPresentationState.model.policies = selected;
+                        });
+                      }
                   ),
                   topicContainer(widget.app, context,
                       title: 'Condition',

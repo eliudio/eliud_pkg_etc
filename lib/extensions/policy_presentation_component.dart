@@ -44,7 +44,7 @@ class PolicyPresentation extends AbstractPolicyPresentationComponent {
       return text(app, context, 'Policy has no pages');
 
     return FutureBuilder<List<String?>>(
-        future: ChainOfMediumModels.getPublicMediumChainOfUrls(
+        future: ChainOfMediumModels.getPlatformMediumChainOfUrls(
             policyPresentationModel.appId, policyPresentationModel.policies!.policy!),
         builder: (context, snapshot) {
           if ((snapshot.hasData) && (snapshot.data != null)) {
