@@ -40,7 +40,7 @@ Widget selectAppPolicyWidget(BuildContext context, AppModel app, StorageConditio
       },
       selectedCallback: selectedCallback,
       addCallback: () => AppPolicyDashboard.addAppPolicy(app, context),
-      deleteCallback: null,
+      deleteCallback: (value) => AppPolicyDashboard.deleteAppPolicy(app, context, value),
       updateCallback: (item) => AppPolicyDashboard.updateAppPolicy(app, context, item),
       changePrivilegeEventCallback: (BuildContext context, int privilegeLevel) {
         BlocProvider.of<AppPolicyListBloc>(context).add(
