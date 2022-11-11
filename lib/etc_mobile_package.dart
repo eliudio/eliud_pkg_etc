@@ -1,5 +1,7 @@
 import 'etc_package.dart';
 
+EtcPackage getEtcPackage() => EtcMobilePackage();
+
 class EtcMobilePackage extends EtcPackage {
 
   @override

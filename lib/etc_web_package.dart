@@ -1,5 +1,7 @@
 import 'etc_package.dart';
 
+EtcPackage getEtcPackage() => EtcWebPackage();
+
 class EtcWebPackage extends EtcPackage {
 
   @override
