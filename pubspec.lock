@@ -381,10 +381,10 @@ packages:
     dependency: "direct main"
     description:
       name: eliud_core
-      sha256: "0125000be5e34795dd1fd785dc6aac8915a06035ac54db405c0d4a69bc8b91e5"
+      sha256: d299820ae876ffdbac78ff6dce73c76f25c23ccd9e945918d09317e6387e1b43
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.5"
+    version: "1.0.6+1"
   eliud_generator:
     dependency: "direct dev"
     description:
@@ -397,10 +397,10 @@ packages:
     dependency: "direct main"
     description:
       name: eliud_pkg_medium
-      sha256: "4a34856635c0d041c173bdca9006b6ced6665b2b3b98089446a68a75c6d905f6"
+      sha256: "589b09c2760c2e6b36d14ca42d64ce781a74702b58f2cf82bc3f318c17305d8a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1+5"
+    version: "1.0.1+6"
   equatable:
     dependency: "direct main"
     description:
