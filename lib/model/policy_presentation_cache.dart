@@ -140,13 +140,13 @@ class PolicyPresentationCache implements PolicyPresentationRepository {
   }
 
   @override
-  StreamSubscription<PolicyPresentationModel?> listenTo(String documentId, PolicyPresentationChanged changed) {
+  StreamSubscription<PolicyPresentationModel?> listenTo(String documentId, PolicyPresentationChanged changed, {PolicyPresentationErrorHandler? errorHandler}) {
     return reference.listenTo(documentId, ((value) {
       if (value != null) {
         fullCache[value.documentID] = value;
       }
       changed(value);
-    }));
+    }), errorHandler: errorHandler);
   }
 
   static Future<PolicyPresentationModel> refreshRelations(PolicyPresentationModel model) async {

@@ -36,6 +36,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef PolicyPresentationModelTrigger(List<PolicyPresentationModel?> list);
 typedef PolicyPresentationChanged(PolicyPresentationModel? value);
+typedef PolicyPresentationErrorHandler(o, e);
 
 abstract class PolicyPresentationRepository extends RepositoryBase<PolicyPresentationModel, PolicyPresentationEntity> {
   Future<PolicyPresentationEntity> addEntity(String documentID, PolicyPresentationEntity value);
@@ -52,7 +53,7 @@ abstract class PolicyPresentationRepository extends RepositoryBase<PolicyPresent
 
   StreamSubscription<List<PolicyPresentationModel?>> listen(PolicyPresentationModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<PolicyPresentationModel?>> listenWithDetails(PolicyPresentationModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<PolicyPresentationModel?> listenTo(String documentId, PolicyPresentationChanged changed);
+  StreamSubscription<PolicyPresentationModel?> listenTo(String documentId, PolicyPresentationChanged changed, {PolicyPresentationErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);

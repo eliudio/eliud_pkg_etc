@@ -153,7 +153,7 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
   }
   
   @override
-  StreamSubscription<MemberActionModel> listenTo(String documentId, MemberActionChanged changed) {
+  StreamSubscription<MemberActionModel> listenTo(String documentId, MemberActionChanged changed, {MemberActionErrorHandler? errorHandler}) {
     throw UnimplementedError();
   }
 
