@@ -3,15 +3,15 @@ name: eliud_pkg_etc
 description: Eliud package for other extensions
 homepage: https://eliud.io
 repository: https://github.com/eliudio/eliud_pkg_etc
-version: 1.0.1+22
+version: 1.0.1+23
 environment:
   sdk: '>=2.17.0 <4.0.0'
   flutter: '>=3.0.0'
 dependencies:
   flutter:
     sdk: flutter
-  eliud_core: ^1.0.19+3
-  eliud_pkg_medium: ^1.0.1+22
+  eliud_core: ^1.0.20+1
+  eliud_pkg_medium: ^1.0.1+23
   flutter_bloc: ^8.1.2
   cloud_firestore: ^4.6.0
   intl: ^0.18.1
