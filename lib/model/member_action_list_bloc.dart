@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_etc/model/member_action_repository.dart';
 import 'package:eliud_pkg_etc/model/member_action_list_event.dart';
 import 'package:eliud_pkg_etc/model/member_action_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'member_action_model.dart';
+
+typedef List<MemberActionModel?> FilterMemberActionModels(List<MemberActionModel?> values);
+
 
 
 class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListState> {
+  final FilterMemberActionModels? filter;
   final MemberActionRepository _memberActionRepository;
   StreamSubscription? _memberActionsListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListS
   final bool? detailed;
   final int memberActionLimit;
 
-  MemberActionListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required MemberActionRepository memberActionRepository, this.memberActionLimit = 5})
-      : assert(memberActionRepository != null),
-        _memberActionRepository = memberActionRepository,
+  MemberActionListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required MemberActionRepository memberActionRepository, this.memberActionLimit = 5})
+      : _memberActionRepository = memberActionRepository,
         super(MemberActionListLoading()) {
     on <LoadMemberActionList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListS
     });
   }
 
+  List<MemberActionModel?> _filter(List<MemberActionModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadMemberActionListToState() async {
     int amountNow =  (state is MemberActionListLoaded) ? (state as MemberActionListLoaded).values!.length : 0;
     _memberActionsListSubscription?.cancel();
     _memberActionsListSubscription = _memberActionRepository.listen(
-          (list) => add(MemberActionListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(MemberActionListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListS
     int amountNow =  (state is MemberActionListLoaded) ? (state as MemberActionListLoaded).values!.length : 0;
     _memberActionsListSubscription?.cancel();
     _memberActionsListSubscription = _memberActionRepository.listenWithDetails(
-            (list) => add(MemberActionListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(MemberActionListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

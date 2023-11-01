@@ -15,14 +15,8 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:eliud_core/tools/common_tools.dart';
-import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import 'package:eliud_pkg_etc/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_etc/model/repository_export.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_etc/model/model_export.dart';
-import '../tools/bespoke_entities.dart';
-import 'package:eliud_pkg_etc/model/entity_export.dart';
 
 
 @immutable

@@ -8,7 +8,6 @@ import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/widgets/header_widget.dart';
 import 'package:eliud_pkg_etc/model/member_action_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 typedef void MemberActionModelCallback(MemberActionModel memberActionModel);
 

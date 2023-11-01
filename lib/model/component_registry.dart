@@ -22,7 +22,6 @@ import 'abstract_repository_singleton.dart';
 import '../extensions/policy_presentation_component.dart';
 import '../editors/policy_presentation_component_editor.dart';
 import 'policy_presentation_component_selector.dart';
-import 'package:eliud_pkg_etc/model/internal_component.dart';
 
 
 

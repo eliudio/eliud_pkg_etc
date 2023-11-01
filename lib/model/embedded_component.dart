@@ -23,7 +23,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 
 import '../model/member_action_list_bloc.dart';
 import '../model/member_action_list.dart';
@@ -62,7 +61,7 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
 
     MemberActionInMemoryRepository(this.trigger, this.items) {
         List<List<MemberActionModel>> myList = <List<MemberActionModel>>[];
-        if (items != null) myList.add(items);
+        myList.add(items);
         theValues = Stream<List<MemberActionModel>>.fromIterable(myList);
     }
 

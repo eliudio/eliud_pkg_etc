@@ -16,11 +16,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-import 'package:eliud_pkg_etc/model/policy_presentation_model.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_component_event.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_component_state.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_repository.dart';
-import 'package:flutter/services.dart';
 
 
 class PolicyPresentationComponentBloc extends Bloc<PolicyPresentationComponentEvent, PolicyPresentationComponentState> {

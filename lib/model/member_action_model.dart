@@ -13,25 +13,14 @@
 
 */
 
-import 'package:eliud_core/tools/common_tools.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/model_base.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:eliud_core/model/app_model.dart';
 
-import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import 'package:eliud_pkg_etc/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_etc/model/repository_export.dart';
 import '../tools/bespoke_models.dart';
-import 'package:eliud_pkg_etc/model/model_export.dart';
-import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_etc/model/entity_export.dart';
 
 
 import 'package:eliud_pkg_etc/model/member_action_entity.dart';
 
-import 'package:eliud_core/tools/random.dart';
 
 
 
@@ -44,9 +33,7 @@ class MemberActionModel implements ModelBase {
   String? description;
   ActionModel? action;
 
-  MemberActionModel({required this.documentID, this.text, this.description, this.action, })  {
-    assert(documentID != null);
-  }
+  MemberActionModel({required this.documentID, this.text, this.description, this.action, });
 
   MemberActionModel copyWith({String? documentID, String? text, String? description, ActionModel? action, }) {
     return MemberActionModel(documentID: documentID ?? this.documentID, text: text ?? this.text, description: description ?? this.description, action: action ?? this.action, );
