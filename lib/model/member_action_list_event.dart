@@ -30,10 +30,10 @@ class NewPage extends MemberActionListEvent {}
 class AddMemberActionList extends MemberActionListEvent {
   final MemberActionModel? value;
 
-  const AddMemberActionList({ this.value });
+  const AddMemberActionList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddMemberActionList{ value: $value }';
@@ -42,10 +42,10 @@ class AddMemberActionList extends MemberActionListEvent {
 class UpdateMemberActionList extends MemberActionListEvent {
   final MemberActionModel? value;
 
-  const UpdateMemberActionList({ this.value });
+  const UpdateMemberActionList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateMemberActionList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateMemberActionList extends MemberActionListEvent {
 class DeleteMemberActionList extends MemberActionListEvent {
   final MemberActionModel? value;
 
-  const DeleteMemberActionList({ this.value });
+  const DeleteMemberActionList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteMemberActionList{ value: $value }';
@@ -67,24 +67,24 @@ class MemberActionListUpdated extends MemberActionListEvent {
   final List<MemberActionModel?>? value;
   final bool? mightHaveMore;
 
-  const MemberActionListUpdated({ this.value, this.mightHaveMore });
+  const MemberActionListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'MemberActionListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'MemberActionListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class MemberActionChangeQuery extends MemberActionListEvent {
   final EliudQuery? newQuery;
 
-  const MemberActionChangeQuery({ required this.newQuery });
+  const MemberActionChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'MemberActionChangeQuery{ value: $newQuery }';
 }
-

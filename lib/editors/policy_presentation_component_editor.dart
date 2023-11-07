@@ -24,7 +24,8 @@ import '../model/abstract_repository_singleton.dart';
 import '../model/policy_presentation_model.dart';
 import 'bloc/policy_presentation_bloc.dart';
 
-class PolicyPresentationComponentEditorConstructor extends ComponentEditorConstructor {
+class PolicyPresentationComponentEditorConstructor
+    extends ComponentEditorConstructor {
   @override
   void updateComponent(
       AppModel app, BuildContext context, model, EditorFeedback feedback) {
@@ -44,7 +45,7 @@ class PolicyPresentationComponentEditorConstructor extends ComponentEditorConstr
           description: 'New policy',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
-                  PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
+                  PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple),
         ),
         feedback);
   }
@@ -52,13 +53,13 @@ class PolicyPresentationComponentEditorConstructor extends ComponentEditorConstr
   @override
   void updateComponentWithID(AppModel app, BuildContext context, String id,
       EditorFeedback feedback) async {
-    var policyPresentation = await policyPresentationRepository(appId: app.documentID)!.get(id);
+    var policyPresentation =
+        await policyPresentationRepository(appId: app.documentID)!.get(id);
     if (policyPresentation != null) {
       _openIt(app, context, false, policyPresentation, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID + '/_error',
-          title: 'Error',
-          errorMessage: 'Cannot find policy with id $id');
+      openErrorDialog(app, context, '${app.documentID}/_error',
+          title: 'Error', errorMessage: 'Cannot find policy with id $id');
     }
   }
 
@@ -67,7 +68,7 @@ class PolicyPresentationComponentEditorConstructor extends ComponentEditorConstr
     openComplexDialog(
       app,
       context,
-      app.documentID + '/notificationdashboard',
+      '${app.documentID}/notificationdashboard',
       title: create
           ? 'Create Notification Dashboard'
           : 'Update Notification Dashboard',
@@ -91,9 +92,9 @@ class DividerComponentEditor extends StatefulWidget {
   final AppModel app;
 
   const DividerComponentEditor({
-    Key? key,
+    super.key,
     required this.app,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _DividerComponentEditorState();
@@ -105,9 +106,11 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
     return BlocBuilder<AccessBloc, AccessState>(
         builder: (aContext, accessState) {
       if (accessState is AccessDetermined) {
-        return BlocBuilder<PolicyPresentationBloc, EditorBaseState<PolicyPresentationModel>>(
+        return BlocBuilder<PolicyPresentationBloc,
+                EditorBaseState<PolicyPresentationModel>>(
             builder: (ppContext, policyPresentationState) {
-          if (policyPresentationState is EditorBaseInitialised<PolicyPresentationModel>) {
+          if (policyPresentationState
+              is EditorBaseInitialised<PolicyPresentationModel>) {
             return ListView(
                 shrinkWrap: true,
                 physics: ScrollPhysics(),
@@ -116,8 +119,8 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                     app: widget.app,
                     title: 'Policy Presentation',
                     okAction: () async {
-                      await BlocProvider.of<PolicyPresentationBloc>(context).save(
-                          EditorBaseApplyChanges<PolicyPresentationModel>(
+                      await BlocProvider.of<PolicyPresentationBloc>(context)
+                          .save(EditorBaseApplyChanges<PolicyPresentationModel>(
                               model: policyPresentationState.model));
                       return true;
                     },
@@ -139,9 +142,11 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                             title: dialogField(
                               widget.app,
                               context,
-                              initialValue: policyPresentationState.model.description,
+                              initialValue:
+                                  policyPresentationState.model.description,
                               valueChanged: (value) {
-                                policyPresentationState.model.description = value;
+                                policyPresentationState.model.description =
+                                    value;
                               },
                               maxLines: 1,
                               decoration: const InputDecoration(
@@ -150,13 +155,15 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                               ),
                             )),
                       ]),
-                  selectAppPolicyWidget(context, widget.app, policyPresentationState.model.conditions,
+                  selectAppPolicyWidget(
+                      context,
+                      widget.app,
+                      policyPresentationState.model.conditions,
                       policyPresentationState.model.policies, (selected) {
-                        setState(() {
-                          policyPresentationState.model.policies = selected;
-                        });
-                      }
-                  ),
+                    setState(() {
+                      policyPresentationState.model.policies = selected;
+                    });
+                  }),
                   topicContainer(widget.app, context,
                       title: 'Condition',
                       collapsible: true,

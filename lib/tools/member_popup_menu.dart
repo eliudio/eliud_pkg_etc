@@ -14,36 +14,33 @@ class MemberPopupMenu {
       VoidCallback callback,
       List<MemberActionModel>? memberActions,
       String memberId) async {
-    List<Widget> _buttons = [];
+    List<Widget> buttons = [];
 
-    _buttons.add(button1(app, context, extraLabel, callback));
+    buttons.add(button1(app, context, extraLabel, callback));
     if (memberActions != null) {
       for (var memberAction in memberActions) {
-        _buttons.add(button2(app, context, memberAction, memberId));
+        buttons.add(button2(app, context, memberAction, memberId));
       }
     }
-    var contents = ListView(
-        shrinkWrap: true, physics: ScrollPhysics(), children: _buttons);
+    var contents =
+        ListView(shrinkWrap: true, physics: ScrollPhysics(), children: buttons);
 
-    openComplexDialog(app, context, app.documentID + '/memberactions', title: "Member Actions",
-        child: contents);
-
+    openComplexDialog(app, context, '${app.documentID}/memberactions',
+        title: "Member Actions", child: contents);
   }
 
-  static Widget button1(AppModel app,
-      BuildContext context, String label, VoidCallback voidCallback) {
-    return button(app, context, label: label,
-        onPressed: voidCallback
-    );
+  static Widget button1(AppModel app, BuildContext context, String label,
+      VoidCallback voidCallback) {
+    return button(app, context, label: label, onPressed: voidCallback);
   }
 
-  static Widget button2(AppModel app,
-      BuildContext context, MemberActionModel action, String memberId) {
-    var text;
+  static Widget button2(AppModel app, BuildContext context,
+      MemberActionModel action, String memberId) {
+    String text;
     if (action.text != null) {
       text = action.text!;
       if (action.description != null) {
-        text = text + ' - ' + action.description!;
+        text = '$text - ${action.description!}';
       }
     } else {
       if (action.description != null) {
@@ -52,9 +49,9 @@ class MemberPopupMenu {
         text = '?';
       }
     }
-    return button(app, context, label: text,
-        onPressed: () =>
-            eliudrouter.Router.navigateTo(context, action.action!, parameters: {'memberId' : memberId})
-    );
+    return button(app, context,
+        label: text,
+        onPressed: () => eliudrouter.Router.navigateTo(context, action.action!,
+            parameters: {'memberId': memberId}));
   }
 }

@@ -30,10 +30,10 @@ class NewPage extends PolicyPresentationListEvent {}
 class AddPolicyPresentationList extends PolicyPresentationListEvent {
   final PolicyPresentationModel? value;
 
-  const AddPolicyPresentationList({ this.value });
+  const AddPolicyPresentationList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddPolicyPresentationList{ value: $value }';
@@ -42,10 +42,10 @@ class AddPolicyPresentationList extends PolicyPresentationListEvent {
 class UpdatePolicyPresentationList extends PolicyPresentationListEvent {
   final PolicyPresentationModel? value;
 
-  const UpdatePolicyPresentationList({ this.value });
+  const UpdatePolicyPresentationList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdatePolicyPresentationList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdatePolicyPresentationList extends PolicyPresentationListEvent {
 class DeletePolicyPresentationList extends PolicyPresentationListEvent {
   final PolicyPresentationModel? value;
 
-  const DeletePolicyPresentationList({ this.value });
+  const DeletePolicyPresentationList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeletePolicyPresentationList{ value: $value }';
@@ -67,24 +67,24 @@ class PolicyPresentationListUpdated extends PolicyPresentationListEvent {
   final List<PolicyPresentationModel?>? value;
   final bool? mightHaveMore;
 
-  const PolicyPresentationListUpdated({ this.value, this.mightHaveMore });
+  const PolicyPresentationListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'PolicyPresentationListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'PolicyPresentationListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class PolicyPresentationChangeQuery extends PolicyPresentationListEvent {
   final EliudQuery? newQuery;
 
-  const PolicyPresentationChangeQuery({ required this.newQuery });
+  const PolicyPresentationChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'PolicyPresentationChangeQuery{ value: $newQuery }';
 }
-

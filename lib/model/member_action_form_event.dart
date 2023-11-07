@@ -18,7 +18,6 @@ import 'package:meta/meta.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_etc/model/model_export.dart';
 
-
 @immutable
 abstract class MemberActionFormEvent extends Equatable {
   const MemberActionFormEvent();
@@ -27,15 +26,13 @@ abstract class MemberActionFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialiseNewMemberActionFormEvent extends MemberActionFormEvent {
-}
-
+class InitialiseNewMemberActionFormEvent extends MemberActionFormEvent {}
 
 class InitialiseMemberActionFormEvent extends MemberActionFormEvent {
   final MemberActionModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseMemberActionFormEvent({this.value});
 }
@@ -44,7 +41,7 @@ class InitialiseMemberActionFormNoLoadEvent extends MemberActionFormEvent {
   final MemberActionModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseMemberActionFormNoLoadEvent({this.value});
 }
@@ -55,7 +52,7 @@ class ChangedMemberActionDocumentID extends MemberActionFormEvent {
   ChangedMemberActionDocumentID({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedMemberActionDocumentID{ value: $value }';
@@ -67,7 +64,7 @@ class ChangedMemberActionText extends MemberActionFormEvent {
   ChangedMemberActionText({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedMemberActionText{ value: $value }';
@@ -79,7 +76,7 @@ class ChangedMemberActionDescription extends MemberActionFormEvent {
   ChangedMemberActionDescription({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedMemberActionDescription{ value: $value }';
@@ -91,9 +88,8 @@ class ChangedMemberActionAction extends MemberActionFormEvent {
   ChangedMemberActionAction({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedMemberActionAction{ value: $value }';
 }
-

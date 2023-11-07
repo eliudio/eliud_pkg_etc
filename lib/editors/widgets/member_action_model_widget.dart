@@ -9,7 +9,8 @@ import 'package:eliud_core/tools/widgets/header_widget.dart';
 import 'package:eliud_pkg_etc/model/member_action_model.dart';
 import 'package:flutter/material.dart';
 
-typedef void MemberActionModelCallback(MemberActionModel memberActionModel);
+typedef MemberActionModelCallback = void Function(
+    MemberActionModel memberActionModel);
 
 class MemberActionModelWidget extends StatefulWidget {
   final bool create;
@@ -21,7 +22,6 @@ class MemberActionModelWidget extends StatefulWidget {
   final int containerPrivilege;
 
   MemberActionModelWidget._({
-    Key? key,
     required this.app,
     required this.create,
     required this.widgetWidth,
@@ -29,7 +29,7 @@ class MemberActionModelWidget extends StatefulWidget {
     required this.memberActionModel,
     required this.memberActionModelCallback,
     required this.containerPrivilege,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -99,14 +99,16 @@ class _MemberActionModelWidgetState extends State<MemberActionModelWidget> {
                   ),
                 )),
           ]),
-      Registry.registry()!.openSelectActionWidget(app: widget.app, action: widget.memberActionModel.action,
+      Registry.registry()!.openSelectActionWidget(
+          app: widget.app,
+          action: widget.memberActionModel.action,
           containerPrivilege: widget.containerPrivilege,
           label: 'action',
           actionSelected: (action) {
-        setState(() {
-          widget.memberActionModel.action = action;
-        });
-      }),
+            setState(() {
+              widget.memberActionModel.action = action;
+            });
+          }),
     ]);
   }
 }

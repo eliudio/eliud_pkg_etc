@@ -41,19 +41,20 @@ class PolicyPresentationFormInitialized extends PolicyPresentationFormState {
   final PolicyPresentationModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const PolicyPresentationFormInitialized({ this.value });
+  const PolicyPresentationFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
-abstract class PolicyPresentationFormError extends PolicyPresentationFormInitialized {
+abstract class PolicyPresentationFormError
+    extends PolicyPresentationFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const PolicyPresentationFormError({this.message, PolicyPresentationModel? value }) : super(value: value);
+  const PolicyPresentationFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +64,13 @@ abstract class PolicyPresentationFormError extends PolicyPresentationFormInitial
     }''';
   }
 }
-class DocumentIDPolicyPresentationFormError extends PolicyPresentationFormError { 
-  const DocumentIDPolicyPresentationFormError({ String? message, PolicyPresentationModel? value }): super(message: message, value: value);
+
+class DocumentIDPolicyPresentationFormError
+    extends PolicyPresentationFormError {
+  const DocumentIDPolicyPresentationFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +81,11 @@ class DocumentIDPolicyPresentationFormError extends PolicyPresentationFormError 
   }
 }
 
-
-class AppIdPolicyPresentationFormError extends PolicyPresentationFormError { 
-  const AppIdPolicyPresentationFormError({ String? message, PolicyPresentationModel? value }): super(message: message, value: value);
+class AppIdPolicyPresentationFormError extends PolicyPresentationFormError {
+  const AppIdPolicyPresentationFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +96,12 @@ class AppIdPolicyPresentationFormError extends PolicyPresentationFormError {
   }
 }
 
-
-class DescriptionPolicyPresentationFormError extends PolicyPresentationFormError { 
-  const DescriptionPolicyPresentationFormError({ String? message, PolicyPresentationModel? value }): super(message: message, value: value);
+class DescriptionPolicyPresentationFormError
+    extends PolicyPresentationFormError {
+  const DescriptionPolicyPresentationFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +112,11 @@ class DescriptionPolicyPresentationFormError extends PolicyPresentationFormError
   }
 }
 
-
-class PoliciesPolicyPresentationFormError extends PolicyPresentationFormError { 
-  const PoliciesPolicyPresentationFormError({ String? message, PolicyPresentationModel? value }): super(message: message, value: value);
+class PoliciesPolicyPresentationFormError extends PolicyPresentationFormError {
+  const PoliciesPolicyPresentationFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +127,12 @@ class PoliciesPolicyPresentationFormError extends PolicyPresentationFormError {
   }
 }
 
-
-class ConditionsPolicyPresentationFormError extends PolicyPresentationFormError { 
-  const ConditionsPolicyPresentationFormError({ String? message, PolicyPresentationModel? value }): super(message: message, value: value);
+class ConditionsPolicyPresentationFormError
+    extends PolicyPresentationFormError {
+  const ConditionsPolicyPresentationFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -142,12 +143,11 @@ class ConditionsPolicyPresentationFormError extends PolicyPresentationFormError 
   }
 }
 
-
-class PolicyPresentationFormLoaded extends PolicyPresentationFormInitialized { 
-  const PolicyPresentationFormLoaded({ PolicyPresentationModel? value }): super(value: value);
+class PolicyPresentationFormLoaded extends PolicyPresentationFormInitialized {
+  const PolicyPresentationFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -157,12 +157,12 @@ class PolicyPresentationFormLoaded extends PolicyPresentationFormInitialized {
   }
 }
 
-
-class SubmittablePolicyPresentationForm extends PolicyPresentationFormInitialized { 
-  const SubmittablePolicyPresentationForm({ PolicyPresentationModel? value }): super(value: value);
+class SubmittablePolicyPresentationForm
+    extends PolicyPresentationFormInitialized {
+  const SubmittablePolicyPresentationForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -171,5 +171,3 @@ class SubmittablePolicyPresentationForm extends PolicyPresentationFormInitialize
     }''';
   }
 }
-
-

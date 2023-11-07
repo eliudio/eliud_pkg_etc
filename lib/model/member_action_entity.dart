@@ -23,46 +23,75 @@ class MemberActionEntity implements EntityBase {
   final String? description;
   final ActionEntity? action;
 
-  MemberActionEntity({this.text, this.description, this.action, });
+  MemberActionEntity({
+    this.text,
+    this.description,
+    this.action,
+  });
 
-  MemberActionEntity copyWith({String? documentID, String? text, String? description, ActionEntity? action, }) {
-    return MemberActionEntity(text : text ?? this.text, description : description ?? this.description, action : action ?? this.action, );
+  MemberActionEntity copyWith({
+    String? documentID,
+    String? text,
+    String? description,
+    ActionEntity? action,
+  }) {
+    return MemberActionEntity(
+      text: text ?? this.text,
+      description: description ?? this.description,
+      action: action ?? this.action,
+    );
   }
-  List<Object?> get props => [text, description, action, ];
+
+  List<Object?> get props => [
+        text,
+        description,
+        action,
+      ];
 
   @override
   String toString() {
     return 'MemberActionEntity{text: $text, description: $description, action: $action}';
   }
 
-  static MemberActionEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+  static MemberActionEntity? fromMap(Object? o,
+      {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
-    var actionFromMap;
-    actionFromMap = map['action'];
-    if (actionFromMap != null)
-      actionFromMap = ActionEntity.fromMap(actionFromMap, newDocumentIds: newDocumentIds);
+    var actionFromMap = map['action'];
+    if (actionFromMap != null) {
+      actionFromMap =
+          ActionEntity.fromMap(actionFromMap, newDocumentIds: newDocumentIds);
+    }
 
     return MemberActionEntity(
-      text: map['text'], 
-      description: map['description'], 
-      action: actionFromMap, 
+      text: map['text'],
+      description: map['description'],
+      action: actionFromMap,
     );
   }
 
+  @override
   Map<String, Object?> toDocument() {
-    final Map<String, dynamic>? actionMap = action != null 
-        ? action!.toDocument()
-        : null;
+    final Map<String, dynamic>? actionMap =
+        action != null ? action!.toDocument() : null;
 
     Map<String, Object?> theDocument = HashMap();
-    if (text != null) theDocument["text"] = text;
-      else theDocument["text"] = null;
-    if (description != null) theDocument["description"] = description;
-      else theDocument["description"] = null;
-    if (action != null) theDocument["action"] = actionMap;
-      else theDocument["action"] = null;
+    if (text != null) {
+      theDocument["text"] = text;
+    } else {
+      theDocument["text"] = null;
+    }
+    if (description != null) {
+      theDocument["description"] = description;
+    } else {
+      theDocument["description"] = null;
+    }
+    if (action != null) {
+      theDocument["action"] = actionMap;
+    } else {
+      theDocument["action"] = null;
+    }
     return theDocument;
   }
 
@@ -72,7 +101,8 @@ class MemberActionEntity implements EntityBase {
     return newEntity;
   }
 
-  static MemberActionEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
+  static MemberActionEntity? fromJsonString(String json,
+      {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
@@ -81,9 +111,9 @@ class MemberActionEntity implements EntityBase {
     return jsonEncode(toDocument());
   }
 
-  Future<Map<String, Object?>> enrichedDocument(Map<String, Object?> theDocument) async {
+  @override
+  Future<Map<String, Object?>> enrichedDocument(
+      Map<String, Object?> theDocument) async {
     return theDocument;
   }
-
 }
-

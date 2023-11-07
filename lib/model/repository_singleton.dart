@@ -20,13 +20,19 @@ import '../model/policy_presentation_firestore.dart';
 import '../model/policy_presentation_repository.dart';
 import '../model/policy_presentation_cache.dart';
 
-
 class RepositorySingleton extends AbstractRepositorySingleton {
-    var _policyPresentationRepository = HashMap<String, PolicyPresentationRepository>();
+  final _policyPresentationRepository =
+      HashMap<String, PolicyPresentationRepository>();
 
-    PolicyPresentationRepository? policyPresentationRepository(String? appId) {
-      if ((appId != null) && (_policyPresentationRepository[appId] == null)) _policyPresentationRepository[appId] = PolicyPresentationCache(PolicyPresentationFirestore(() => appRepository()!.getSubCollection(appId, 'policypresentation'), appId));
-      return _policyPresentationRepository[appId];
+  @override
+  PolicyPresentationRepository? policyPresentationRepository(String? appId) {
+    if ((appId != null) && (_policyPresentationRepository[appId] == null)) {
+      _policyPresentationRepository[appId] = PolicyPresentationCache(
+          PolicyPresentationFirestore(
+              () => appRepository()!
+                  .getSubCollection(appId, 'policypresentation'),
+              appId));
     }
-
+    return _policyPresentationRepository[appId];
+  }
 }

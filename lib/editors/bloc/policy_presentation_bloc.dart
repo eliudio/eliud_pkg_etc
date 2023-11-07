@@ -7,7 +7,8 @@ import '../../model/abstract_repository_singleton.dart';
 import '../../model/policy_presentation_entity.dart';
 import '../../model/policy_presentation_model.dart';
 
-class PolicyPresentationBloc extends EditorBaseBloc<PolicyPresentationModel, PolicyPresentationEntity> {
+class PolicyPresentationBloc
+    extends EditorBaseBloc<PolicyPresentationModel, PolicyPresentationEntity> {
   PolicyPresentationBloc(String appId, EditorFeedback feedback)
       : super(appId, policyPresentationRepository(appId: appId)!, feedback);
 
@@ -23,7 +24,6 @@ class PolicyPresentationBloc extends EditorBaseBloc<PolicyPresentationModel, Pol
   @override
   PolicyPresentationModel setDefaultValues(
       PolicyPresentationModel t, StorageConditionsModel conditions) {
-    return t.copyWith(
-        conditions: t.conditions ?? conditions);
+    return t.copyWith(conditions: t.conditions ?? conditions);
   }
 }

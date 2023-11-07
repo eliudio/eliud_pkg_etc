@@ -13,7 +13,6 @@
 
 */
 
-
 import 'package:eliud_pkg_etc/model/policy_presentation_component_bloc.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_component_event.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_model.dart';
@@ -31,20 +30,23 @@ abstract class AbstractPolicyPresentationComponent extends StatelessWidget {
   final AppModel app;
   final String policyPresentationId;
 
-  AbstractPolicyPresentationComponent({Key? key, required this.app, required this.policyPresentationId}): super(key: key);
+  AbstractPolicyPresentationComponent(
+      {super.key, required this.app, required this.policyPresentationId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<PolicyPresentationComponentBloc> (
-          create: (context) => PolicyPresentationComponentBloc(
-            policyPresentationRepository: policyPresentationRepository(appId: app.documentID)!)
+    return BlocProvider<PolicyPresentationComponentBloc>(
+      create: (context) => PolicyPresentationComponentBloc(
+          policyPresentationRepository:
+              policyPresentationRepository(appId: app.documentID)!)
         ..add(FetchPolicyPresentationComponent(id: policyPresentationId)),
       child: _policyPresentationBlockBuilder(context),
     );
   }
 
   Widget _policyPresentationBlockBuilder(BuildContext context) {
-    return BlocBuilder<PolicyPresentationComponentBloc, PolicyPresentationComponentState>(builder: (context, state) {
+    return BlocBuilder<PolicyPresentationComponentBloc,
+        PolicyPresentationComponentState>(builder: (context, state) {
       if (state is PolicyPresentationComponentLoaded) {
         return yourWidget(context, state.value);
       } else if (state is PolicyPresentationComponentPermissionDenied) {
@@ -57,7 +59,11 @@ abstract class AbstractPolicyPresentationComponent extends StatelessWidget {
         return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
+          child: StyleRegistry.registry()
+              .styleWithApp(app)
+              .frontEndStyle()
+              .progressIndicatorStyle()
+              .progressIndicator(app, context),
         );
       }
     });
@@ -65,4 +71,3 @@ abstract class AbstractPolicyPresentationComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, PolicyPresentationModel value);
 }
-

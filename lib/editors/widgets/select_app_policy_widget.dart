@@ -14,40 +14,50 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/cupertino.dart';
 
-Widget selectAppPolicyWidget(BuildContext context, AppModel app, StorageConditionsModel? containerStorageConditions, AppPolicyModel? appPolicy, Function (dynamic selected) selectedCallback) {
+Widget selectAppPolicyWidget(
+    BuildContext context,
+    AppModel app,
+    StorageConditionsModel? containerStorageConditions,
+    AppPolicyModel? appPolicy,
+    Function(dynamic selected) selectedCallback) {
   return SelectWidget<AppPolicyModel>(
       app: app,
       currentlySelected: appPolicy,
       title: 'AppPolicy',
       selectTitle: 'Select appPolicy',
-      displayItemFunction: (item) => text(app, context,
-          item.documentID + ' ' + (item.name ?? '?')),
+      displayItemFunction: (item) =>
+          text(app, context, item.documentID + ' ' + (item.name ?? '?')),
       blocProviderProvider: () => BlocProvider<AppPolicyListBloc>(
-        create: (context) => AppPolicyListBloc(
-          eliudQuery: getComponentSelectorQuery(0, app.documentID),
-          appPolicyRepository: appPolicyRepository(appId: app.documentID)!,
-        )..add(LoadAppPolicyList()),
-      ),
+            create: (context) => AppPolicyListBloc(
+              eliudQuery: getComponentSelectorQuery(0, app.documentID),
+              appPolicyRepository: appPolicyRepository(appId: app.documentID)!,
+            )..add(LoadAppPolicyList()),
+          ),
       blocBuilder: (contentsLoaded, contentsNotLoaded) {
         return BlocBuilder<AppPolicyListBloc, AppPolicyListState>(
             builder: (context, state) {
-              if ((state is AppPolicyListLoaded) && (state.values != null)) {
-                return contentsLoaded(context, state.values!);
-              } else {
-                return contentsNotLoaded(context, );
-              }
-            });
+          if ((state is AppPolicyListLoaded) && (state.values != null)) {
+            return contentsLoaded(context, state.values!);
+          } else {
+            return contentsNotLoaded(
+              context,
+            );
+          }
+        });
       },
       selectedCallback: selectedCallback,
       addCallback: () => AppPolicyDashboard.addAppPolicy(app, context),
-      deleteCallback: (value) => AppPolicyDashboard.deleteAppPolicy(app, context, value),
-      updateCallback: (item) => AppPolicyDashboard.updateAppPolicy(app, context, item),
+      deleteCallback: (value) =>
+          AppPolicyDashboard.deleteAppPolicy(app, context, value),
+      updateCallback: (item) =>
+          AppPolicyDashboard.updateAppPolicy(app, context, item),
       changePrivilegeEventCallback: (BuildContext context, int privilegeLevel) {
-        BlocProvider.of<AppPolicyListBloc>(context).add(
-            AppPolicyChangeQuery(newQuery: getComponentSelectorQuery(privilegeLevel,
-                app.documentID)));
+        BlocProvider.of<AppPolicyListBloc>(context).add(AppPolicyChangeQuery(
+            newQuery:
+                getComponentSelectorQuery(privilegeLevel, app.documentID)));
       },
-      containerPrivilege: containerStorageConditions == null || containerStorageConditions.privilegeLevelRequired == null ? 0 : containerStorageConditions.privilegeLevelRequired!.index
-    );
+      containerPrivilege: containerStorageConditions == null ||
+              containerStorageConditions.privilegeLevelRequired == null
+          ? 0
+          : containerStorageConditions.privilegeLevelRequired!.index);
 }
-

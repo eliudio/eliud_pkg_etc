@@ -16,11 +16,11 @@
 import '../model/policy_presentation_repository.dart';
 import 'package:eliud_core/package/package.dart';
 
-PolicyPresentationRepository? policyPresentationRepository({ String? appId }) => AbstractRepositorySingleton.singleton.policyPresentationRepository(appId);
+PolicyPresentationRepository? policyPresentationRepository({String? appId}) =>
+    AbstractRepositorySingleton.singleton.policyPresentationRepository(appId);
 
 abstract class AbstractRepositorySingleton {
-  static List<MemberCollectionInfo> collections = [
-  ];
+  static List<MemberCollectionInfo> collections = [];
   static late AbstractRepositorySingleton singleton;
 
   PolicyPresentationRepository? policyPresentationRepository(String? appId);

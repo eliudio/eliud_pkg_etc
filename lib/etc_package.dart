@@ -10,15 +10,22 @@ import 'package:eliud_pkg_etc/model/repository_singleton.dart';
 import 'package:eliud_pkg_etc/model/component_registry.dart';
 
 import 'package:eliud_pkg_etc/etc_package_stub.dart'
-if (dart.library.io) 'etc_mobile_package.dart'
-if (dart.library.html) 'etc_web_package.dart';
+    if (dart.library.io) 'etc_mobile_package.dart'
+    if (dart.library.html) 'etc_web_package.dart';
 import 'package:eliud_pkg_medium/medium_package.dart';
 
 abstract class EtcPackage extends Package {
   EtcPackage() : super('eliud_pkg_etc');
 
   @override
-  Future<List<PackageConditionDetails>>? getAndSubscribe(AccessBloc accessBloc, AppModel app, MemberModel? member, bool isOwner, bool? isBlocked, PrivilegeLevel? privilegeLevel) => null;
+  Future<List<PackageConditionDetails>>? getAndSubscribe(
+          AccessBloc accessBloc,
+          AppModel app,
+          MemberModel? member,
+          bool isOwner,
+          bool? isBlocked,
+          PrivilegeLevel? privilegeLevel) =>
+      null;
 
   @override
   List<String>? retrieveAllPackageConditions() => null;
@@ -31,13 +38,15 @@ abstract class EtcPackage extends Package {
   }
 
   @override
-  List<MemberCollectionInfo> getMemberCollectionInfo() => AbstractRepositorySingleton.collections;
+  List<MemberCollectionInfo> getMemberCollectionInfo() =>
+      AbstractRepositorySingleton.collections;
 
   static EtcPackage instance() => getEtcPackage();
 
   /*
    * Register depending packages
    */
+  @override
   void registerDependencies(Eliud eliud) {
     eliud.registerPackage(CorePackage.instance());
     eliud.registerPackage(MediumPackage.instance());

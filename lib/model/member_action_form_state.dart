@@ -41,9 +41,9 @@ class MemberActionFormInitialized extends MemberActionFormState {
   final MemberActionModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const MemberActionFormInitialized({ this.value });
+  const MemberActionFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class MemberActionFormError extends MemberActionFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const MemberActionFormError({this.message, MemberActionModel? value }) : super(value: value);
+  const MemberActionFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class MemberActionFormError extends MemberActionFormInitialized {
     }''';
   }
 }
-class DocumentIDMemberActionFormError extends MemberActionFormError { 
-  const DocumentIDMemberActionFormError({ String? message, MemberActionModel? value }): super(message: message, value: value);
+
+class DocumentIDMemberActionFormError extends MemberActionFormError {
+  const DocumentIDMemberActionFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDMemberActionFormError extends MemberActionFormError {
   }
 }
 
-
-class TextMemberActionFormError extends MemberActionFormError { 
-  const TextMemberActionFormError({ String? message, MemberActionModel? value }): super(message: message, value: value);
+class TextMemberActionFormError extends MemberActionFormError {
+  const TextMemberActionFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class TextMemberActionFormError extends MemberActionFormError {
   }
 }
 
-
-class DescriptionMemberActionFormError extends MemberActionFormError { 
-  const DescriptionMemberActionFormError({ String? message, MemberActionModel? value }): super(message: message, value: value);
+class DescriptionMemberActionFormError extends MemberActionFormError {
+  const DescriptionMemberActionFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class DescriptionMemberActionFormError extends MemberActionFormError {
   }
 }
 
-
-class ActionMemberActionFormError extends MemberActionFormError { 
-  const ActionMemberActionFormError({ String? message, MemberActionModel? value }): super(message: message, value: value);
+class ActionMemberActionFormError extends MemberActionFormError {
+  const ActionMemberActionFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +124,11 @@ class ActionMemberActionFormError extends MemberActionFormError {
   }
 }
 
-
-class MemberActionFormLoaded extends MemberActionFormInitialized { 
-  const MemberActionFormLoaded({ MemberActionModel? value }): super(value: value);
+class MemberActionFormLoaded extends MemberActionFormInitialized {
+  const MemberActionFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -141,12 +138,11 @@ class MemberActionFormLoaded extends MemberActionFormInitialized {
   }
 }
 
-
-class SubmittableMemberActionForm extends MemberActionFormInitialized { 
-  const SubmittableMemberActionForm({ MemberActionModel? value }): super(value: value);
+class SubmittableMemberActionForm extends MemberActionFormInitialized {
+  const SubmittableMemberActionForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -155,5 +151,3 @@ class SubmittableMemberActionForm extends MemberActionFormInitialized {
     }''';
   }
 }
-
-

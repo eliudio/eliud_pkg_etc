@@ -20,25 +20,27 @@ import 'package:eliud_pkg_etc/model/policy_presentation_component_event.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_component_state.dart';
 import 'package:eliud_pkg_etc/model/policy_presentation_repository.dart';
 
-
-class PolicyPresentationComponentBloc extends Bloc<PolicyPresentationComponentEvent, PolicyPresentationComponentState> {
+class PolicyPresentationComponentBloc extends Bloc<
+    PolicyPresentationComponentEvent, PolicyPresentationComponentState> {
   final PolicyPresentationRepository? policyPresentationRepository;
   StreamSubscription? _policyPresentationSubscription;
 
   void _mapLoadPolicyPresentationComponentUpdateToState(String documentId) {
     _policyPresentationSubscription?.cancel();
-    _policyPresentationSubscription = policyPresentationRepository!.listenTo(documentId, (value) {
+    _policyPresentationSubscription =
+        policyPresentationRepository!.listenTo(documentId, (value) {
       if (value != null) {
         add(PolicyPresentationComponentUpdated(value: value));
       }
     });
   }
 
-  PolicyPresentationComponentBloc({ this.policyPresentationRepository }): super(PolicyPresentationComponentUninitialized()) {
-    on <FetchPolicyPresentationComponent> ((event, emit) {
+  PolicyPresentationComponentBloc({this.policyPresentationRepository})
+      : super(PolicyPresentationComponentUninitialized()) {
+    on<FetchPolicyPresentationComponent>((event, emit) {
       _mapLoadPolicyPresentationComponentUpdateToState(event.id!);
     });
-    on <PolicyPresentationComponentUpdated> ((event, emit) {
+    on<PolicyPresentationComponentUpdated>((event, emit) {
       emit(PolicyPresentationComponentLoaded(value: event.value));
     });
   }
@@ -48,6 +50,4 @@ class PolicyPresentationComponentBloc extends Bloc<PolicyPresentationComponentEv
     _policyPresentationSubscription?.cancel();
     return super.close();
   }
-
 }
-

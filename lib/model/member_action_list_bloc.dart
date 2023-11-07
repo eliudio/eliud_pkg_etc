@@ -23,11 +23,11 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 
 import 'member_action_model.dart';
 
-typedef List<MemberActionModel?> FilterMemberActionModels(List<MemberActionModel?> values);
+typedef FilterMemberActionModels = List<MemberActionModel?> Function(
+    List<MemberActionModel?> values);
 
-
-
-class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListState> {
+class MemberActionListBloc
+    extends Bloc<MemberActionListEvent, MemberActionListState> {
   final FilterMemberActionModels? filter;
   final MemberActionRepository _memberActionRepository;
   StreamSubscription? _memberActionsListSubscription;
@@ -39,23 +39,32 @@ class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListS
   final bool? detailed;
   final int memberActionLimit;
 
-  MemberActionListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required MemberActionRepository memberActionRepository, this.memberActionLimit = 5})
+  MemberActionListBloc(
+      {this.filter,
+      this.paged,
+      this.orderBy,
+      this.descending,
+      this.detailed,
+      this.eliudQuery,
+      required MemberActionRepository memberActionRepository,
+      this.memberActionLimit = 5})
       : _memberActionRepository = memberActionRepository,
         super(MemberActionListLoading()) {
-    on <LoadMemberActionList> ((event, emit) {
+    on<LoadMemberActionList>((event, emit) {
       if ((detailed == null) || (!detailed!)) {
         _mapLoadMemberActionListToState();
       } else {
         _mapLoadMemberActionListWithDetailsToState();
       }
     });
-    
-    on <NewPage> ((event, emit) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+
+    on<NewPage>((event, emit) {
+      pages = pages +
+          1; // it doesn't matter so much if we increase pages beyond the end
       _mapLoadMemberActionListWithDetailsToState();
     });
-    
-    on <MemberActionChangeQuery> ((event, emit) {
+
+    on<MemberActionChangeQuery>((event, emit) {
       eliudQuery = event.newQuery;
       if ((detailed == null) || (!detailed!)) {
         _mapLoadMemberActionListToState();
@@ -63,20 +72,20 @@ class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListS
         _mapLoadMemberActionListWithDetailsToState();
       }
     });
-      
-    on <AddMemberActionList> ((event, emit) async {
+
+    on<AddMemberActionList>((event, emit) async {
       await _mapAddMemberActionListToState(event);
     });
-    
-    on <UpdateMemberActionList> ((event, emit) async {
+
+    on<UpdateMemberActionList>((event, emit) async {
       await _mapUpdateMemberActionListToState(event);
     });
-    
-    on <DeleteMemberActionList> ((event, emit) async {
+
+    on<DeleteMemberActionList>((event, emit) async {
       await _mapDeleteMemberActionListToState(event);
     });
-    
-    on <MemberActionListUpdated> ((event, emit) {
+
+    on<MemberActionListUpdated>((event, emit) {
       emit(_mapMemberActionListUpdatedToState(event));
     });
   }
@@ -90,27 +99,31 @@ class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListS
   }
 
   Future<void> _mapLoadMemberActionListToState() async {
-    int amountNow =  (state is MemberActionListLoaded) ? (state as MemberActionListLoaded).values!.length : 0;
+    int amountNow = (state is MemberActionListLoaded)
+        ? (state as MemberActionListLoaded).values!.length
+        : 0;
     _memberActionsListSubscription?.cancel();
     _memberActionsListSubscription = _memberActionRepository.listen(
-          (list) => add(MemberActionListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
-      orderBy: orderBy,
-      descending: descending,
-      eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * memberActionLimit : null
-    );
-  }
-
-  Future<void> _mapLoadMemberActionListWithDetailsToState() async {
-    int amountNow =  (state is MemberActionListLoaded) ? (state as MemberActionListLoaded).values!.length : 0;
-    _memberActionsListSubscription?.cancel();
-    _memberActionsListSubscription = _memberActionRepository.listenWithDetails(
-            (list) => add(MemberActionListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
+        (list) => add(MemberActionListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * memberActionLimit : null
-    );
+        limit: ((paged != null) && paged!) ? pages * memberActionLimit : null);
+  }
+
+  Future<void> _mapLoadMemberActionListWithDetailsToState() async {
+    int amountNow = (state is MemberActionListLoaded)
+        ? (state as MemberActionListLoaded).values!.length
+        : 0;
+    _memberActionsListSubscription?.cancel();
+    _memberActionsListSubscription = _memberActionRepository.listenWithDetails(
+        (list) => add(MemberActionListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && paged!) ? pages * memberActionLimit : null);
   }
 
   Future<void> _mapAddMemberActionListToState(AddMemberActionList event) async {
@@ -120,14 +133,16 @@ class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListS
     }
   }
 
-  Future<void> _mapUpdateMemberActionListToState(UpdateMemberActionList event) async {
+  Future<void> _mapUpdateMemberActionListToState(
+      UpdateMemberActionList event) async {
     var value = event.value;
     if (value != null) {
       await _memberActionRepository.update(value);
     }
   }
 
-  Future<void> _mapDeleteMemberActionListToState(DeleteMemberActionList event) async {
+  Future<void> _mapDeleteMemberActionListToState(
+      DeleteMemberActionList event) async {
     var value = event.value;
     if (value != null) {
       await _memberActionRepository.delete(value);
@@ -135,7 +150,9 @@ class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListS
   }
 
   MemberActionListLoaded _mapMemberActionListUpdatedToState(
-      MemberActionListUpdated event) => MemberActionListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
+          MemberActionListUpdated event) =>
+      MemberActionListLoaded(
+          values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {
@@ -143,5 +160,3 @@ class MemberActionListBloc extends Bloc<MemberActionListEvent, MemberActionListS
     return super.close();
   }
 }
-
-

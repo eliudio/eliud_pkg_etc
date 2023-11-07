@@ -21,16 +21,16 @@ abstract class PolicyPresentationComponentEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchPolicyPresentationComponent extends PolicyPresentationComponentEvent {
+class FetchPolicyPresentationComponent
+    extends PolicyPresentationComponentEvent {
   final String? id;
 
-  FetchPolicyPresentationComponent({ this.id });
+  FetchPolicyPresentationComponent({this.id});
 }
 
-class PolicyPresentationComponentUpdated extends PolicyPresentationComponentEvent {
+class PolicyPresentationComponentUpdated
+    extends PolicyPresentationComponentEvent {
   final PolicyPresentationModel value;
 
-  PolicyPresentationComponentUpdated({ required this.value });
+  PolicyPresentationComponentUpdated({required this.value});
 }
-
-

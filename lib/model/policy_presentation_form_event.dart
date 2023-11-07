@@ -18,7 +18,6 @@ import 'package:meta/meta.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_etc/model/model_export.dart';
 
-
 @immutable
 abstract class PolicyPresentationFormEvent extends Equatable {
   const PolicyPresentationFormEvent();
@@ -27,24 +26,25 @@ abstract class PolicyPresentationFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialiseNewPolicyPresentationFormEvent extends PolicyPresentationFormEvent {
-}
+class InitialiseNewPolicyPresentationFormEvent
+    extends PolicyPresentationFormEvent {}
 
-
-class InitialisePolicyPresentationFormEvent extends PolicyPresentationFormEvent {
+class InitialisePolicyPresentationFormEvent
+    extends PolicyPresentationFormEvent {
   final PolicyPresentationModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialisePolicyPresentationFormEvent({this.value});
 }
 
-class InitialisePolicyPresentationFormNoLoadEvent extends PolicyPresentationFormEvent {
+class InitialisePolicyPresentationFormNoLoadEvent
+    extends PolicyPresentationFormEvent {
   final PolicyPresentationModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialisePolicyPresentationFormNoLoadEvent({this.value});
 }
@@ -55,7 +55,7 @@ class ChangedPolicyPresentationDocumentID extends PolicyPresentationFormEvent {
   ChangedPolicyPresentationDocumentID({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedPolicyPresentationDocumentID{ value: $value }';
@@ -67,7 +67,7 @@ class ChangedPolicyPresentationAppId extends PolicyPresentationFormEvent {
   ChangedPolicyPresentationAppId({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedPolicyPresentationAppId{ value: $value }';
@@ -79,7 +79,7 @@ class ChangedPolicyPresentationDescription extends PolicyPresentationFormEvent {
   ChangedPolicyPresentationDescription({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedPolicyPresentationDescription{ value: $value }';
@@ -91,7 +91,7 @@ class ChangedPolicyPresentationPolicies extends PolicyPresentationFormEvent {
   ChangedPolicyPresentationPolicies({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedPolicyPresentationPolicies{ value: $value }';
@@ -103,9 +103,8 @@ class ChangedPolicyPresentationConditions extends PolicyPresentationFormEvent {
   ChangedPolicyPresentationConditions({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedPolicyPresentationConditions{ value: $value }';
 }
-

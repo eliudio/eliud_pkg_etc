@@ -23,11 +23,11 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 
 import 'policy_presentation_model.dart';
 
-typedef List<PolicyPresentationModel?> FilterPolicyPresentationModels(List<PolicyPresentationModel?> values);
+typedef FilterPolicyPresentationModels = List<PolicyPresentationModel?>
+    Function(List<PolicyPresentationModel?> values);
 
-
-
-class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, PolicyPresentationListState> {
+class PolicyPresentationListBloc
+    extends Bloc<PolicyPresentationListEvent, PolicyPresentationListState> {
   final FilterPolicyPresentationModels? filter;
   final PolicyPresentationRepository _policyPresentationRepository;
   StreamSubscription? _policyPresentationsListSubscription;
@@ -39,23 +39,32 @@ class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, Polic
   final bool? detailed;
   final int policyPresentationLimit;
 
-  PolicyPresentationListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required PolicyPresentationRepository policyPresentationRepository, this.policyPresentationLimit = 5})
+  PolicyPresentationListBloc(
+      {this.filter,
+      this.paged,
+      this.orderBy,
+      this.descending,
+      this.detailed,
+      this.eliudQuery,
+      required PolicyPresentationRepository policyPresentationRepository,
+      this.policyPresentationLimit = 5})
       : _policyPresentationRepository = policyPresentationRepository,
         super(PolicyPresentationListLoading()) {
-    on <LoadPolicyPresentationList> ((event, emit) {
+    on<LoadPolicyPresentationList>((event, emit) {
       if ((detailed == null) || (!detailed!)) {
         _mapLoadPolicyPresentationListToState();
       } else {
         _mapLoadPolicyPresentationListWithDetailsToState();
       }
     });
-    
-    on <NewPage> ((event, emit) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+
+    on<NewPage>((event, emit) {
+      pages = pages +
+          1; // it doesn't matter so much if we increase pages beyond the end
       _mapLoadPolicyPresentationListWithDetailsToState();
     });
-    
-    on <PolicyPresentationChangeQuery> ((event, emit) {
+
+    on<PolicyPresentationChangeQuery>((event, emit) {
       eliudQuery = event.newQuery;
       if ((detailed == null) || (!detailed!)) {
         _mapLoadPolicyPresentationListToState();
@@ -63,25 +72,26 @@ class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, Polic
         _mapLoadPolicyPresentationListWithDetailsToState();
       }
     });
-      
-    on <AddPolicyPresentationList> ((event, emit) async {
+
+    on<AddPolicyPresentationList>((event, emit) async {
       await _mapAddPolicyPresentationListToState(event);
     });
-    
-    on <UpdatePolicyPresentationList> ((event, emit) async {
+
+    on<UpdatePolicyPresentationList>((event, emit) async {
       await _mapUpdatePolicyPresentationListToState(event);
     });
-    
-    on <DeletePolicyPresentationList> ((event, emit) async {
+
+    on<DeletePolicyPresentationList>((event, emit) async {
       await _mapDeletePolicyPresentationListToState(event);
     });
-    
-    on <PolicyPresentationListUpdated> ((event, emit) {
+
+    on<PolicyPresentationListUpdated>((event, emit) {
       emit(_mapPolicyPresentationListUpdatedToState(event));
     });
   }
 
-  List<PolicyPresentationModel?> _filter(List<PolicyPresentationModel?> original) {
+  List<PolicyPresentationModel?> _filter(
+      List<PolicyPresentationModel?> original) {
     if (filter != null) {
       return filter!(original);
     } else {
@@ -90,44 +100,56 @@ class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, Polic
   }
 
   Future<void> _mapLoadPolicyPresentationListToState() async {
-    int amountNow =  (state is PolicyPresentationListLoaded) ? (state as PolicyPresentationListLoaded).values!.length : 0;
+    int amountNow = (state is PolicyPresentationListLoaded)
+        ? (state as PolicyPresentationListLoaded).values!.length
+        : 0;
     _policyPresentationsListSubscription?.cancel();
     _policyPresentationsListSubscription = _policyPresentationRepository.listen(
-          (list) => add(PolicyPresentationListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
-      orderBy: orderBy,
-      descending: descending,
-      eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * policyPresentationLimit : null
-    );
-  }
-
-  Future<void> _mapLoadPolicyPresentationListWithDetailsToState() async {
-    int amountNow =  (state is PolicyPresentationListLoaded) ? (state as PolicyPresentationListLoaded).values!.length : 0;
-    _policyPresentationsListSubscription?.cancel();
-    _policyPresentationsListSubscription = _policyPresentationRepository.listenWithDetails(
-            (list) => add(PolicyPresentationListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
+        (list) => add(PolicyPresentationListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * policyPresentationLimit : null
-    );
+        limit: ((paged != null) && paged!)
+            ? pages * policyPresentationLimit
+            : null);
   }
 
-  Future<void> _mapAddPolicyPresentationListToState(AddPolicyPresentationList event) async {
+  Future<void> _mapLoadPolicyPresentationListWithDetailsToState() async {
+    int amountNow = (state is PolicyPresentationListLoaded)
+        ? (state as PolicyPresentationListLoaded).values!.length
+        : 0;
+    _policyPresentationsListSubscription?.cancel();
+    _policyPresentationsListSubscription =
+        _policyPresentationRepository.listenWithDetails(
+            (list) => add(PolicyPresentationListUpdated(
+                value: _filter(list), mightHaveMore: amountNow != list.length)),
+            orderBy: orderBy,
+            descending: descending,
+            eliudQuery: eliudQuery,
+            limit: ((paged != null) && paged!)
+                ? pages * policyPresentationLimit
+                : null);
+  }
+
+  Future<void> _mapAddPolicyPresentationListToState(
+      AddPolicyPresentationList event) async {
     var value = event.value;
     if (value != null) {
       await _policyPresentationRepository.add(value);
     }
   }
 
-  Future<void> _mapUpdatePolicyPresentationListToState(UpdatePolicyPresentationList event) async {
+  Future<void> _mapUpdatePolicyPresentationListToState(
+      UpdatePolicyPresentationList event) async {
     var value = event.value;
     if (value != null) {
       await _policyPresentationRepository.update(value);
     }
   }
 
-  Future<void> _mapDeletePolicyPresentationListToState(DeletePolicyPresentationList event) async {
+  Future<void> _mapDeletePolicyPresentationListToState(
+      DeletePolicyPresentationList event) async {
     var value = event.value;
     if (value != null) {
       await _policyPresentationRepository.delete(value);
@@ -135,7 +157,9 @@ class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, Polic
   }
 
   PolicyPresentationListLoaded _mapPolicyPresentationListUpdatedToState(
-      PolicyPresentationListUpdated event) => PolicyPresentationListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
+          PolicyPresentationListUpdated event) =>
+      PolicyPresentationListLoaded(
+          values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {
@@ -143,5 +167,3 @@ class PolicyPresentationListBloc extends Bloc<PolicyPresentationListEvent, Polic
     return super.close();
   }
 }
-
-

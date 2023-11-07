@@ -13,7 +13,6 @@
 
 */
 
-
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
@@ -31,146 +30,207 @@ import '../model/member_action_model.dart';
 import '../model/member_action_entity.dart';
 import '../model/member_action_repository.dart';
 
-typedef MemberActionListChanged(List<MemberActionModel> values);
+typedef MemberActionListChanged = Function(List<MemberActionModel> values);
 
-memberActionsList(app, context, value, trigger) => EmbeddedComponentFactory.memberActionsList(app, context, value, trigger);
+memberActionsList(app, context, value, trigger) =>
+    EmbeddedComponentFactory.memberActionsList(app, context, value, trigger);
 
 class EmbeddedComponentFactory {
-
-static Widget memberActionsList(AppModel app, BuildContext context, List<MemberActionModel> values, MemberActionListChanged trigger) {
-  MemberActionInMemoryRepository inMemoryRepository = MemberActionInMemoryRepository(trigger, values,);
-  return MultiBlocProvider(
-    providers: [
-      BlocProvider<MemberActionListBloc>(
-        create: (context) => MemberActionListBloc(
-          memberActionRepository: inMemoryRepository,
+  static Widget memberActionsList(AppModel app, BuildContext context,
+      List<MemberActionModel> values, MemberActionListChanged trigger) {
+    MemberActionInMemoryRepository inMemoryRepository =
+        MemberActionInMemoryRepository(
+      trigger,
+      values,
+    );
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<MemberActionListBloc>(
+          create: (context) => MemberActionListBloc(
+            memberActionRepository: inMemoryRepository,
           )..add(LoadMemberActionList()),
         )
-        ],
-    child: MemberActionListWidget(app: app, isEmbedded: true),
-  );
-}
-
-
+      ],
+      child: MemberActionListWidget(app: app, isEmbedded: true),
+    );
+  }
 }
 
 class MemberActionInMemoryRepository implements MemberActionRepository {
-    final List<MemberActionModel> items;
-    final MemberActionListChanged trigger;
-    Stream<List<MemberActionModel>>? theValues;
+  final List<MemberActionModel> items;
+  final MemberActionListChanged trigger;
+  Stream<List<MemberActionModel>>? theValues;
 
-    MemberActionInMemoryRepository(this.trigger, this.items) {
-        List<List<MemberActionModel>> myList = <List<MemberActionModel>>[];
-        myList.add(items);
-        theValues = Stream<List<MemberActionModel>>.fromIterable(myList);
-    }
+  MemberActionInMemoryRepository(this.trigger, this.items) {
+    List<List<MemberActionModel>> myList = <List<MemberActionModel>>[];
+    myList.add(items);
+    theValues = Stream<List<MemberActionModel>>.fromIterable(myList);
+  }
 
-    int _index(String documentID) {
-      int i = 0;
-      for (final item in items) {
-        if (item.documentID == documentID) {
-          return i;
-        }
-        i++;
+  int _index(String documentID) {
+    int i = 0;
+    for (final item in items) {
+      if (item.documentID == documentID) {
+        return i;
       }
-      return -1;
+      i++;
     }
+    return -1;
+  }
 
-    Future<MemberActionEntity> addEntity(String documentID, MemberActionEntity value) {
-      throw Exception('Not implemented'); 
-    }
+  @override
+  Future<MemberActionEntity> addEntity(
+      String documentID, MemberActionEntity value) {
+    throw Exception('Not implemented');
+  }
 
-    Future<MemberActionEntity> updateEntity(String documentID, MemberActionEntity value) {
-      throw Exception('Not implemented'); 
-    }
+  @override
+  Future<MemberActionEntity> updateEntity(
+      String documentID, MemberActionEntity value) {
+    throw Exception('Not implemented');
+  }
 
-    Future<MemberActionModel> add(MemberActionModel value) {
-        items.add(value.copyWith(documentID: newRandomKey()));
-        trigger(items);
-        return Future.value(value);
-    }
+  @override
+  Future<MemberActionModel> add(MemberActionModel value) {
+    items.add(value.copyWith(documentID: newRandomKey()));
+    trigger(items);
+    return Future.value(value);
+  }
 
-    Future<void> delete(MemberActionModel value) {
-      int index = _index(value.documentID);
-      if (index >= 0) items.removeAt(index);
+  @override
+  Future<void> delete(MemberActionModel value) {
+    int index = _index(value.documentID);
+    if (index >= 0) items.removeAt(index);
+    trigger(items);
+    return Future.value();
+  }
+
+  @override
+  Future<MemberActionModel> update(MemberActionModel value) {
+    int index = _index(value.documentID);
+    if (index >= 0) {
+      items.replaceRange(index, index + 1, [value]);
       trigger(items);
-      return Future.value(value);
     }
+    return Future.value(value);
+  }
 
-    Future<MemberActionModel> update(MemberActionModel value) {
-      int index = _index(value.documentID);
-      if (index >= 0) {
-        items.replaceRange(index, index+1, [value]);
-        trigger(items);
-      }
-      return Future.value(value);
-    }
+  @override
+  Future<MemberActionModel> get(String? id, {Function(Exception)? onError}) {
+    int index = _index(id!);
+    var completer = Completer<MemberActionModel>();
+    completer.complete(items[index]);
+    return completer.future;
+  }
 
-    Future<MemberActionModel> get(String? id, { Function(Exception)? onError }) {
-      int index = _index(id!);
-      var completer = new Completer<MemberActionModel>();
-      completer.complete(items[index]);
-      return completer.future;
-    }
+  @override
+  Stream<List<MemberActionModel>> values(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    return theValues!;
+  }
 
-    Stream<List<MemberActionModel>> values({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
-      return theValues!;
-    }
-    
-    Stream<List<MemberActionModel>> valuesWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
-      return theValues!;
-    }
-    
-    @override
-    StreamSubscription<List<MemberActionModel>> listen(trigger, { String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery }) {
-      return theValues!.listen((theList) => trigger(theList));
-    }
-  
-    @override
-    StreamSubscription<List<MemberActionModel>> listenWithDetails(trigger, { String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery }) {
-      return theValues!.listen((theList) => trigger(theList));
-    }
-    
-    void flush() {}
+  @override
+  Stream<List<MemberActionModel>> valuesWithDetails(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    return theValues!;
+  }
 
-    Future<List<MemberActionModel>> valuesList({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
-      return Future.value(items);
-    }
-    
-    Future<List<MemberActionModel>> valuesListWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
-      return Future.value(items);
-    }
+  @override
+  StreamSubscription<List<MemberActionModel>> listen(trigger,
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    return theValues!.listen((theList) => trigger(theList));
+  }
 
-    @override
-    getSubCollection(String documentId, String name) {
-      throw UnimplementedError();
-    }
+  @override
+  StreamSubscription<List<MemberActionModel>> listenWithDetails(trigger,
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    return theValues!.listen((theList) => trigger(theList));
+  }
+
+  @override
+  void flush() {}
+
+  @override
+  Future<List<MemberActionModel>> valuesList(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    return Future.value(items);
+  }
+
+  @override
+  Future<List<MemberActionModel>> valuesListWithDetails(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    return Future.value(items);
+  }
+
+  @override
+  getSubCollection(String documentId, String name) {
+    throw UnimplementedError();
+  }
 
   @override
   String timeStampToString(timeStamp) {
     throw UnimplementedError();
   }
-  
+
   @override
-  StreamSubscription<MemberActionModel> listenTo(String documentId, MemberActionChanged changed, {MemberActionErrorHandler? errorHandler}) {
+  StreamSubscription<MemberActionModel> listenTo(
+      String documentId, MemberActionChanged changed,
+      {MemberActionErrorHandler? errorHandler}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<MemberActionModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
-    throw UnimplementedError();
-  }
-  
-  @override
-  Future<MemberActionEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+  Future<MemberActionModel> changeValue(
+      String documentId, String fieldName, num changeByThisValue) {
     throw UnimplementedError();
   }
 
   @override
-  MemberActionEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+  Future<MemberActionEntity?> getEntity(String? id,
+      {Function(Exception p1)? onError}) {
     throw UnimplementedError();
   }
 
-    Future<void> deleteAll() async {}
+  @override
+  MemberActionEntity? fromMap(Object? o,
+      {Map<String, String>? newDocumentIds}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteAll() async {}
 }
-

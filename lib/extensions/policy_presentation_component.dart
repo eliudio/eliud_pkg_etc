@@ -16,34 +16,42 @@ import 'package:flutter/material.dart';
 class PolicyPresentationComponentConstructorDefault
     implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required AppModel app, required String id, Map<String, dynamic>? parameters}) {
+  Widget createNew(
+      {Key? key,
+      required AppModel app,
+      required String id,
+      Map<String, dynamic>? parameters}) {
     return PolicyPresentation(key: key, app: app, id: id);
   }
 
   @override
-  Future<dynamic> getModel({required AppModel app, required String id}) async => await policyPresentationRepository(appId: app.documentID)!.get(id);
+  Future<dynamic> getModel({required AppModel app, required String id}) async =>
+      await policyPresentationRepository(appId: app.documentID)!.get(id);
 }
 
 class PolicyPresentation extends AbstractPolicyPresentationComponent {
-  PolicyPresentation({Key? key, required AppModel app, required String id}) : super(key: key, app: app, policyPresentationId: id);
+  PolicyPresentation({super.key, required super.app, required String id})
+      : super(policyPresentationId: id);
 
   @override
-  Widget yourWidget(
-      BuildContext context, PolicyPresentationModel? policyPresentationModel) {
-    if (policyPresentationModel!.policies == null)
+  Widget yourWidget(BuildContext context, PolicyPresentationModel? value) {
+    if (value!.policies == null) {
       return text(app, context, 'Policy not available');
-    if (policyPresentationModel.policies!.policy == null)
+    }
+    if (value.policies!.policy == null) {
       return text(app, context, 'Policy has no pages');
+    }
 
     return FutureBuilder<List<String?>>(
         future: ChainOfMediumModels.getPlatformMediumChainOfUrls(
-            policyPresentationModel.appId, policyPresentationModel.policies!.policy!),
+            value.appId, value.policies!.policy!),
         builder: (context, snapshot) {
           if ((snapshot.hasData) && (snapshot.data != null)) {
             var height = fullScreenHeight(context) - 30;
             if (snapshot.data!.isNotEmpty) {
               //title: 'Policy',
-              return AlbumSlider(app: app,
+              return AlbumSlider(
+                app: app,
                 height: height,
                 slideImageProvider: UrlSlideImageProvider(
                     ListHelper.getStringList(snapshot.data!)),

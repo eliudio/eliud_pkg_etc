@@ -23,24 +23,29 @@ abstract class PolicyPresentationComponentState extends Equatable {
   List<Object?> get props => [];
 }
 
-class PolicyPresentationComponentUninitialized extends PolicyPresentationComponentState {}
+class PolicyPresentationComponentUninitialized
+    extends PolicyPresentationComponentState {}
 
-class PolicyPresentationComponentError extends PolicyPresentationComponentState {
+class PolicyPresentationComponentError
+    extends PolicyPresentationComponentState {
   final String? message;
-  PolicyPresentationComponentError({ this.message });
+  PolicyPresentationComponentError({this.message});
 }
 
-class PolicyPresentationComponentPermissionDenied extends PolicyPresentationComponentState {
+class PolicyPresentationComponentPermissionDenied
+    extends PolicyPresentationComponentState {
   PolicyPresentationComponentPermissionDenied();
 }
 
-class PolicyPresentationComponentLoaded extends PolicyPresentationComponentState {
+class PolicyPresentationComponentLoaded
+    extends PolicyPresentationComponentState {
   final PolicyPresentationModel value;
 
-  const PolicyPresentationComponentLoaded({ required this.value });
+  const PolicyPresentationComponentLoaded({required this.value});
 
-  PolicyPresentationComponentLoaded copyWith({ PolicyPresentationModel? copyThis }) {
-    return PolicyPresentationComponentLoaded(value: copyThis ?? this.value);
+  PolicyPresentationComponentLoaded copyWith(
+      {PolicyPresentationModel? copyThis}) {
+    return PolicyPresentationComponentLoaded(value: copyThis ?? value);
   }
 
   @override
@@ -49,4 +54,3 @@ class PolicyPresentationComponentLoaded extends PolicyPresentationComponentState
   @override
   String toString() => 'PolicyPresentationComponentLoaded { value: $value }';
 }
-
