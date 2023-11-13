@@ -36,6 +36,9 @@ memberActionsList(app, context, value, trigger) =>
     EmbeddedComponentFactory.memberActionsList(app, context, value, trigger);
 
 class EmbeddedComponentFactory {
+/* 
+ * memberActionsList function to construct a list of MemberActionModel
+ */
   static Widget memberActionsList(AppModel app, BuildContext context,
       List<MemberActionModel> values, MemberActionListChanged trigger) {
     MemberActionInMemoryRepository inMemoryRepository =
@@ -56,11 +59,17 @@ class EmbeddedComponentFactory {
   }
 }
 
+/* 
+ * MemberActionInMemoryRepository is an in memory implementation of MemberActionRepository
+ */
 class MemberActionInMemoryRepository implements MemberActionRepository {
   final List<MemberActionModel> items;
   final MemberActionListChanged trigger;
   Stream<List<MemberActionModel>>? theValues;
 
+  /* 
+     * Construct the MemberActionInMemoryRepository
+     */
   MemberActionInMemoryRepository(this.trigger, this.items) {
     List<List<MemberActionModel>> myList = <List<MemberActionModel>>[];
     myList.add(items);
@@ -78,18 +87,27 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
     return -1;
   }
 
+  /* 
+     * Add an entity
+     */
   @override
   Future<MemberActionEntity> addEntity(
       String documentID, MemberActionEntity value) {
     throw Exception('Not implemented');
   }
 
+  /* 
+     * Update an entity
+     */
   @override
   Future<MemberActionEntity> updateEntity(
       String documentID, MemberActionEntity value) {
     throw Exception('Not implemented');
   }
 
+  /* 
+     * Update a model
+     */
   @override
   Future<MemberActionModel> add(MemberActionModel value) {
     items.add(value.copyWith(documentID: newRandomKey()));
@@ -97,6 +115,9 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
     return Future.value(value);
   }
 
+  /* 
+     * Delete a model
+     */
   @override
   Future<void> delete(MemberActionModel value) {
     int index = _index(value.documentID);
@@ -105,6 +126,9 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
     return Future.value();
   }
 
+  /* 
+     * Update a model
+     */
   @override
   Future<MemberActionModel> update(MemberActionModel value) {
     int index = _index(value.documentID);
@@ -115,6 +139,9 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
     return Future.value(value);
   }
 
+  /* 
+     * Get a model
+     */
   @override
   Future<MemberActionModel> get(String? id, {Function(Exception)? onError}) {
     int index = _index(id!);
@@ -123,6 +150,9 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
     return completer.future;
   }
 
+  /* 
+     * Retrieve to a list of MemberActionModel base on a query
+     */
   @override
   Stream<List<MemberActionModel>> values(
       {String? orderBy,
@@ -135,6 +165,9 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
     return theValues!;
   }
 
+  /* 
+     * Retrieve to a list of MemberActionModel, including linked models base on a query
+     */
   @override
   Stream<List<MemberActionModel>> valuesWithDetails(
       {String? orderBy,
@@ -147,6 +180,9 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
     return theValues!;
   }
 
+  /* 
+     * Subscribe to a list of MemberActionModel base on a query
+     */
   @override
   StreamSubscription<List<MemberActionModel>> listen(trigger,
       {String? orderBy,
@@ -158,6 +194,9 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
     return theValues!.listen((theList) => trigger(theList));
   }
 
+  /* 
+     * Subscribe to a list of MemberActionModel, including linked models, base on a query
+     */
   @override
   StreamSubscription<List<MemberActionModel>> listenWithDetails(trigger,
       {String? orderBy,
@@ -169,9 +208,15 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
     return theValues!.listen((theList) => trigger(theList));
   }
 
+  /* 
+     * Flush the repository
+     */
   @override
   void flush() {}
 
+  /* 
+     * Retrieve the list of models
+     */
   @override
   Future<List<MemberActionModel>> valuesList(
       {String? orderBy,
@@ -196,16 +241,25 @@ class MemberActionInMemoryRepository implements MemberActionRepository {
     return Future.value(items);
   }
 
+  /* 
+     * Retrieve a subcollection of this collection
+     */
   @override
   getSubCollection(String documentId, String name) {
     throw UnimplementedError();
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String timeStampToString(timeStamp) {
     throw UnimplementedError();
   }
 
+  /* 
+   * Subscribe to 1 document / 1 model
+   */
   @override
   StreamSubscription<MemberActionModel> listenTo(
       String documentId, MemberActionChanged changed,

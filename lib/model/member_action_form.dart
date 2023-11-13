@@ -58,7 +58,7 @@ class MemberActionForm extends StatelessWidget {
         create: (context) => MemberActionFormBloc(
           appId,
         )..add(InitialiseMemberActionFormEvent(value: value)),
-        child: MyMemberActionForm(
+        child: _MyMemberActionForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -67,7 +67,7 @@ class MemberActionForm extends StatelessWidget {
         create: (context) => MemberActionFormBloc(
           appId,
         )..add(InitialiseMemberActionFormNoLoadEvent(value: value)),
-        child: MyMemberActionForm(
+        child: _MyMemberActionForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -85,26 +85,26 @@ class MemberActionForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseMemberActionFormEvent(value: value)
                 : InitialiseNewMemberActionFormEvent())),
-            child: MyMemberActionForm(
+            child: _MyMemberActionForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyMemberActionForm extends StatefulWidget {
+class _MyMemberActionForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyMemberActionForm({required this.app, this.formAction, this.submitAction});
+  _MyMemberActionForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyMemberActionForm> createState() =>
+  State<_MyMemberActionForm> createState() =>
       _MyMemberActionFormState(formAction);
 }
 
-class _MyMemberActionFormState extends State<MyMemberActionForm> {
+class _MyMemberActionFormState extends State<_MyMemberActionForm> {
   final FormAction? formAction;
   late MemberActionFormBloc _myFormBloc;
 

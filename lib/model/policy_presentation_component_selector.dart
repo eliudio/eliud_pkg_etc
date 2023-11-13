@@ -31,7 +31,13 @@ import 'policy_presentation_list_event.dart';
 import 'policy_presentation_list_state.dart';
 import 'policy_presentation_model.dart';
 
+/* 
+ * PolicyPresentationComponentSelector is a component selector for PolicyPresentation, allowing to select a PolicyPresentation component
+ */
 class PolicyPresentationComponentSelector extends ComponentSelector {
+  /* 
+   * createSelectWidget creates the widget
+   */
   @override
   Widget createSelectWidget(BuildContext context, AppModel app,
       int privilegeLevel, double height, SelectComponent selected, editor) {
@@ -42,7 +48,7 @@ class PolicyPresentationComponentSelector extends ComponentSelector {
         policyPresentationRepository:
             policyPresentationRepository(appId: appId)!,
       )..add(LoadPolicyPresentationList()),
-      child: SelectPolicyPresentationWidget(
+      child: _SelectPolicyPresentationWidget(
           app: app,
           height: height,
           containerPrivilege: privilegeLevel,
@@ -52,29 +58,31 @@ class PolicyPresentationComponentSelector extends ComponentSelector {
   }
 }
 
-class SelectPolicyPresentationWidget extends StatefulWidget {
+/* 
+ * _SelectPolicyPresentationWidget 
+ */
+class _SelectPolicyPresentationWidget extends StatefulWidget {
   final AppModel app;
   final double height;
   final SelectComponent selected;
   final int containerPrivilege;
   final ComponentEditorConstructor editorConstructor;
 
-  const SelectPolicyPresentationWidget(
-      {super.key,
-      required this.app,
+  const _SelectPolicyPresentationWidget(
+      {required this.app,
       required this.containerPrivilege,
       required this.height,
       required this.selected,
       required this.editorConstructor});
 
   @override
-  State<SelectPolicyPresentationWidget> createState() {
+  State<_SelectPolicyPresentationWidget> createState() {
     return _SelectPolicyPresentationWidgetState();
   }
 }
 
 class _SelectPolicyPresentationWidgetState
-    extends State<SelectPolicyPresentationWidget>
+    extends State<_SelectPolicyPresentationWidget>
     with TickerProviderStateMixin {
   TabController? _privilegeTabController;
   final List<String> _privilegeItems = ['No', 'L1', 'L2', 'Owner'];

@@ -22,7 +22,13 @@ import '../extensions/policy_presentation_component.dart';
 import '../editors/policy_presentation_component_editor.dart';
 import 'policy_presentation_component_selector.dart';
 
+/* 
+ * Component registry contains a list of components
+ */
 class ComponentRegistry {
+  /* 
+   * Initialise the component registry
+   */
   void init() {
     Registry.registry()!.addInternalComponents('eliud_pkg_etc', [
       "policyPresentations",

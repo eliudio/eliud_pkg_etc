@@ -33,6 +33,9 @@ typedef PolicyPresentationChanged = Function(
   int? privilegeLevel,
 );
 
+/* 
+ * PolicyPresentationDropdownButtonWidget is the drop down widget to allow to select an instance of PolicyPresentation
+ */
 class PolicyPresentationDropdownButtonWidget extends StatefulWidget {
   final AppModel app;
   final int? privilegeLevel;
@@ -40,6 +43,9 @@ class PolicyPresentationDropdownButtonWidget extends StatefulWidget {
   final PolicyPresentationChanged? trigger;
   final bool? optional;
 
+  /* 
+   * construct a PolicyPresentationDropdownButtonWidget
+   */
   PolicyPresentationDropdownButtonWidget(
       {required this.app,
       this.privilegeLevel,
@@ -48,18 +54,21 @@ class PolicyPresentationDropdownButtonWidget extends StatefulWidget {
       this.optional,
       super.key});
 
+  /* 
+   * create state of PolicyPresentationDropdownButtonWidget
+   */
   @override
   State<StatefulWidget> createState() {
-    return PolicyPresentationDropdownButtonWidgetState(value);
+    return _PolicyPresentationDropdownButtonWidgetState(value);
   }
 }
 
-class PolicyPresentationDropdownButtonWidgetState
+class _PolicyPresentationDropdownButtonWidgetState
     extends State<PolicyPresentationDropdownButtonWidget> {
   PolicyPresentationListBloc? bloc;
   String? value;
 
-  PolicyPresentationDropdownButtonWidgetState(this.value);
+  _PolicyPresentationDropdownButtonWidgetState(this.value);
 
   @override
   void didChangeDependencies() {
@@ -73,7 +82,7 @@ class PolicyPresentationDropdownButtonWidgetState
     super.dispose();
   }
 
-  List<Widget> widgets(PolicyPresentationModel value) {
+  List<Widget> _widgets(PolicyPresentationModel value) {
     var app = widget.app;
     var widgets = <Widget>[];
     widgets.add(value.description != null
@@ -130,7 +139,7 @@ class PolicyPresentationDropdownButtonWidgetState
                   height: 100.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: widgets(element),
+                    children: _widgets(element),
                   ),
                 )));
           }

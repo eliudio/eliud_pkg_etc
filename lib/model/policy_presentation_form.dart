@@ -60,7 +60,7 @@ class PolicyPresentationForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialisePolicyPresentationFormEvent(value: value)),
-        child: MyPolicyPresentationForm(
+        child: _MyPolicyPresentationForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -70,7 +70,7 @@ class PolicyPresentationForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialisePolicyPresentationFormNoLoadEvent(value: value)),
-        child: MyPolicyPresentationForm(
+        child: _MyPolicyPresentationForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -89,27 +89,27 @@ class PolicyPresentationForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialisePolicyPresentationFormEvent(value: value)
                 : InitialiseNewPolicyPresentationFormEvent())),
-            child: MyPolicyPresentationForm(
+            child: _MyPolicyPresentationForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyPolicyPresentationForm extends StatefulWidget {
+class _MyPolicyPresentationForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyPolicyPresentationForm(
+  _MyPolicyPresentationForm(
       {required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyPolicyPresentationForm> createState() =>
+  State<_MyPolicyPresentationForm> createState() =>
       _MyPolicyPresentationFormState(formAction);
 }
 
-class _MyPolicyPresentationFormState extends State<MyPolicyPresentationForm> {
+class _MyPolicyPresentationFormState extends State<_MyPolicyPresentationForm> {
   final FormAction? formAction;
   late PolicyPresentationFormBloc _myFormBloc;
 

@@ -25,13 +25,22 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
+/* 
+ * PolicyPresentationFirestore is the firestore implementation of PolicyPresentationRepository
+ */
 class PolicyPresentationFirestore implements PolicyPresentationRepository {
+  /* 
+   * transform a map into an entity
+   */
   @override
   PolicyPresentationEntity? fromMap(Object? o,
       {Map<String, String>? newDocumentIds}) {
     return PolicyPresentationEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
+  /* 
+   * add an entity to the repository
+   */
   @override
   Future<PolicyPresentationEntity> addEntity(
       String documentID, PolicyPresentationEntity value) {
@@ -41,6 +50,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Update an entity
+   */
   @override
   Future<PolicyPresentationEntity> updateEntity(
       String documentID, PolicyPresentationEntity value) {
@@ -50,6 +62,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Add a model to the repository
+   */
   @override
   Future<PolicyPresentationModel> add(PolicyPresentationModel value) {
     return policyPresentationCollection
@@ -58,11 +73,17 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Delete a model
+   */
   @override
   Future<void> delete(PolicyPresentationModel value) {
     return policyPresentationCollection.doc(value.documentID).delete();
   }
 
+  /* 
+   * Update a model
+   */
   @override
   Future<PolicyPresentationModel> update(PolicyPresentationModel value) {
     return policyPresentationCollection
@@ -83,6 +104,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
         appId: appId);
   }
 
+  /* 
+   * Retrieve an entity from the repository with id
+   */
   @override
   Future<PolicyPresentationEntity?> getEntity(String? id,
       {Function(Exception)? onError}) async {
@@ -101,6 +125,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     return null;
   }
 
+  /* 
+   * Retrieve an model from the repository with id
+   */
   @override
   Future<PolicyPresentationModel?> get(String? id,
       {Function(Exception)? onError}) async {
@@ -119,6 +146,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     return null;
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models
+   */
   @override
   StreamSubscription<List<PolicyPresentationModel?>> listen(
       PolicyPresentationModelTrigger trigger,
@@ -150,6 +180,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     });
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models and linked models
+   */
   @override
   StreamSubscription<List<PolicyPresentationModel?>> listenWithDetails(
       PolicyPresentationModelTrigger trigger,
@@ -181,6 +214,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     });
   }
 
+  /* 
+   * Listen to 1 document in the repository
+   */
   @override
   StreamSubscription<PolicyPresentationModel?> listenTo(
       String documentId, PolicyPresentationChanged changed,
@@ -202,6 +238,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     return theStream;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Stream<List<PolicyPresentationModel?>> values(
       {String? orderBy,
@@ -232,6 +271,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Stream<List<PolicyPresentationModel?>> valuesWithDetails(
       {String? orderBy,
@@ -262,6 +304,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Future<List<PolicyPresentationModel?>> valuesList(
       {String? orderBy,
@@ -293,6 +338,9 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Future<List<PolicyPresentationModel?>> valuesListWithDetails(
       {String? orderBy,
@@ -324,9 +372,15 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     return values;
   }
 
+  /* 
+   * Flush the repository
+   */
   @override
   void flush() {}
 
+  /* 
+   * Delete all entries in the repository
+   */
   @override
   Future<void> deleteAll() {
     return policyPresentationCollection.get().then((snapshot) {
@@ -336,16 +390,25 @@ class PolicyPresentationFirestore implements PolicyPresentationRepository {
     });
   }
 
+  /* 
+   * Retrieve the subcollection of this repository
+   */
   @override
   dynamic getSubCollection(String documentId, String name) {
     return policyPresentationCollection.doc(documentId).collection(name);
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String? timeStampToString(dynamic timeStamp) {
     return firestoreTimeStampToString(timeStamp);
   }
 
+  /* 
+   * change 1 a fieldvalue for 1 document  
+   */
   @override
   Future<PolicyPresentationModel?> changeValue(
       String documentId, String fieldName, num changeByThisValue) {

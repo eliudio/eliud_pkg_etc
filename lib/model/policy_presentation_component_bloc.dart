@@ -35,6 +35,9 @@ class PolicyPresentationComponentBloc extends Bloc<
     });
   }
 
+  /*
+   * Construct PolicyPresentationComponentBloc
+   */
   PolicyPresentationComponentBloc({this.policyPresentationRepository})
       : super(PolicyPresentationComponentUninitialized()) {
     on<FetchPolicyPresentationComponent>((event, emit) {
@@ -45,6 +48,9 @@ class PolicyPresentationComponentBloc extends Bloc<
     });
   }
 
+  /*
+   * Close the PolicyPresentationComponentBloc
+   */
   @override
   Future<void> close() {
     _policyPresentationSubscription?.cancel();
