@@ -15,7 +15,7 @@
 
 import '../model/internal_component.dart';
 import 'package:eliud_core/core/registry.dart';
-import 'package:eliud_core/tools/component/component_spec.dart';
+import 'package:eliud_core_model/tools/component/component_spec.dart';
 import 'abstract_repository_singleton.dart';
 
 import '../extensions/policy_presentation_component.dart';
@@ -30,19 +30,19 @@ class ComponentRegistry {
    * Initialise the component registry
    */
   void init() {
-    Registry.registry()!.addInternalComponents('eliud_pkg_etc', [
+    Apis.apis().addInternalComponents('eliud_pkg_etc', [
       "policyPresentations",
     ]);
 
-    Registry.registry()!.register(
+    Apis.apis().register(
         componentName: "eliud_pkg_etc_internalWidgets",
         componentConstructor: ListComponentFactory());
-    Registry.registry()!.addDropDownSupporter(
+    Apis.apis().addDropDownSupporter(
         "policyPresentations", DropdownButtonComponentFactory());
-    Registry.registry()!.register(
+    Apis.apis().register(
         componentName: "policyPresentations",
         componentConstructor: PolicyPresentationComponentConstructorDefault());
-    Registry.registry()!.addComponentSpec('eliud_pkg_etc', 'etc', [
+    Apis.apis().addComponentSpec('eliud_pkg_etc', 'etc', [
       ComponentSpec(
           'policyPresentations',
           PolicyPresentationComponentConstructorDefault(),
@@ -50,7 +50,7 @@ class ComponentRegistry {
           PolicyPresentationComponentEditorConstructor(),
           ({String? appId}) => policyPresentationRepository(appId: appId)!),
     ]);
-    Registry.registry()!.registerRetrieveRepository(
+    Apis.apis().registerRetrieveRepository(
         'eliud_pkg_etc',
         'policyPresentations',
         ({String? appId}) => policyPresentationRepository(appId: appId)!);

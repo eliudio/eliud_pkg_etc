@@ -1,6 +1,6 @@
-import 'package:eliud_core/model/app_model.dart';
-import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
-import 'package:eliud_core/style/frontend/has_text.dart';
+import 'package:eliud_core_model/model/app_model.dart';
+import 'package:eliud_core_model/style/frontend/has_progress_indicator.dart';
+import 'package:eliud_core_model/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/screen_size.dart';
