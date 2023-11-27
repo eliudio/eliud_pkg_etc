@@ -1,12 +1,12 @@
-import 'package:eliud_core/core/registry.dart';
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core_model/style/frontend/has_container.dart';
-import 'package:eliud_core_model/style/frontend/has_dialog_field.dart';
-import 'package:eliud_core_model/style/frontend/has_divider.dart';
-import 'package:eliud_core_model/style/frontend/has_list_tile.dart';
-import 'package:eliud_core_model/style/frontend/has_text.dart';
-import 'package:eliud_core/tools/widgets/header_widget.dart';
-import 'package:eliud_pkg_etc/model/member_action_model.dart';
+import 'package:eliud_core_main/apis/apis.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_container.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_dialog_field.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_divider.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_list_tile.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_text.dart';
+import 'package:eliud_core/core/widgets/helper_widgets/header_widget.dart';
+import 'package:eliud_pkg_etc_model/model/member_action_model.dart';
 import 'package:flutter/material.dart';
 
 typedef MemberActionModelCallback = void Function(
@@ -99,7 +99,7 @@ class _MemberActionModelWidgetState extends State<MemberActionModelWidget> {
                   ),
                 )),
           ]),
-      Apis.apis().openSelectActionWidget(
+      Apis.apis().getRegistryApi().openSelectActionWidget(
           app: widget.app,
           action: widget.memberActionModel.action,
           containerPrivilege: widget.containerPrivilege,

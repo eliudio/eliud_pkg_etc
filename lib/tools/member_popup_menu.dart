@@ -1,7 +1,7 @@
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core_model/style/frontend/has_button.dart';
-import 'package:eliud_core_model/style/frontend/has_dialog.dart';
-import 'package:eliud_pkg_etc/model/member_action_model.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_button.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_dialog.dart';
+import 'package:eliud_pkg_etc_model/model/member_action_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;

@@ -1,13 +1,16 @@
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
+import 'package:eliud_core/access/access_bloc.dart';
 import 'package:eliud_core/core_package.dart';
 import 'package:eliud_core/eliud.dart';
-import 'package:eliud_core/model/access_model.dart';
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core/model/member_model.dart';
+import 'package:eliud_core_main/tools/etc/member_collection_info.dart';
+import 'package:eliud_core_model/model/access_model.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/model/member_model.dart';
 import 'package:eliud_core/package/package.dart';
-import 'package:eliud_pkg_etc/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_etc/model/repository_singleton.dart';
-import 'package:eliud_pkg_etc/model/component_registry.dart';
+import 'package:eliud_pkg_etc/editors/policy_presentation_component_editor.dart';
+import 'package:eliud_pkg_etc/extensions/policy_presentation_component.dart';
+import 'package:eliud_pkg_etc_model/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_etc_model/model/repository_singleton.dart';
+import 'package:eliud_pkg_etc_model/model/component_registry.dart';
 
 import 'package:eliud_pkg_etc/etc_package_stub.dart'
     if (dart.library.io) 'etc_mobile_package.dart'
@@ -32,7 +35,8 @@ abstract class EtcPackage extends Package {
 
   @override
   void init() {
-    ComponentRegistry().init();
+    ComponentRegistry().init(PolicyPresentationComponentConstructorDefault(),
+        PolicyPresentationComponentEditorConstructor());
 
     AbstractRepositorySingleton.singleton = RepositorySingleton();
   }
